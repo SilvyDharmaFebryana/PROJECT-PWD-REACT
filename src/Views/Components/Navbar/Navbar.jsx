@@ -124,7 +124,7 @@ class Navbar extends React.Component {
           <div className="d-flex mt-2 ml-2">
             <Link
               className="d-flex"
-              to="/auth"
+              to="/login"
               style={{ color: "inherit", textDecoration: "none" }}
             >
               <p className="font-weight-bolder medium mt-1 ml-2 mr-2 text-navbar">
