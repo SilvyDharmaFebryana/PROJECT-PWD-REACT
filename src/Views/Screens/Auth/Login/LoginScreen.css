@@ -1,9 +1,6 @@
-.login-bg {
+.container {
+  padding: 10px;
 }
-
-/* .limiter {
-    width: 100%;
-} */
 
 .container-login {
   width: 100%;

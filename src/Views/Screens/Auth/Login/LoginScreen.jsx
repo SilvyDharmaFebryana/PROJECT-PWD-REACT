@@ -88,7 +88,7 @@ class LoginScreen extends React.Component {
       return <Redirect to="/" />;
     }
     return (
-      <div>
+      <div className="container">
         <div className="row mt-1">
           <div className="col-4"></div>
           <div className="col-4 container-login">
