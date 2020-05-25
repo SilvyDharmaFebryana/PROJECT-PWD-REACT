@@ -15,7 +15,8 @@
 }
 
 .jadwal-box {
-    border: 1px solid #003cb3;
+    border: 1.5px solid darkgrey;
     width: 400px;
-    height: 100px;
+    height: 110px;
+    background-color: whitesmoke;
 }
