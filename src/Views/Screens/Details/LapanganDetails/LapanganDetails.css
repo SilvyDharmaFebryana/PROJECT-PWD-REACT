@@ -1,0 +1,21 @@
+.container {
+  padding: 0px;
+}
+
+.image-lap {
+    width: 650px;
+    height: 400px;
+    -webkit-box-shadow: -12px 12px 5px -6px rgba(171,171,171,1);
+    -moz-box-shadow: -12px 12px 5px -6px rgba(171,171,171,1);
+    box-shadow: -12px 12px 5px -6px rgba(171,171,171,1);
+}
+
+.color-text {
+    color: #003cb3;
+}
+
+.jadwal-box {
+    border: 1px solid #003cb3;
+    width: 400px;
+    height: 100px;
+}
