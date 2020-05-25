@@ -25,7 +25,6 @@ export const loginHandler = (userData) => {
                         payload: res.data[0],
                     });
                 } else {
-                    alert("masuk");
                     dispatch({
                         type: ON_LOGIN_FAIL,
                         payload: "Username atau password salah",
@@ -73,6 +72,8 @@ export const logoutHandler = () => {
 
 export const registerHandler = (userData) => {
     return (dispatch) => {
+        const { repPassword, password, username, firstName, lastName, role, address, gender, phone, email, } = userData
+
         Axios.get(`${API_URL}/users`, {
             params: {
                 username: userData.username,
@@ -85,18 +86,38 @@ export const registerHandler = (userData) => {
                         payload: "Username sudah digunakan",
                     });
                 } else {
-                    Axios.post(`${API_URL}/users`, userData)
-                        .then((res) => {
-                            console.log(res.data);
-                            dispatch({
-                                type: ON_LOGIN_SUCCESS,
-                                payload: res.data,
+                    if (password == repPassword) {
+                        Axios.post(`${API_URL}/users`, {
+                            username: username,
+                            password: password,
+                            role: role,
+                            firstName: firstName,
+                            lastName: lastName,
+                            fullName: firstName + ' ' + lastName,
+                            address: address,
+                            gender: gender,
+                            phone: phone,
+                        }
+                        )
+                            .then((res) => {
+                                    console.log(res.data);
+                                dispatch({
+                                    type: ON_LOGIN_SUCCESS,
+                                    payload: res.data,
+                                });
+                                swal("berhasil menambahkan akun", "", "success")
+                                
+                            })
+                            .catch((err) => {
+                                console.log(err);
                             });
-                            swal("berhasil menambahkan akun", "", "success")
-                        })
-                        .catch((err) => {
-                            console.log(err);
+                    } else {
+                        dispatch({
+                            type: "ON_PASSWORD_FAIL",
+                            payload: "password not match",
                         });
+                    }
+                   
                 }
             })
             .catch((err) => {
