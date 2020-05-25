@@ -147,7 +147,7 @@ class RegisterScreen extends React.Component {
                       value={this.state.registerForm.gender}
                       className="custom-text-input h-100 pl-3"
                       onChange={(e) =>
-                        this.inputHandler(e, "deliveryCourier", "transaction")
+                        this.inputHandler(e, "gender", "registerForm")
                       }
                     >
                       <option
@@ -174,7 +174,7 @@ class RegisterScreen extends React.Component {
                         }
                         value="male"
                       >
-                       Male
+                        Male
                       </option>
                     </select>
                   </div>
