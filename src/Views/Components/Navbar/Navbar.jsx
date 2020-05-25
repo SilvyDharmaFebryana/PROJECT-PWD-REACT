@@ -187,7 +187,14 @@ class Navbar extends React.Component {
                 Sewa
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Lapangan Voli</DropdownItem>
+                <DropdownItem>
+                  <Link
+                    to="/voli"
+                    style = {{ textDecoration: "none", color: "inherit" }}
+                    >
+                    Lapangan Voli
+                  </Link>
+                </DropdownItem>
                 <DropdownItem>Lapangan Futsal</DropdownItem>
                 <DropdownItem>Lapangan Basket</DropdownItem>
                 <DropdownItem>Lapangan Tennis</DropdownItem>
