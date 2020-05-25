@@ -64,7 +64,7 @@ class LapanganDetails extends React.Component {
                         <div className="col-5">
                             <div>
                                 <h2 style={{ color: "grey" }}>Lapangan {category}</h2>
-                                <p className="font-weight-bolder mt-4" style={{ color: "darkGrey" }}>{type}</p>
+                                <p className="font-weight-bolder mt-4" style={{ color: "grey" }}>{type}</p>
                                 <span>
                                     <h5 className="mt-2">
                                         {new Intl.NumberFormat("id-ID", {
