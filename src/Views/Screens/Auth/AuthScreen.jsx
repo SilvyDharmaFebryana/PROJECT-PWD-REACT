@@ -190,7 +190,7 @@ class AuthScreen extends React.Component {
             return <Redirect to="/" />;
         }
         return (
-            <div className="container">
+            <div>
                 <div className="row mt-5">
                     <div className="col-5">
                         <div className="d-flex flex-row">

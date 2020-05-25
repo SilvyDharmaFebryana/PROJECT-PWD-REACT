@@ -12,6 +12,10 @@ import { userKeepLogin, cookieChecker } from "./Redux/Actions";
 import ButtonUI from './Views/Components/Buttons/Buttons.tsx'
 import Shoes from './Views/Screens/Products/shoes/shoes';
 import Kolam from './Views/Screens/Lapangan/kolam/kolam';
+import LoginScreen from './Views/Screens/Auth/Login/LoginScreen';
+import RegisterScreen from './Views/Screens/Auth/Register/RegisterScreen';
+import LapanganVoli from './Views/Screens/Lapangan/LapanganVoli/LapanganVoli';
+import LapanganDetails from './Views/Screens/Details/LapanganDetails/LapanganDetails';
 
 const cookieObj = new Cookie();
 
@@ -35,6 +39,10 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/auth" component={AuthScreen} />
+            <Route exact path="/login/" component={LoginScreen} />
+            <Route exact path="/register" component={RegisterScreen} />
+            <Route exact path="/voli" component={LapanganVoli} />
+            <Route exact path="/lapangan/:lapanganId" component={LapanganDetails} />
             <Route exact path="/shoes" component={Shoes} />
             <Route exact path="/kolam" component={Kolam} />
           </Switch>
