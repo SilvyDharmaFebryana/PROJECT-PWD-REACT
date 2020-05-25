@@ -78,7 +78,7 @@ class Kolam extends React.Component {
     render() {
         return (
             <>
-            <div>
+            <div className="mt-1">
                 <Breadcrumb>
                         <BreadcrumbItem active>  <h5 className="font-weight-bolder m-1" > SWIMMING POOL</h5></BreadcrumbItem>
                 </Breadcrumb>
