@@ -16,6 +16,9 @@ import LoginScreen from './Views/Screens/Auth/Login/LoginScreen';
 import RegisterScreen from './Views/Screens/Auth/Register/RegisterScreen';
 import LapanganVoli from './Views/Screens/Lapangan/LapanganVoli/LapanganVoli';
 import LapanganDetails from './Views/Screens/Details/LapanganDetails/LapanganDetails';
+import LapanganBasket from './Views/Screens/Lapangan/LapanganBasket/LapanganBasket';
+import BookingDetails from './Views/Screens/BookingDetails/BookingDetails';
+import BookingList from './Views/Screens/BookingList/BookingList';
 
 const cookieObj = new Cookie();
 
@@ -42,7 +45,10 @@ class App extends React.Component {
             <Route exact path="/login/" component={LoginScreen} />
             <Route exact path="/register" component={RegisterScreen} />
             <Route exact path="/voli" component={LapanganVoli} />
-            <Route exact path="/lapangan/:lapanganId" component={LapanganDetails} />
+            <Route exact path="/basket" component={LapanganBasket} />
+            <Route exact path="/booking_details" component={BookingDetails} />
+            <Route exact path="/booking_list" component={BookingList} />
+            <Route exact path="/lapangan/:fieldId" component={LapanganDetails} />
             <Route exact path="/shoes" component={Shoes} />
             <Route exact path="/kolam" component={Kolam} />
           </Switch>
