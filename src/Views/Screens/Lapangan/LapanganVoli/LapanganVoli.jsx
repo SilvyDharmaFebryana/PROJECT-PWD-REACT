@@ -12,7 +12,7 @@ class LapanganVoli extends React.Component {
     }
 
     getLapanganVoli = () => {
-        Axios.get(`${API_URL}/lapangan`, {
+        Axios.get(`${API_URL}/fields`, {
             params : {
                 category: "voli"
             }
