@@ -22,7 +22,6 @@ class LapanganDetails extends React.Component {
       desc:"",
       jam: "09.00",
       date: new Date(),
-      kodeBooking: 0,
     },
   };
 
@@ -35,9 +34,9 @@ class LapanganDetails extends React.Component {
     });
 
   getLapanganDetails = () => {
-    let lapanganId = this.props.match.params.lapanganId;
+    let fieldId = this.props.match.params.fieldId;
 
-    Axios.get(`${API_URL}/lapangan/${lapanganId}`)
+    Axios.get(`${API_URL}/fields/${fieldId}`)
       .then((res) => {
         console.log(res.data);
         this.setState({
@@ -65,10 +64,10 @@ class LapanganDetails extends React.Component {
 
   bookingBtnHandler = () => {
 
-    let bookingNumber = Math.floor(Math.random() * 1000000000000000);
+    // let bookingNumber = Math.floor(Math.random() * 1000000000000000);
     // bookingNumber.toFixed(16)
 
-    Axios.get(`${API_URL}/bookingTransactions`, {
+    Axios.get(`${API_URL}/bookingList`, {
       params: {
         date: this.state.lapanganDetails.date,
         jam: this.state.lapanganDetails.jam
@@ -83,13 +82,13 @@ class LapanganDetails extends React.Component {
             "error"
           );
         } else {
-          Axios.post(`${API_URL}/bookingTransactions`, {
+          Axios.post(`${API_URL}/bookingList`, {
             userId: this.props.user.id,
-            lapanganId: this.state.lapanganDetails.id,
+            fieldId: this.state.lapanganDetails.id,
             quantity: 1,
             date: this.state.lapanganDetails.date,
             jam: this.state.lapanganDetails.jam,
-            kodeBooking: bookingNumber,
+            // kodeBooking: bookingNumber,
           })
             .then((res) => {
               console.log(res.data);
