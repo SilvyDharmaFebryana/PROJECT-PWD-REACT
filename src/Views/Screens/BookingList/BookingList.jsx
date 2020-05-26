@@ -7,6 +7,7 @@ import Axios from "axios";
 import { API_URL } from "../../../Constants/API";
 import { connect } from 'react-redux'
 import ButtonUI from "../../Components/Buttons/Buttons";
+import { Link } from "react-router-dom";
 
 
 class BookingList extends React.Component {
@@ -82,28 +83,33 @@ class BookingList extends React.Component {
                         </BreadcrumbItem>
                     </Breadcrumb>
                 </div>
-                <div className="table">
-                    <center>
-                        <Table className="table-striped" style={{ width: "80%" }} >
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Item</th>
-                                    <th>Harga</th>
-                                    <th>Tanggal</th>
-                                    <th>Jam</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    this.renderBookingList()
-                                }
-                            </tbody>
-                        </Table>
-                    </center>
-                    
-
+                <div>
+                    {
+                        this.state.bookingListData.length == 0 ? (
+                            <Alert color="primary" className="mt-4">Your cart is empty! <Link to="/">Go Shopping</Link></Alert>
+                        ) : 
+                        <div className="table">
+                                <center>
+                                    <Table className="table-striped" style={{ width: "80%" }} >
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Item</th>
+                                                <th>Harga</th>
+                                                <th>Tanggal</th>
+                                                <th>Jam</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                this.renderBookingList()
+                                            }
+                                        </tbody>
+                                    </Table>
+                                </center>
+                        </div>
+                    }
                 </div>
             </div>
         )
