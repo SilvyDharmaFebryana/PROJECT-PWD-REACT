@@ -15,8 +15,35 @@
 }
 
 .jadwal-box {
-    border: 1.5px solid darkgrey;
-    width: 400px;
+    /* border: 1.5px solid darkgrey; */
+    width: 75%;
     height: 110px;
     background-color: whitesmoke;
+}
+
+.align-jus {
+    text-align: justify;
+}
+
+.book-wrap {
+    background-color: whitesmoke;
+    width: 100%;
+}
+
+.button-book {
+  width: 200px;
+  height: 40px;
+  background-color: #336699;
+  color: #e6e6e6;
+  border-radius: 20px;
+  opacity: 20%;
+  border: none;
+  transition: all ease-in-out 200ms;
+  font-weight: bolder;
+  margin: 19px;
+}
+
+.button-book:hover {
+  background-color: #132639;
+  color: #f2f2f2;
 }
