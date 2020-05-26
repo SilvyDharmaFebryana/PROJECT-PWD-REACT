@@ -59,6 +59,14 @@ class Navbar extends React.Component {
                 <DropdownItem>
                   <Link
                     style={{ color: "inherit", textDecoration: "none" }}
+                    to="/history"
+                  >
+                    Cart
+                  </Link>
+                </DropdownItem>
+                <DropdownItem>
+                  <Link
+                    style={{ color: "inherit", textDecoration: "none" }}
                     to="/wishlist"
                   >
                     Wishlist
@@ -135,6 +143,7 @@ class Navbar extends React.Component {
                 icon={faSignInAlt}
                 style={{ fontSize: 25, color: "#003cb3" }}
               />
+              
             </Link>
           </div>
         </div>
@@ -195,8 +204,15 @@ class Navbar extends React.Component {
                     Lapangan Voli
                   </Link>
                 </DropdownItem>
+                <DropdownItem>
+                  <Link
+                    to="/basket"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    Lapangan Basket
+                  </Link>
+                </DropdownItem>
                 <DropdownItem>Lapangan Futsal</DropdownItem>
-                <DropdownItem>Lapangan Basket</DropdownItem>
                 <DropdownItem>Lapangan Tennis</DropdownItem>
                 <DropdownItem>Lapangan Badminton</DropdownItem>
                 <DropdownItem>Tennis Meja</DropdownItem>
