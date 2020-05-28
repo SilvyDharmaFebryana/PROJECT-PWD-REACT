@@ -9,7 +9,6 @@ import Navbar from './Views/Components/Navbar/Navbar'
 import AuthScreen from './Views/Screens/Auth/AuthScreen'
 import { connect } from "react-redux";
 import { userKeepLogin, cookieChecker } from "./Redux/Actions";
-import ButtonUI from './Views/Components/Buttons/Buttons.tsx'
 import Shoes from './Views/Screens/Products/shoes/shoes';
 import Kolam from './Views/Screens/Lapangan/kolam/kolam';
 import LoginScreen from './Views/Screens/Auth/Login/LoginScreen';
@@ -32,7 +31,6 @@ class App extends React.Component {
         this.props.cookieChecker();
       }
   }
-
 
   render() {
     if (this.props.user.cookieChecked) {
@@ -58,7 +56,6 @@ class App extends React.Component {
     } else {
       return <div>Loading ...</div>
     }
-   
   }
 }
 
