@@ -37,8 +37,9 @@ class LapanganVoli extends React.Component {
         <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}>
           <div className={`kolam-card d-inline-block ml-4 mt-4`}>
             <img
+              className="image-lap"
               src={val.image}
-              style={{ width: "430px", height: "300px", objectFit: "contain" }}
+              // style={{ objectFit: "contain" }}
             />
             <div>
               <p className="mt-3">{val.type}</p>

@@ -2,12 +2,17 @@
   padding: 16px;
   transition: all ease 150ms;
   box-sizing: border-box;
-  width: 460px;
+  width: 500px;
   border: 1px solid var(--gray-divider);
-  background-color: #f9f9f9;
+  background-color: whitesmoke;
 }
 
 .kolam-card:hover {
-  box-shadow: 0px 4px 8px rgba(92, 107, 192, 0.2),
-    0px 2px 4px rgba(59, 69, 123, 0.2);
+  border: 5px solid #336699;
+}
+
+
+.image-lap {
+  width: 100%;
+  height: 290px;
 }

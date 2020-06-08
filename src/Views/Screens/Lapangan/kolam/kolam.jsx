@@ -42,8 +42,9 @@ class Kolam extends React.Component {
             return (
                 <div className={`kolam-card d-inline-block ml-4 mt-4`}>
                     <img
+                        className="image-lap"
                         src={val.image}
-                        style={{ width: "430px", height: "300px", objectFit: "contain" }}
+                        // style={{ width: "430px", height: "300px", objectFit: "contain" }}
                     />
                     <div>
                         <p className="mt-3">{val.type}</p>
