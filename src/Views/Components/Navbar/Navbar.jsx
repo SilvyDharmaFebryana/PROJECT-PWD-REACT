@@ -181,7 +181,9 @@ class Navbar extends React.Component {
         </div>
         <div className="col-sm-7 d-flex d-flex justify-content-center align-items-center">
           {
-            this.props.user.role === "user" ? (
+            this.props.user.role === "admin" ? (
+              null
+            ) : (
               <>
               <h6>
                 <Link
@@ -280,9 +282,7 @@ class Navbar extends React.Component {
                 </Modal>
               </h6>
               </>
-            ) : null
-                // <h6>{this.state.date + "-" + this.state.month + "-" + this.state.year}</h6>
-            
+            )
           }
         </div>
         <div className="col-sm-2">
