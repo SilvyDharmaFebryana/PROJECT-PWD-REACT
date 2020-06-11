@@ -1,0 +1,8 @@
+.detail {
+    color: #336699;
+}
+
+.detail:hover{
+    color: black;
+    cursor: pointer;
+}
