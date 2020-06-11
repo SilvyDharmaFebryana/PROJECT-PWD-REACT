@@ -1,0 +1,54 @@
+body {
+    background-color: #b3cce6;
+    /* background: url("../images/some-background.jpg"); */
+    /* background-size:contain; */
+    /* background-position:top; */
+    /* background: cover; */
+}
+
+.admin-login {
+    background-color: #ecf2f9;
+    height: 300px;
+    margin-top: 100px ;
+    border-radius: 10px;
+    border: 2px solid #2a5889;
+    /* -webkit-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.75); */
+}
+
+.text-input {
+    width: 78%;
+    height: 35px;
+    /* background-color: var(--gray-lightest); */
+    padding: 20px;
+    border: 1px solid #336699;
+    border-radius: 20px;
+    font-size: 16px;
+    outline: none;
+    border-bottom: 1px solid none;
+    transition: all ease 150ms;
+    font-family: Muli;
+  }
+
+.text-input.active {
+    -webkit-box-shadow: 0px 4px 19px -9px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 0px 4px 19px -9px rgba(0, 0, 0, 1);
+    box-shadow: 0px 4px 19px -9px rgba(0, 0, 0, 1);
+}
+  
+.button-login {
+    width: 30%;
+    height: 40px;
+    background-color: #336699;
+    color: #e6e6e6;
+    border-radius: 20px;
+    opacity: 20%;
+    border: none;
+    transition: all ease-in-out 200ms;
+}
+  
+.button-login:hover {
+    background-color: #132639;
+    color: #f2f2f2;
+}

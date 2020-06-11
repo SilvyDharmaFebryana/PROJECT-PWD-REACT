@@ -60,6 +60,7 @@ class RegisterScreen extends React.Component {
       gender,
       repPassword,
       address,
+      role,
     } = this.state.registerForm;
 
 
@@ -74,6 +75,7 @@ class RegisterScreen extends React.Component {
       gender,
       repPassword,
       address,
+      role: "user"
     };
 
     this.props.onRegister(userData);
@@ -86,8 +88,8 @@ class RegisterScreen extends React.Component {
     return (
       <div className="container">
         <div className="row mt-1">
-          <div className="col-1"></div>
-          <div className="col-10 container-register">
+          <div className="col-sm-1"></div>
+          <div className="col-sm-10 container-register">
             <div
               className="mt-3"
               style={{ height: "50px", borderRadius: "8px" }}
@@ -101,14 +103,14 @@ class RegisterScreen extends React.Component {
               style={{ height: "300px", borderTop: "2px solid #336699" }}
             >
               <div className="row mt-2">
-                <div className="col-2">
+                <div className="col-sm-2">
                   <p className="mt-3 ml-2">First Name</p>
                   <p className="mt-4 ml-2">Last Name</p>
                   <p className="mt-4 ml-2">Username</p>
                   <p className="mt-5 ml-2">Gender</p>
                   <p className="mt-4 ml-2">Email</p>
                 </div>
-                <div className="col-4">
+                <div className="col-sm-4">
                   <TextField
                     placeholder="First Name"
                     className="mt-2"
@@ -187,13 +189,13 @@ class RegisterScreen extends React.Component {
                     }
                   />
                 </div>
-                <div className="col-2">
+                <div className="col-sm-2">
                   <p className="mt-3">Phone Number</p>
                   <p className="mt-4">Password</p>
                   <p className="mt-5">Repeat Password</p>
                   <p className="mt-5">Address</p>
                 </div>
-                <div className="col-4">
+                <div className="col-sm-4">
                   <div className="d-flex">
                     <input
                       type="text"
@@ -247,7 +249,7 @@ class RegisterScreen extends React.Component {
                     classNam="mt-2"
                     name=""
                     id=""
-                    cols="37.5"
+                    cols="25"
                     rows="3"
                     style={{ border: "1px solid #336699" }}
                     value={this.state.registerForm.address}
@@ -269,7 +271,7 @@ class RegisterScreen extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-1"></div>
+          <div className="col-sm-1"></div>
         </div>
       </div>
     );

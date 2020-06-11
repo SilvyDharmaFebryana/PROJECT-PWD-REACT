@@ -90,8 +90,8 @@ class LoginScreen extends React.Component {
     return (
       <div className="container">
         <div className="row mt-1">
-          <div className="col-4"></div>
-          <div className="col-4 container-login">
+          <div className="col-md-4"></div>
+          <div className="col-md-4 container-login">
             <div
               className="mt-3"
               style={{ height: "70px", borderRadius: "8px" }}
@@ -116,7 +116,7 @@ class LoginScreen extends React.Component {
               </div>
               <div>
                 <FontAwesomeIcon
-                  className="mt-5 ml-4"
+                  className="mt-5 ml-3"
                   icon={faUserAlt}
                   style={{ fontSize: 25, color: "#336699" }}
                 />
@@ -136,7 +136,7 @@ class LoginScreen extends React.Component {
               </div>
               <div>
                 <FontAwesomeIcon
-                  className="mt-4 ml-4"
+                  className="mt-3 ml-3"
                   icon={faKey}
                   style={{ fontSize: 25, color: "#336699" }}
                 />
@@ -149,7 +149,7 @@ class LoginScreen extends React.Component {
                   onBlur={this.onBlurPassword}
                   className={`text-input ${
                     this.state.passwordFocused ? "active" : null
-                  } mt-4 ml-3`}
+                  } mt-3 ml-3`}
                   type={this.state.loginForm.showPassword ? "text" : "password"}
                   placeholder="password"
                 />
@@ -161,7 +161,7 @@ class LoginScreen extends React.Component {
                   name="showPasswordLogin"
                   onChange={(e) => this.checkboxHandler(e, "loginForm")}
                 />
-                <p className="mt-2 mr-4 ml-1">show password</p>
+                <p className="small mt-2 mr-4 ml-1">show password</p>
               </div>
               <div className="text-center">
                 <input
@@ -172,7 +172,7 @@ class LoginScreen extends React.Component {
                 />
               </div>
             </div>
-            <div className="bg-grey text-center" style={{ height: "100px" }}>
+            <div className="bg-grey text-center">
               <div className="mt-1">Don’t have an account?</div>
               <div className="mt-2 font-weight-bolder sign-up">
                   <Link to="/register" style={{ textDecoration: "none", color:"inherit" }}>
@@ -181,7 +181,7 @@ class LoginScreen extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-4"></div>
+          {/* <div className="col-sm-4" style={{border: "1px solid black"}}></div> */}
         </div>
       </div>
     );
