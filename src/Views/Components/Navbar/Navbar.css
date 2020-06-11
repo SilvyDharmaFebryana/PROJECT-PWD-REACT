@@ -14,11 +14,13 @@
 }
 
 .navbar-container {
+  width: 100%;
   /* padding: 100px; */
-  border: 1px solid #e2e5e6;
+  border-bottom: 1px solid #e2e5e6;
   -webkit-box-shadow: -1px 2px 5px 0px rgba(117,117,117,1);
   -moz-box-shadow: -1px 2px 5px 0px rgba(117,117,117,1);
   box-shadow: -1px 2px 5px 0px rgba(117,117,117,1);
+  background-color: white;
 
 }
 
