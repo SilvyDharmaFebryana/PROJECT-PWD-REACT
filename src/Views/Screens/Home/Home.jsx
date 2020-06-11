@@ -21,20 +21,19 @@ class Home extends React.Component {
     render() {
         return (
             <>
-            <div className="mt-1">
-            <Breadcrumb>
-                <BreadcrumbItem active>  <h5 className="font-weight-bolder m-1" > ADMIN DASHBOARD </h5></BreadcrumbItem>
-            </Breadcrumb>
-            </div>
+            
             <div className="text-center">
                 <div className="d-flex">
-                    <h1></h1>
                 </div>
                 <div>
                     {
                         this.props.user.role === "admin" ? (
                             <>
-                    
+                        <div className="mt-1">
+                            <Breadcrumb>
+                                <BreadcrumbItem active>  <h5 className="font-weight-bolder m-1" > ADMIN DASHBOARD </h5></BreadcrumbItem>
+                            </Breadcrumb>
+                        </div>
                             <div className="row text-center">
                                 <div className="col-4">
                                     <div className="container-admin">
