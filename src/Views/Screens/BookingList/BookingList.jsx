@@ -1,7 +1,8 @@
 import React from "react"
+import "./BookingList.css"
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faListAlt } from "@fortawesome/free-solid-svg-icons";
+import { faListAlt, faStop, faCross, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Table, Alert } from 'reactstrap'
 import Axios from "axios";
 import { API_URL } from "../../../Constants/API";
@@ -52,15 +53,24 @@ class BookingList extends React.Component {
 
     renderBookingList = () => {
         return this.state.bookingListData.map((val, idx) => {
-            let tanggal = val.date.get
+            let tanggal = val.date.split("T")[0]
+            // let tanggalBooking = tanggal[tanggal.length - 1] + 1
             return (
                 <tr>
                     <td>{idx + 1}</td>
                     <td>Lapangan {val.field.category}</td>
                     <td>{val.field.price}</td>
-                    <td>{val.date}</td>
+                    <td>{tanggal}</td>
                     <td>{val.jam}</td>
-                    <td><ButtonUI type="textual" onClick={() => this.deleteDataHandler(val.id)}>Delete</ButtonUI> </td>
+                    <td> 
+                        <FontAwesomeIcon
+                            className="mt-1 mr-4 ml-3 fontawesome-icon"
+                            icon={faTrashAlt}
+                            style={{ fontSize: 18 }}
+                            onClick={() => this.deleteDataHandler(val.id)}
+                        /> 
+                    </td>
+                    {/* <td><ButtonUI type="textual" onClick={() => this.deleteDataHandler(val.id)}>Delete</ButtonUI> </td> */}
                 </tr>
             )
         })
@@ -88,7 +98,8 @@ class BookingList extends React.Component {
                         this.state.bookingListData.length == 0 ? (
                             <Alert color="primary" className="mt-4">Your cart is empty! <Link to="/">Go Shopping</Link></Alert>
                         ) : 
-                        <div className="table">
+                        <>
+                        <div className="">
                                 <center>
                                     <Table className="table-striped" style={{ width: "80%" }} >
                                         <thead>
@@ -107,8 +118,13 @@ class BookingList extends React.Component {
                                             }
                                         </tbody>
                                     </Table>
+                                    <div className="mt-4">
+                                        <Link to="/booking_details" style={{ color: "inherit", textDecoration: "none"}}><ButtonUI type="contained">Checkout</ButtonUI></Link>  
+                                    </div>
                                 </center>
                         </div>
+                        
+                        </>
                     }
                 </div>
             </div>

@@ -70,6 +70,13 @@ export const logoutHandler = () => {
     };
 };
 
+export const logoutAdminHandler = () => {
+    cookieObj.remove("authData", { path: "/login/admin"});
+    return {
+        type: ON_LOGOUT_SUCCESS,
+    };
+};
+
 export const registerHandler = (userData) => {
     return (dispatch) => {
         const { repPassword, password, username, firstName, lastName, role, address, gender, phone, email, } = userData
@@ -97,6 +104,8 @@ export const registerHandler = (userData) => {
                             address: address,
                             gender: gender,
                             phone: phone,
+                            email: email,
+                            role: role,
                         }
                         )
                             .then((res) => {

@@ -1,0 +1,8 @@
+.fontawesome-icon {
+    cursor: pointer;
+    color: black;
+}
+
+.fontawesome-icon:hover {
+    color: blue;
+}

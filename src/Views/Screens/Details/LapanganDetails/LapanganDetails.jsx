@@ -3,12 +3,19 @@ import Axios from "axios";
 import { API_URL } from "../../../../Constants/API";
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import "./LapanganDetails.css";
-import DatePicker from "react-date-picker";
+// import DatePicker from "react-date-picker";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import { connect } from "react-redux";
 import swal from "sweetalert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRestroom, faToilet, faChargingStation, faTrash, faTrashRestore, faTrashAlt, faMosque, faCashRegister, faClock, faVolleyballBall, faBasketballBall } from "@fortawesome/free-solid-svg-icons";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { faRestroom, faToilet, faChargingStation, faTrashAlt, faMosque, faClock, faVolleyballBall, faBasketballBall, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import ButtonUI from "../../../Components/Buttons/Buttons";
+
+// import DayPicker from 'react-day-picker';
+// import 'react-day-picker/lib/style.css';
 
 class LapanganDetails extends React.Component {
   state = {
@@ -18,20 +25,25 @@ class LapanganDetails extends React.Component {
       price: "",
       category: "",
       image: "",
-      quantity: 0,
+      duration: 0,
       desc:"",
-      jam: "09.00",
+      jam: "",
       date: new Date(),
     },
+    modalOpen: false,
   };
 
-  onChange = (date) =>
+  onChangeDate = (date) =>
     this.setState({
       lapanganDetails: {
         ...this.state.lapanganDetails,
         date: date,
       },
     });
+
+  toggle = () => this.setState({ modalOpen: !this.state.modalOpen });
+
+  toogleClose = () => this.setState({ modalOpen: this.state.modalOpen });
 
   getLapanganDetails = () => {
     let fieldId = this.props.match.params.fieldId;
@@ -63,7 +75,6 @@ class LapanganDetails extends React.Component {
   };
 
   bookingBtnHandler = () => {
-
     // let bookingNumber = Math.floor(Math.random() * 1000000000000000);
     // bookingNumber.toFixed(16)
 
@@ -78,26 +89,27 @@ class LapanganDetails extends React.Component {
         if (res.data.length > 0) {
           swal(
             "Jadwal tidak tersedia",
-            "jadwal yang anda pilih sudah ter-booking atau sudah tidak tersedia. silahkan pilih jadwal yang tersedia di jam atau tanggal lainnya 🙏",
+            "",
             "error"
           );
         } else {
-          Axios.post(`${API_URL}/bookingList`, {
-            userId: this.props.user.id,
-            fieldId: this.state.lapanganDetails.id,
-            quantity: 1,
-            date: this.state.lapanganDetails.date,
-            jam: this.state.lapanganDetails.jam,
-            // kodeBooking: bookingNumber,
-          })
+            Axios.post(`${API_URL}/bookingList`, {
+                userId: this.props.user.id,
+                fieldId: this.state.lapanganDetails.id,
+                duration: 1,
+                date: this.state.lapanganDetails.date,
+                jam: this.state.lapanganDetails.jam,
+                    // kodeBooking: bookingNumber,
+            })
             .then((res) => {
-              console.log(res.data);
-              swal("", "Your item has been add to your cart", "success");
-              // this.props.onFillCart(this.props.user.id);
+                console.log(res.data);
+                swal("", "Your item has been add to your cart", "success");
+                this.toogleClose();
+                        // this.props.onFillCart(this.props.user.id);
             })
             .catch((err) => {
-              console.log(err);
-            });
+                console.log(err);
+            });   
         }
       })
 
@@ -125,7 +137,7 @@ class LapanganDetails extends React.Component {
           <div className="row mt-4">
             <div className="col-7">
               <div className="text-center">
-                <img className="image-lap" src={image} alt="" />
+                <img className="image-detail" src={image} alt="" />
               </div>
             </div>
             <div className="col-5">
@@ -189,13 +201,13 @@ class LapanganDetails extends React.Component {
                       icon={faClock}
                       style={{ fontSize: 30, color: "#003cb3" }}
                     />
-                    {this.state.lapanganDetails.category == "voli" ? (
+                    {this.state.lapanganDetails.category === "voli" ? (
                       <FontAwesomeIcon
                         className="mt-2 ml-4"
                         icon={faVolleyballBall}
                         style={{ fontSize: 30, color: "#003cb3" }}
                       />
-                    ) : this.state.lapanganDetails.category == "basket" ? (
+                    ) : this.state.lapanganDetails.category === "basket" ? (
                       <FontAwesomeIcon
                         className="mt-2 ml-4"
                         icon={faBasketballBall}
@@ -204,12 +216,23 @@ class LapanganDetails extends React.Component {
                     ) : null}
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="book-wrap">
-            <div className="d-flex mt-4">
-              <div className="jadwal-box">
+                <div>
+                  <center>
+                  <input className="button-book mt-4" type="button" value="Booking" onClick={this.toggle}/>
+                  </center>
+                  <Modal isOpen={this.state.modalOpen} toggle={this.toggle}>
+                  <ModalHeader toggle={this.toggle}>
+                    <FontAwesomeIcon
+                        className="mt-2 mr-2"
+                        icon={faCalendarAlt}
+                        style={{ fontSize: 20, color: "inherit" }}
+                      />
+                    Pilih Jadwal 
+                    
+                  </ModalHeader>
+                  <ModalBody>
+                    <div>
+                <div className="jadwal-box">
                 <div className="row ml-1">
                   <div className="col-3 mt-3">
                     <p className="mr-1 ml-1 font-weight-bolder">Tanggal</p>
@@ -219,11 +242,16 @@ class LapanganDetails extends React.Component {
                     <p className="">:</p>
                     <p className="mt-3">:</p>
                   </div>
-                  <div className="col-4 mt-3">
+                  <div className="col-6 mt-3">
                     <DatePicker
-                      onChange={this.onChange}
+                      classNam="ml-5"
+                      selected={this.state.lapanganDetails.date}
+                      onChange={this.onChangeDate}
                       value={this.state.lapanganDetails.date}
                       style={{ color: "#003cb3" }}
+                      dateFormat="dd/MM/yyyy"
+                      minDate={new Date()}
+                      // isClearable={true}
                     />
                     <select
                       value={this.state.lapanganDetails.jam}
@@ -404,14 +432,17 @@ class LapanganDetails extends React.Component {
                     </select>
                   </div>
                 </div>
-              </div>
-              <div className="mt-3 ml-5">
-                <input
-                  className="button-book"
-                  type="button"
-                  value="Booking"
-                  onClick={this.bookingBtnHandler}
-                />
+                </div>
+                    </div>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="primary" onClick={this.bookingBtnHandler}>Booking</Button>{' '}
+                    <Button color="secondary" onClick={this.toggle}>
+                      Close
+                    </Button>
+                  </ModalFooter>
+                </Modal>
+                </div>
               </div>
             </div>
           </div>

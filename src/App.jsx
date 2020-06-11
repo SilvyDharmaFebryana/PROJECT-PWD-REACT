@@ -18,6 +18,10 @@ import LapanganDetails from './Views/Screens/Details/LapanganDetails/LapanganDet
 import LapanganBasket from './Views/Screens/Lapangan/LapanganBasket/LapanganBasket';
 import BookingDetails from './Views/Screens/BookingDetails/BookingDetails';
 import BookingList from './Views/Screens/BookingList/BookingList';
+import Export from './test';
+import AdminLogin from './Views/Screens/Auth/AdminLogin/AdminLogin';
+import AdminDashboard from './Views/Screens/Admin/AdminDashboard/AdminDashboard';
+
 
 const cookieObj = new Cookie();
 
@@ -34,25 +38,45 @@ class App extends React.Component {
 
   render() {
     if (this.props.user.cookieChecked) {
-      return (
-        <>
-          <Navbar />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/auth" component={AuthScreen} />
-            <Route exact path="/login/" component={LoginScreen} />
-            <Route exact path="/register" component={RegisterScreen} />
-            <Route exact path="/voli" component={LapanganVoli} />
-            <Route exact path="/basket" component={LapanganBasket} />
-            <Route exact path="/booking_details" component={BookingDetails} />
-            <Route exact path="/booking_list" component={BookingList} />
-            <Route exact path="/lapangan/:fieldId" component={LapanganDetails} />
-            <Route exact path="/shoes" component={Shoes} />
-            <Route exact path="/kolam" component={Kolam} />
-          </Switch>
-          <div style={{ height: "120px" }} />
-        </>
-      )
+      if (this.props.user.role == "admin") {
+        return (
+          <>
+            <Navbar />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/login/" component={LoginScreen} />
+              <Route exact path="/login/admin" component={AdminLogin} />
+              <Route exact path="/admin/dashboard" component={AdminDashboard} />
+            </Switch>
+            <div style={{ height: "120px" }} />
+          </>
+        )
+      } else {
+        return (
+           <>
+           <Navbar />
+           <Switch>
+             <Route exact path="/" component={Home} />
+             <Route exact path="/login/" component={LoginScreen} />
+             <Route exact path="/register" component={RegisterScreen} />
+             <Route exact path="/voli" component={LapanganVoli} />
+             <Route exact path="/basket" component={LapanganBasket} />
+             <Route exact path="/booking_details" component={BookingDetails} />
+             <Route exact path="/booking_list" component={BookingList} />
+             <Route exact path="/lapangan/:fieldId" component={LapanganDetails} />
+             <Route exact path="/shoes" component={Shoes} />
+             <Route exact path="/kolam" component={Kolam} />
+             <Route exact path="/test" component={Export} />
+ 
+             <Route exact path="/login/admin" component={AdminLogin} />
+             {/* <Route exact path="/admin/dashboard" component={AdminDashboard} /> */}
+ 
+           </Switch>
+           <div style={{ height: "120px" }} />
+         </>
+        )
+      }
+      
     } else {
       return <div>Loading ...</div>
     }
