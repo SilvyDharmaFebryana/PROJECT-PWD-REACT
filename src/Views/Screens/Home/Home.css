@@ -1,3 +1,36 @@
 .home {
     text-align: center;
 }
+
+body {
+    background-color: white !important;
+    background: cover;
+}
+
+.container-admin {
+    height: 300px;
+    width: 90%;
+    background-color: #edf2f8;
+    margin: 22px;
+    margin-top: 40px;
+    /* border: 1px solid black; */
+}
+
+.container-admin:hover {
+    border: 5px solid #336699;
+}
+
+.button {
+    width: 75%;
+    height: 40px;
+    background-color: #336699;
+    color: #e6e6e6;
+    opacity: 20%;
+    border: none;
+    transition: all ease-in-out 200ms;
+}
+
+.button:hover {
+    background-color: #060d13;
+    color: #e6e6e6;
+}
