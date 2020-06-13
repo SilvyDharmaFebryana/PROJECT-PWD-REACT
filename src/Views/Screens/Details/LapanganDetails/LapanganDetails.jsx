@@ -104,7 +104,7 @@ class LapanganDetails extends React.Component {
             .then((res) => {
                 console.log(res.data);
                 swal("", "Your item has been add to your cart", "success");
-                this.toogleClose();
+                this.setState({ modalOpen: false });
                         // this.props.onFillCart(this.props.user.id);
             })
             .catch((err) => {
