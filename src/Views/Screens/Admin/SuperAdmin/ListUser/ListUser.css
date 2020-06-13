@@ -1,0 +1,64 @@
+.button-filter {
+    color: #ecf2f8;
+    border: none;
+    background-color:#2d5986;
+    border-radius: 2px;
+    height: 40px;
+    width: 10%;
+    margin-bottom: 10px;
+}
+
+.button-filter.active {
+    color:  #2d5986;
+    border: none;
+    background-color: #ecf2f8;
+    border-radius: 2px;
+    height: 40px;
+    width: 10%;
+    margin-bottom: 10px;
+}
+
+.add-user {
+    color: #ecf2f8;
+    border: none;
+    background-color:#2d5986;
+    border-radius: 2px;
+    height: 40px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.add-user:hover {
+    color: #ecf2f8;
+    border: none;
+    background-color:#0e1a25;
+}
+
+.icon:hover {
+    cursor: pointer;
+    color: #0e1a25 ;
+}
+
+.text-input-toggle {
+    color:  #2d5986;
+    background-color: #ecf2f8;
+    padding: 11px 16px;
+    border: none;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    border-bottom: 1px solid white;
+    transition: all ease 150ms;
+    /* font-family: Muli; */
+}
+
+.button-edit {
+    color: #ecf2f8;
+    border: none;
+    background-color:#2d5986;
+    border-radius: 2px;
+    height: 40px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
