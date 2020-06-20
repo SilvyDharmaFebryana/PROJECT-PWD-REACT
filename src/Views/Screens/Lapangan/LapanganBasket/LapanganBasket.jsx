@@ -1,9 +1,10 @@
 import React from "react"
 import Axios from "axios";
-import { API_URL } from "../../../../Constants/API";
+// import { API_URL } from "../../../../Constants/API";
 import "./LapanganBasket.css"
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from "react-router-dom";
+import { API_URL } from "../../../../Constants/API";
 
 class LapanganVoli extends React.Component {
 
@@ -12,7 +13,7 @@ class LapanganVoli extends React.Component {
   }
 
   getLapanganBasket = () => {
-    Axios.get(`${API_URL}/fields`, {
+    Axios.get(`${API_URL}/lapangan/basket`, {
       params: {
         category: "basket"
       }
@@ -20,7 +21,6 @@ class LapanganVoli extends React.Component {
       .then((res) => {
         this.setState({ lapanganBasket: res.data })
         console.log(res.data);
-
       })
       .catch((err) => {
         console.log(err)

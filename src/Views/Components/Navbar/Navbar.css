@@ -14,9 +14,10 @@
 }
 
 .navbar-container {
-  width: 100%;
-  /* padding: 100px; */
-  border-bottom: 1px solid #e2e5e6;
+  /* width: 100%; */
+  /* padding: 1px; */
+  border-top: 1px solid #e2e5e6;
+  border-right: none !important;
   -webkit-box-shadow: -1px 2px 5px 0px rgba(117,117,117,1);
   -moz-box-shadow: -1px 2px 5px 0px rgba(117,117,117,1);
   box-shadow: -1px 2px 5px 0px rgba(117,117,117,1);

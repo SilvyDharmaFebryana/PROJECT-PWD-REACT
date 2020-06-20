@@ -1,0 +1,18 @@
+.table-add {
+    margin-left: 50px;
+    /* border: 1px solid black; */
+    width: 75%;
+}
+
+.input-text {
+    color:  #2d5986;
+    background-color: #d8e5f3;
+    padding: 11px 16px;
+    border: none;
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+    border-bottom: 1px solid white;
+    transition: all ease 150ms;
+
+}

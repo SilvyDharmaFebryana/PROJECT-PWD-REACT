@@ -21,6 +21,10 @@ import BookingList from './Views/Screens/BookingList/BookingList';
 import Export from './test';
 import AdminLogin from './Views/Screens/Auth/AdminLogin/AdminLogin';
 import AdminDashboard from './Views/Screens/Admin/AdminDashboard/AdminDashboard';
+import ListUser from './Views/Screens/Admin/SuperAdmin/ListUser/ListUser';
+import AddUser from './Views/Screens/Admin/SuperAdmin/TambahUser/AddUser';
+import AddField from './Views/Screens/Admin/SuperAdmin/TambahField/AddField';
+import LapanganFutsal from './Views/Screens/Lapangan/LapanganFutsal/LapanganFutsal';
 
 
 const cookieObj = new Cookie();
@@ -38,7 +42,7 @@ class App extends React.Component {
 
   render() {
     if (this.props.user.cookieChecked) {
-      if (this.props.user.role == "admin") {
+      if (this.props.user.role == "super_admin") {
         return (
           <>
             <Navbar />
@@ -47,6 +51,8 @@ class App extends React.Component {
               <Route exact path="/login/" component={LoginScreen} />
               <Route exact path="/login/admin" component={AdminLogin} />
               <Route exact path="/admin/dashboard" component={AdminDashboard} />
+              <Route exact path="/admin/list_user" component={ListUser} />
+              <Route exact path="/admin/add_user" component={AddUser} />
             </Switch>
             <div style={{ height: "120px" }} />
           </>
@@ -61,15 +67,18 @@ class App extends React.Component {
              <Route exact path="/register" component={RegisterScreen} />
              <Route exact path="/voli" component={LapanganVoli} />
              <Route exact path="/basket" component={LapanganBasket} />
+             <Route exact path="/futsal" component={LapanganFutsal} />
              <Route exact path="/booking_details" component={BookingDetails} />
              <Route exact path="/booking_list" component={BookingList} />
              <Route exact path="/lapangan/:fieldId" component={LapanganDetails} />
              <Route exact path="/shoes" component={Shoes} />
              <Route exact path="/kolam" component={Kolam} />
              <Route exact path="/test" component={Export} />
- 
+
              <Route exact path="/login/admin" component={AdminLogin} />
-             {/* <Route exact path="/admin/dashboard" component={AdminDashboard} /> */}
+
+
+             <Route exact path="/admin/add_field" component={AddField} />
  
            </Switch>
            <div style={{ height: "120px" }} />

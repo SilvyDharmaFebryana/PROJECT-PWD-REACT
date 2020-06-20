@@ -12,7 +12,8 @@ import swal from "sweetalert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { faRestroom, faToilet, faChargingStation, faTrashAlt, faMosque, faClock, faVolleyballBall, faBasketballBall, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
-import ButtonUI from "../../../Components/Buttons/Buttons";
+// import ButtonUI from "../../../Components/Buttons/Buttons";
+import { faFutbol } from "@fortawesome/free-regular-svg-icons";
 
 // import DayPicker from 'react-day-picker';
 // import 'react-day-picker/lib/style.css';
@@ -26,8 +27,8 @@ class LapanganDetails extends React.Component {
       category: "",
       image: "",
       duration: 0,
-      desc:"",
-      jam: "",
+      description:"",
+      time: "",
       date: new Date(),
     },
     modalOpen: false,
@@ -48,16 +49,14 @@ class LapanganDetails extends React.Component {
   getLapanganDetails = () => {
     let fieldId = this.props.match.params.fieldId;
 
-    Axios.get(`${API_URL}/fields/${fieldId}`)
-      .then((res) => {
-        console.log(res.data);
-        this.setState({
-          lapanganDetails: res.data,
+    Axios.get(`${API_URL}/lapangan/${fieldId}`)
+        .then((res) => {
+            console.log(res.data);
+            this.setState({ lapanganDetails: res.data });
+        })
+        .catch((err) => {
+            console.log(err);
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
   componentDidMount() {
@@ -81,11 +80,11 @@ class LapanganDetails extends React.Component {
     Axios.get(`${API_URL}/bookingList`, {
       params: {
         date: this.state.lapanganDetails.date,
-        jam: this.state.lapanganDetails.jam
+        time: this.state.lapanganDetails.time
       },
     })
     
-      .then((res) => {
+      .then((res) => {  
         if (res.data.length > 0) {
           swal(
             "Jadwal tidak tersedia",
@@ -98,7 +97,7 @@ class LapanganDetails extends React.Component {
                 fieldId: this.state.lapanganDetails.id,
                 duration: 1,
                 date: this.state.lapanganDetails.date,
-                jam: this.state.lapanganDetails.jam,
+                time: this.state.lapanganDetails.time,
                     // kodeBooking: bookingNumber,
             })
             .then((res) => {
@@ -121,7 +120,7 @@ class LapanganDetails extends React.Component {
   };
 
   render() {
-    const { image, price, type, category, desc } = this.state.lapanganDetails;
+    const { image, price, type, category, description } = this.state.lapanganDetails;
 
     return (
       <div className="color-text">
@@ -157,14 +156,14 @@ class LapanganDetails extends React.Component {
                       style: "currency",
                       currency: "IDR",
                     }).format(price)}{" "}
-                    / <p className="small">{"   "}jam</p>
+                    / <p className="small">{"   "}Jam</p>
                   </h4>
                 </span>
                 <div className="mt-4">
                   <p className="font-weight-bolder" style={{ color: "grey" }}>
                     Deskripsi
                   </p>
-                  <p className="mt-2 align-jus">{desc}</p>
+                  <p className="mt-2 align-jus">{description}</p>
                 </div>
                 <div className="mt-4">
                   <p className="font-weight-bolder" style={{ color: "grey" }}>
@@ -213,6 +212,12 @@ class LapanganDetails extends React.Component {
                         icon={faBasketballBall}
                         style={{ fontSize: 30, color: "#003cb3" }}
                       />
+                    ) : this.state.lapanganDetails.category === "futsal" ? (
+                      <FontAwesomeIcon
+                        className="mt-2 ml-4"
+                        icon={faFutbol}
+                        style={{ fontSize: 30, color: "#003cb3" }}
+                      />
                     ) : null}
                   </div>
                 </div>
@@ -254,10 +259,10 @@ class LapanganDetails extends React.Component {
                       // isClearable={true}
                     />
                     <select
-                      value={this.state.lapanganDetails.jam}
+                      value={this.state.lapanganDetails.time}
                       className="custom-text-input mt-1"
                       onChange={(e) =>
-                        this.inputHandler(e, "jam", "lapanganDetails")
+                        this.inputHandler(e, "time", "lapanganDetails")
                       }
                     >
                       <option
@@ -265,7 +270,7 @@ class LapanganDetails extends React.Component {
                           this.setState({
                             lapanganDetails: {
                               ...this.state.lapanganDetails,
-                              jam: "09.00",
+                              time: "09.00",
                             },
                           })
                         }
@@ -278,7 +283,7 @@ class LapanganDetails extends React.Component {
                           this.setState({
                             lapanganDetails: {
                               ...this.state.lapanganDetails,
-                              jam: "10.00",
+                              time: "10.00",
                             },
                           })
                         }
@@ -291,7 +296,7 @@ class LapanganDetails extends React.Component {
                           this.setState({
                             lapanganDetails: {
                               ...this.state.lapanganDetails,
-                              jam: "11.00",
+                              time: "11.00",
                             },
                           })
                         }
@@ -304,7 +309,7 @@ class LapanganDetails extends React.Component {
                           this.setState({
                             lapanganDetails: {
                               ...this.state.lapanganDetails,
-                              jam: "13.00",
+                              time: "13.00",
                             },
                           })
                         }
@@ -317,7 +322,7 @@ class LapanganDetails extends React.Component {
                           this.setState({
                             lapanganDetails: {
                               ...this.state.lapanganDetails,
-                              jam: "14.00",
+                              time: "14.00",
                             },
                           })
                         }
@@ -330,7 +335,7 @@ class LapanganDetails extends React.Component {
                           this.setState({
                             lapanganDetails: {
                               ...this.state.lapanganDetails,
-                              jam: "15.00",
+                              time: "15.00",
                             },
                           })
                         }
@@ -343,7 +348,7 @@ class LapanganDetails extends React.Component {
                           this.setState({
                             lapanganDetails: {
                               ...this.state.lapanganDetails,
-                              jam: "16.00",
+                              time: "16.00",
                             },
                           })
                         }
@@ -356,7 +361,7 @@ class LapanganDetails extends React.Component {
                           this.setState({
                             lapanganDetails: {
                               ...this.state.lapanganDetails,
-                              jam: "17.00",
+                              time: "17.00",
                             },
                           })
                         }
@@ -369,7 +374,7 @@ class LapanganDetails extends React.Component {
                           this.setState({
                             lapanganDetails: {
                               ...this.state.lapanganDetails,
-                              jam: "19.00",
+                              time: "19.00",
                             },
                           })
                         }
@@ -382,7 +387,7 @@ class LapanganDetails extends React.Component {
                           this.setState({
                             lapanganDetails: {
                               ...this.state.lapanganDetails,
-                              jam: "20.00",
+                              time: "20.00",
                             },
                           })
                         }
@@ -395,7 +400,7 @@ class LapanganDetails extends React.Component {
                           this.setState({
                             lapanganDetails: {
                               ...this.state.lapanganDetails,
-                              jam: "21.00",
+                              time: "21.00",
                             },
                           })
                         }
@@ -408,7 +413,7 @@ class LapanganDetails extends React.Component {
                           this.setState({
                             lapanganDetails: {
                               ...this.state.lapanganDetails,
-                              jam: "22.00",
+                              time: "22.00",
                             },
                           })
                         }
@@ -421,7 +426,7 @@ class LapanganDetails extends React.Component {
                           this.setState({
                             lapanganDetails: {
                               ...this.state.lapanganDetails,
-                              jam: "23.00",
+                              time: "23.00",
                             },
                           })
                         }

@@ -1,24 +1,24 @@
 import React from "react"
 import Axios from "axios";
 import { API_URL } from "../../../../Constants/API";
-import "./LapanganVoli.css"
+import "./LapanganFutsal.css"
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from "react-router-dom";
 
-class LapanganVoli extends React.Component {
+class LapanganFutsal extends React.Component {
 
     state = {
-        lapanganVoli: [],
+        lapanganFutsal: [],
     }
 
     getLapanganVoli = () => {
-        Axios.get(`${API_URL}/lapangan/voli`, {
+        Axios.get(`${API_URL}/lapangan/futsal`, {
             params : {
-                category: "voli"
+                category: "futsal"
             }
         })
             .then((res) => {
-                this.setState({ lapanganVoli: res.data })
+                this.setState({ lapanganFutsal: res.data })
                 console.log(res.data);
                 
             })
@@ -32,7 +32,7 @@ class LapanganVoli extends React.Component {
     }
 
     renderLapangan = () => {
-        return this.state.lapanganVoli.map((val) => {
+        return this.state.lapanganFutsal.map((val) => {
             return (
                 <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}>
                 <div className={`kolam-card d-inline-block ml-4 mt-4`}>
@@ -67,7 +67,7 @@ class LapanganVoli extends React.Component {
             <div>
                 <div className="mt-1">
                     <Breadcrumb>
-                        <BreadcrumbItem active>  <h5 className="font-weight-bolder m-1" > LAPANGAN VOLI </h5></BreadcrumbItem>
+                        <BreadcrumbItem active>  <h5 className="font-weight-bolder m-1" > LAPANGAN FUTSAL </h5></BreadcrumbItem>
                     </Breadcrumb>
                 </div>
                 <div className="container" >
@@ -83,4 +83,4 @@ class LapanganVoli extends React.Component {
     }
 }
 
-export default LapanganVoli;
+export default LapanganFutsal;
