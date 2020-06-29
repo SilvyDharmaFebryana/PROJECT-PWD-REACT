@@ -79,9 +79,9 @@ export const logoutAdminHandler = () => {
 
 export const registerHandler = (userData) => {
     return (dispatch) => {
-        const { repPassword, password, username, firstName, lastName, role, address, gender, phone, email, } = userData
+        const { repPassword, password, username, firstname, lastname, role, address, gender, phoneNumber, email, } = userData
 
-        Axios.get(`${API_URL}/users`, {
+        Axios.get(`${API_URL}/users/username`, {
             params: {
                 username: userData.username,
             },
@@ -98,12 +98,12 @@ export const registerHandler = (userData) => {
                             username: username,
                             password: password,
                             role: role,
-                            firstName: firstName,
-                            lastName: lastName,
-                            fullName: firstName + ' ' + lastName,
+                            firstname: firstname,
+                            lastname: lastname,
+                            fullname: firstname + ' ' + lastname,
                             address: address,
                             gender: gender,
-                            phone: phone,
+                            phoneNumber: phoneNumber,
                             email: email,
                             role: role,
                         }
