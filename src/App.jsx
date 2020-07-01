@@ -41,7 +41,7 @@ class App extends React.Component {
   }
 
   render() {
-    if (this.props.user.cookieChecked) {
+    // if (this.props.user.cookieChecked) {
       if (this.props.user.role == "super_admin") {
         return (
           <>
@@ -53,6 +53,7 @@ class App extends React.Component {
               <Route exact path="/admin/dashboard" component={AdminDashboard} />
               <Route exact path="/admin/list_user" component={ListUser} />
               <Route exact path="/admin/add_user" component={AddUser} />
+              <Route exact path="/admin/add_field" component={AddField} />  
             </Switch>
             <div style={{ height: "120px" }} />
           </>
@@ -77,18 +78,14 @@ class App extends React.Component {
 
              <Route exact path="/login/admin" component={AdminLogin} />
 
-
-             <Route exact path="/admin/add_field" component={AddField} />
- 
            </Switch>
            <div style={{ height: "120px" }} />
          </>
         )
-      }
-      
-    } else {
-      return <div>Loading ...</div>
-    }
+      }  
+    // } else {
+    //   return <div>Loading ...</div>
+    // }
   }
 }
 

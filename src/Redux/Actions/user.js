@@ -10,55 +10,64 @@ const cookieObj = new Cookie();
 
 export const loginHandler = (userData) => {
     return (dispatch) => {
-        const { username, password } = userData;
+        // const { username, password } = userData;
 
-        Axios.get(`${API_URL}/users`, {
+        Axios.get(`${API_URL}/users/login`, {
             params: {
-                username,
-                password,
-            },
+                username: userData.username,
+                password: userData.password
+            }  
         })
             .then((res) => {
-                if (res.data.length > 0) {
+                console.log(res.data);       
+                // if (res.data) {
                     dispatch({
                         type: ON_LOGIN_SUCCESS,
-                        payload: res.data[0],
+                        payload: res.data,
                     });
-                } else {
-                    dispatch({
-                        type: ON_LOGIN_FAIL,
-                        payload: "Username atau password salah",
-                    });
-                }
+                // } else {
+                //     dispatch({
+                //         type: ON_LOGIN_FAIL,
+                //         payload: "Username atau password salah",
+                //     });
+                // }
             })
             .catch((err) => {
                 console.log(err);
-            });
-    };
+                dispatch({
+                    type: ON_LOGIN_FAIL,
+                    payload: "Username atau password salah",
+                    })
+            })
+        }
 };
 
 export const userKeepLogin = (userData) => {
     return (dispatch) => {
-        Axios.get(`${API_URL}/users`, {
+        Axios.get(`${API_URL}/users/login/byId`, {
             params: {
                 id: userData.id,
             },
         })
             .then((res) => {
-                if (res.data.length > 0) {
+                // if (res.data.length > 0) {
                     dispatch({
                         type: ON_LOGIN_SUCCESS,
-                        payload: res.data[0],
+                        payload: res.data,
                     });
-                } else {
-                    dispatch({
-                        type: ON_LOGIN_FAIL,
-                        payload: "Username atau password salah",
-                    });
-                }
+                // } else {
+                    // dispatch({
+                    //     type: ON_LOGIN_FAIL,
+                    //     payload: "Username atau password salah",
+                    // });
+                // }
             })
             .catch((err) => {
                 console.log(err);
+                dispatch({
+                    type: ON_LOGIN_FAIL,
+                    payload: "Username atau password salah",
+                });
             });
     };
 };
@@ -106,8 +115,7 @@ export const registerHandler = (userData) => {
                             phoneNumber: phoneNumber,
                             email: email,
                             role: role,
-                        }
-                        )
+                        })
                             .then((res) => {
                                     console.log(res.data);
                                 dispatch({

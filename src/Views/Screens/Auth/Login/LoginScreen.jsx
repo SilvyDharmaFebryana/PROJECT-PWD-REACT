@@ -19,9 +19,9 @@ class LoginScreen extends React.Component {
     passwordFocused: false,
     loginForm: {
       username: "",
-      password: "",
-      showPassword: false,
+      password: ""
     },
+    showPassword: false,
   };
 
   componentDidUpdate() {
@@ -48,12 +48,12 @@ class LoginScreen extends React.Component {
 
   loginBtnHandler = () => {
     const { username, password } = this.state.loginForm;
-    let newUser = {
+    let userData = {
       username,
       password,
     };
 
-    this.props.onLogin(newUser);
+    this.props.onLogin(userData);
   };
 
   checkboxHandler = (e, form) => {

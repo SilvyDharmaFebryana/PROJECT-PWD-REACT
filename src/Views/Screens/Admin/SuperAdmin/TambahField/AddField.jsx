@@ -72,7 +72,7 @@ class AddField extends React.Component {
             <div>
             <div className="mt-1">
                 <Breadcrumb>
-                    <BreadcrumbItem active>  <h5 className="font-weight-bolder m-1" > ADD USER </h5></BreadcrumbItem>
+                    <BreadcrumbItem active>  <h5 className="font-weight-bolder m-1" > ADD FIELD </h5></BreadcrumbItem>
                 </Breadcrumb>
             </div>
 

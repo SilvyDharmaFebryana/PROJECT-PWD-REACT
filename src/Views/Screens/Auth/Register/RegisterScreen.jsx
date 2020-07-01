@@ -12,12 +12,12 @@ class RegisterScreen extends React.Component {
   state = {
     registerForm: {
       username: "",
-      fullName: "",
-      firstName: "",
-      lastName: "",
+      fullname: "",
+      firstname: "",
+      lastname: "",
       email: "",
       gender: "female",
-      phone: "",
+      phoneNumber: "",
       password: "",
       repPassword: "",
       address: "",
@@ -51,12 +51,12 @@ class RegisterScreen extends React.Component {
   registerBtnHandler = () => {
     const {
       username,
-      fullName,
+      fullname,
       password,
       email,
-      lastName,
-      firstName,
-      phone,
+      lastname,
+      firstname,
+      phoneNumber,
       gender,
       repPassword,
       address,
@@ -66,12 +66,12 @@ class RegisterScreen extends React.Component {
 
     let userData = {
       username,
-      fullname: firstName + " " + lastName,
+      fullname: firstname + " " + lastname,
       password,
       email,
-      lastName,
-      firstName,
-      phone: 62 + phone,
+      lastname,
+      firstname,
+      phoneNumber: 62 + phoneNumber,
       gender,
       repPassword,
       address,
@@ -114,17 +114,17 @@ class RegisterScreen extends React.Component {
                   <TextField
                     placeholder="First Name"
                     className="mt-2"
-                    value={this.state.registerForm.firstName}
+                    value={this.state.registerForm.firstname}
                     onChange={(e) =>
-                      this.inputHandler(e, "firstName", "registerForm")
+                      this.inputHandler(e, "firstname", "registerForm")
                     }
                   />
                   <TextField
                     placeholder="Last Name"
                     className="mt-2"
-                    value={this.state.registerForm.lastName}
+                    value={this.state.registerForm.lastname}
                     onChange={(e) =>
-                      this.inputHandler(e, "lastName", "registerForm")
+                      this.inputHandler(e, "lastname", "registerForm")
                     }
                   />
                   <TextField
@@ -207,9 +207,9 @@ class RegisterScreen extends React.Component {
                     <TextField
                       placeholder="Phone"
                       className="mt-2"
-                      value={this.state.registerForm.phone}
+                      value={this.state.registerForm.phoneNumber}
                       onChange={(e) =>
-                        this.inputHandler(e, "phone", "registerForm")
+                        this.inputHandler(e, "phoneNumber", "registerForm")
                       }
                     />
                   </div>

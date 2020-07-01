@@ -82,6 +82,7 @@ class Home extends React.Component {
                                     />
                                 </div>
                                 <div>
+                                    <Link to="/admin/add_field" style={{ textDecoration: "none", color: "inherit"}}>
                                     <button className="mt-4 button">
                                         <FontAwesomeIcon
                                             className="mt-1 mr-2"
@@ -89,10 +90,11 @@ class Home extends React.Component {
                                             style={{ fontSize: 16, color: "white" }}
                                         /> Add Field
                                     </button>
+                                    </Link>
                                 </div>
                                 <div>
                                     <button className="mt-2 button">
-                                        List User
+                                        List Field
                                     </button>
                                 </div>
                             </div>

@@ -58,7 +58,6 @@ class ListUser extends React.Component {
                     this.getUserList()
                     this.getAllUserList()
                     this.getAdminList()
-    
                 })
                 
                 .catch((err) => {
