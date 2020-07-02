@@ -15,8 +15,6 @@ import { faRestroom, faToilet, faChargingStation, faTrashAlt, faMosque, faClock,
 // import ButtonUI from "../../../Components/Buttons/Buttons";
 import { faFutbol } from "@fortawesome/free-regular-svg-icons";
 
-// import DayPicker from 'react-day-picker';
-// import 'react-day-picker/lib/style.css';
 
 class LapanganDetails extends React.Component {
   state = {
@@ -51,8 +49,10 @@ class LapanganDetails extends React.Component {
 
     Axios.get(`${API_URL}/lapangan/${fieldId}`)
         .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             this.setState({ lapanganDetails: res.data });
+            console.log(this.state.lapanganDetails.id);
+            
         })
         .catch((err) => {
             console.log(err);
@@ -60,7 +60,9 @@ class LapanganDetails extends React.Component {
   };
 
   componentDidMount() {
-    this.getLapanganDetails();
+    this.getLapanganDetails();  
+    // console.log(this.props.user.id);
+      
   }
 
   inputHandler = (e, field, form) => {
@@ -77,13 +79,12 @@ class LapanganDetails extends React.Component {
     // let bookingNumber = Math.floor(Math.random() * 1000000000000000);
     // bookingNumber.toFixed(16)
 
-    Axios.get(`${API_URL}/bookingList`, {
+    Axios.get(`${API_URL}/bField/check/`, {
       params: {
         date: this.state.lapanganDetails.date,
         time: this.state.lapanganDetails.time
       },
     })
-    
       .then((res) => {  
         if (res.data.length > 0) {
           swal(
@@ -92,19 +93,20 @@ class LapanganDetails extends React.Component {
             "error"
           );
         } else {
-            Axios.post(`${API_URL}/bookingList`, {
-                userId: this.props.user.id,
-                fieldId: this.state.lapanganDetails.id,
+          
+          let fieldId = this.state.lapanganDetails.id
+          let userId =  this.props.user.id
+
+            Axios.post(`${API_URL}/bField/${fieldId}/${userId}`, {
                 duration: 1,
                 date: this.state.lapanganDetails.date,
                 time: this.state.lapanganDetails.time,
-                    // kodeBooking: bookingNumber,
             })
             .then((res) => {
                 console.log(res.data);
                 swal("", "Your item has been add to your cart", "success");
                 this.setState({ modalOpen: false });
-                        // this.props.onFillCart(this.props.user.id);
+                // this.props.onFillCart(this.props.user.id);
             })
             .catch((err) => {
                 console.log(err);

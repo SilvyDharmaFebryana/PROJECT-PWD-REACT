@@ -20,10 +20,9 @@ class BookingList extends React.Component {
     }
 
     getBookingList = () => {
-        Axios.get(`${API_URL}/bookingList`, {
+        Axios.get(`${API_URL}/bField/user/`, {
             params: {
-                userId: this.props.user.id,
-                _expand: "field"
+                user_id: this.props.user.id,
             }
         })
         .then((res) => {
@@ -38,12 +37,14 @@ class BookingList extends React.Component {
 
     componentDidMount() {
         this.getBookingList()
+        console.log(this.props.user.id);
+        
     }
 
     deleteDataHandler = (id) => {
-        Axios.delete(`${API_URL}/bookingList/${id}`)
+        Axios.delete(`${API_URL}/bField/${id}`)
             .then((res) => {
-                this.getBookingList()
+                this.getBookingList()   
                 // this.props.onFillCart(this.props.user.id);
             })
             .catch((err) => {
@@ -54,14 +55,14 @@ class BookingList extends React.Component {
     renderBookingList = () => {
         return this.state.bookingListData.map((val, idx) => {
             let tanggal = val.date.split("T")[0]
-            // let tanggalBooking = tanggal[tanggal.length - 1] + 1
+
             return (
                 <tr>
                     <td>{idx + 1}</td>
                     <td>Lapangan {val.field.category}</td>
                     <td>{val.field.price}</td>
                     <td>{tanggal}</td>
-                    <td>{val.jam}</td>
+                    <td>{val.time}</td>
                     <td> 
                         <FontAwesomeIcon
                             className="mt-1 mr-4 ml-3 fontawesome-icon"
@@ -70,7 +71,6 @@ class BookingList extends React.Component {
                             onClick={() => this.deleteDataHandler(val.id)}
                         /> 
                     </td>
-                    {/* <td><ButtonUI type="textual" onClick={() => this.deleteDataHandler(val.id)}>Delete</ButtonUI> </td> */}
                 </tr>
             )
         })

@@ -43,13 +43,14 @@ class BookingDetails extends React.Component {
         let allTotalJam = 0
         let subTotal = 0
 
-        Axios.get(`${API_URL}/bookingList`, {
+        Axios.get(`${API_URL}/bField/user/`, {
             params: {
-                userId: this.props.user.id,
-                _expand: "field"
+                user_id: this.props.user.id,
             }
         })
         .then((res) => {
+            console.log(res.data);
+            
             res.data.map((val) => {
                 const { duration, field } = val
                 const { price } = field
@@ -60,9 +61,9 @@ class BookingDetails extends React.Component {
                 bookingTransaction: {
                     ...this.state.bookingTransaction,
                     userId: this.props.user.id,
-                    fullName: this.props.user.firstName + " " + this.props.user.lastName,
+                    fullName: this.props.user.firstname + " " + this.props.user.lastname,
                     gender: this.props.user.gender,
-                    phoneNumber: this.props.user.phone,
+                    phoneNumber: this.props.user.phoneNumber,
                     email: this.props.user.email,
                     dateOfCheckout: new Date().toLocaleString(),
                     totalDuration: allTotalJam,
@@ -80,9 +81,19 @@ class BookingDetails extends React.Component {
         })
     }
 
+    deleteDataHandler = (id) => {
+        Axios.delete(`${API_URL}/bField/${id}`)
+            .then((res) => {
+                this.getBookingList()   
+                // this.props.onFillCart(this.props.user.id);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
 
     checkoutBookingButtonHandler = () => {
-
         let bookingNumber = Math.floor(Math.random() * 1000000000000000);
         bookingNumber.toFixed(16)
 
@@ -130,17 +141,6 @@ class BookingDetails extends React.Component {
         this.getBookingListHandler()
     }
 
-
-    deleteDataHandler = (id) => {
-        Axios.delete(`${API_URL}/bookingList/${id}`)
-            .then((res) => {
-                this.getBookingList()
-                // this.props.onFillCart(this.props.user.id);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
 
     render() {
         return (
