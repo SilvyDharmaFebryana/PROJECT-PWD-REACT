@@ -25,6 +25,7 @@ import ListUser from './Views/Screens/Admin/SuperAdmin/ListUser/ListUser';
 import AddUser from './Views/Screens/Admin/SuperAdmin/TambahUser/AddUser';
 import AddField from './Views/Screens/Admin/SuperAdmin/TambahField/AddField';
 import LapanganFutsal from './Views/Screens/Lapangan/LapanganFutsal/LapanganFutsal';
+import Checkout from './Views/Screens/Checkout/Checkout';
 
 
 const cookieObj = new Cookie();
@@ -41,7 +42,7 @@ class App extends React.Component {
   }
 
   render() {
-    // if (this.props.user.cookieChecked) {
+    if (this.props.user.cookieChecked) {
       if (this.props.user.role == "super_admin") {
         return (
           <>
@@ -75,17 +76,17 @@ class App extends React.Component {
              <Route exact path="/shoes" component={Shoes} />
              <Route exact path="/kolam" component={Kolam} />
              <Route exact path="/test" component={Export} />
+             <Route exact path="/checkout" component={Checkout} />
 
              <Route exact path="/login/admin" component={AdminLogin} />
 
            </Switch>
            <div style={{ height: "120px" }} />
          </>
-        )
-      }  
-    // } else {
-    //   return <div>Loading ...</div>
-    // }
+        )}
+    } else {
+      return <div>Loading ...</div>
+    }
   }
 }
 

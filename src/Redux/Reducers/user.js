@@ -10,7 +10,7 @@ const init_state = {
     lastname: "",
     email: "",
     gender: "",
-    phone: "",
+    phoneNumber: "",
     password: "",
     repPassword: "",
     address: "",
@@ -22,14 +22,14 @@ const init_state = {
 export default (state = init_state, action) => {
     switch (action.type) {
         case ON_LOGIN_SUCCESS:
-            const { username, fullname, role, id, password, cookieChecked, firstname, lastname, phone, address, repPassword, gender, email } = action.payload;
+            const { username, fullname, role, id, password, cookieChecked, firstname, lastname, phoneNumber, address, repPassword, gender, email } = action.payload;
             return {
                 ...state,
                 username,
                 password,
                 firstname,
                 lastname,
-                phone,
+                phoneNumber,
                 address,
                 gender,
                 email,

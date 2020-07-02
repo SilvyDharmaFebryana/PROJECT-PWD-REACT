@@ -68,7 +68,7 @@ class Navbar extends React.Component {
                           to="/history"
                         >
                           Cart
-                  </Link>
+                        </Link>
                       </DropdownItem>
                       <DropdownItem>
                         <Link

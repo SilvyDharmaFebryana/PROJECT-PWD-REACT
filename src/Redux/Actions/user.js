@@ -20,24 +20,17 @@ export const loginHandler = (userData) => {
         })
             .then((res) => {
                 console.log(res.data);       
-                // if (res.data) {
-                    dispatch({
-                        type: ON_LOGIN_SUCCESS,
-                        payload: res.data,
-                    });
-                // } else {
-                //     dispatch({
-                //         type: ON_LOGIN_FAIL,
-                //         payload: "Username atau password salah",
-                //     });
-                // }
+                dispatch({
+                    type: ON_LOGIN_SUCCESS,
+                    payload: res.data,
+                });
             })
             .catch((err) => {
                 console.log(err);
                 dispatch({
                     type: ON_LOGIN_FAIL,
                     payload: "Username atau password salah",
-                    })
+                })
             })
         }
 };

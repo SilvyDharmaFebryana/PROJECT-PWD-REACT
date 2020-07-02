@@ -19,68 +19,81 @@
 }
 
 .custom-btn:hover {
+  font-family: Balsamiq Sans;
   cursor: pointer;
 }
 
 .custom-btn-outlined {
   border: 1px solid var(--accent-default);
   color: var(--accent-default);
+  font-family: Balsamiq Sans;
 }
 
 .custom-btn-outlined:hover {
   border: 1px solid var(--accent-light);
   color: var(--accent-light);
+  font-family: Balsamiq Sans;
 }
 
 .custom-btn-outlined:active {
   border: 1px solid var(--accent-dark);
   color: var(--accent-dark);
+  font-family: Balsamiq Sans;
 }
 
 .custom-btn-contained {
   border: 1px solid var(--accent-default);
   background-color: var(--accent-default);
   color: white;
+  font-family: Balsamiq Sans;
 }
 
 .custom-btn-contained:hover {
   border: 1px solid var(--accent-light);
-  background-color: var(--accent-light);
-  color: white;
+  background-color: white;
+  color: var(--accent-dark);
+  font-family: Balsamiq Sans;
 }
 
 .custom-btn-contained:active {
   border: 1px solid var(--accent-dark);
   background-color: var(--accent-dark);
   color: white;
+  font-family: Balsamiq Sans;
 }
 
 .custom-btn-textual {
   color: var(--accent-default);
   padding: 0 !important;
+  font-family: Balsamiq Sans;
 }
 
 .custom-btn-textual:hover {
   color: var(--accent-light);
+  font-family: Balsamiq Sans;
 }
 
 .custom-btn-textual:active {
   color: var(--accent-dark);
+  font-family: Balsamiq Sans;
 }
 
 .custom-btn-auth {
   border: 1px solid #E2E5E6;
   color: #373F41;
+  font-family: Balsamiq Sans;
 }
 
 .custom-btn-auth:hover {
   border: 1px solid #373F41;
   background-color: #373F41;
   color: #FFFFFF;
+  font-family: Balsamiq Sans;
 }
 
 .custom-btn-auth:active {
   border: 1px solid #E2E5E6;
   color: #373F41;
+  font-family: Balsamiq Sans;
 }
 
