@@ -1,0 +1,8 @@
+.wrap {
+    margin: 30px;
+    height: 600px;
+}
+
+th {
+    background-color: none !important;
+}

@@ -11,6 +11,7 @@ import { faBookReader, faListOl, faListUl } from "@fortawesome/free-solid-svg-ic
 import { UncontrolledCollapse, Button, CardBody, Card, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Table, Alert } from 'reactstrap';
 import { Link, Redirect } from "react-router-dom";
+import { WaveTopBottomLoading  } from 'react-loadingg';
 
 
 class BookingDetails extends React.Component {
@@ -45,8 +46,9 @@ class BookingDetails extends React.Component {
         totalBayar: 0,
         idTrans: 0,
         willRedirect: false,
+        totalPaket: 0,
+        jenisPaket: 0,
 
-        
     }
 
 
@@ -114,7 +116,6 @@ class BookingDetails extends React.Component {
 
 
     checkoutBookingButtonHandler = () => {
-        
        
         let userId =  this.props.user.id
 
@@ -122,7 +123,7 @@ class BookingDetails extends React.Component {
             noPesanan: new Date().getTime(),
             checkoutDate: new Date().toLocaleString(),
             paymentMethod: this.state.bookingTransaction.paymentMethod,
-            status: "pending",
+            status: "noPayment",
             totalDuration: this.state.bookingTransaction.totalDuration,
             totalPrice: this.state.bookingTransaction.totalPrice
         })
@@ -131,7 +132,6 @@ class BookingDetails extends React.Component {
             console.log(res.data.id);
             
             this.state.listBookingItem.forEach((val) => {
-                
                 let fieldId = val.field.id
                 let fieldTransactionId = res.data.id
                 let bookingNumber = Math.floor(Math.random() * 1000000000000000);
@@ -160,7 +160,11 @@ class BookingDetails extends React.Component {
                 this.deleteDataHandler(val.id)
                 this.renderDetails()
             })
-            swal("succes")
+            swal (
+                "Transaksi Sukses",
+                "Transaksi anda sukses di proses",
+                "success",
+            )
         })
         .catch((err) => {
             console.log(err);
@@ -177,21 +181,36 @@ class BookingDetails extends React.Component {
     renderDetails = () => {
         return this.state.listBookingItem.map((val) => {
             return (
-            <tbody>
-                <tr>
+                <tr style={{ height: "150px", fontSize: "13px", border: "solid 2px lightgray" }}>
+                    <th className="th-tbl" style={{ width:"30%" }}>
+                        <img className="mt-1" style={{ width: "100%" }} src={val.field.image} alt="" srcset=""/>
+                        <h6 className="text-center mt-3" style={{ fontSize: "14px" }}>{val.field.fieldName}</h6>
+                    </th>
+                    
                     <td>
-                        <img src={val.field.image} style={{ width: "100px" }} />
+                        <tr style={{ height: "5px" }}>
+                            <td>Tanggal Booking</td>
+                            <td>:</td>
+                            <td>{val.date}</td>
+                        </tr>
+                        <tr style={{ height: "5px" }}>
+                            <td>Jam Booking</td>
+                            <td>:</td>
+                            <td>{val.time}</td>
+                        </tr>
+                        <tr style={{ height: "5px" }}>
+                            <td>Durasi</td>
+                            <td>:</td>
+                            <td>{val.duration} jam</td>
+                        </tr>
+                        <tr style={{ height: "5px" }}>
+                            <td>Total</td>
+                            <td>:</td>
+                            <td>{val.field.price}</td>
+                        </tr>
                     </td>
-                    <td>{val.field.category}</td>
-                    <td>{val.field.type}</td>
-                    <td>{val.date}</td>
-                    <td>{val.time}</td>
-                    <td>{val.field.price}</td>
-                    <td>x</td>
-                    <td>{val.duration} /jam</td>
-                    <td>{val.duration * val.field.price}</td>
                 </tr>
-            </tbody>
+         
             )
         })
     }
@@ -216,74 +235,69 @@ class BookingDetails extends React.Component {
                         </BreadcrumbItem>
                     </Breadcrumb>
                 </div>
-                <div>
-                        <center>
-                            <div>
+                <div className="row">
+                        <div className="col-7">
+                            <div className="ml-3 mt-2">
                                 <Table bordered>
-                                    <tr>
-                                        <th>Nama Pemesan</th>
-                                        <td>{this.state.bookingTransaction.fullName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Email</th>
-                                        <td>{this.state.bookingTransaction.email}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>No Tlp</th>
-                                        <td>+{this.state.bookingTransaction.phoneNumber}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total Bayar</th>
-                                        <td>{this.state.bookingTransaction.totalPrice}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Metode Pembayaran</th>
-                                        <td>
-                                            <select 
-                                                style={{ border: "none", width: "50%"}}   
-                                                onChange={(e) => this.inputHandler(e, "paymentMethod", "bookingTransaction")}
-                                            >
-                                                <option value="transfer">Transfer Bank</option>
-                                                <option value="onthespot">On the Spot</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    
+                                        {
+                                            this.renderDetails()
+                                        }
                                 </Table>
-                                <div>
-                                <h6 className="detail" color="primary" id="toggler" style={{ marginBottom: '1rem' }}>Lihat Detail</h6>
-                                <UncontrolledCollapse toggler="#toggler">
-                                <Card>
-                                    <CardBody>
-                                        <div className="d-flex justify-content-center">
-                                            <Table className="justify-content-center">
-                                                <thead>
-                                                    <tr>
-                                                        <th sty>Image</th>
-                                                        <th>Lapangan</th>
-                                                        <th>Tipe</th>
-                                                        <th>Tanggal</th>
-                                                        <th>Jam</th>
-                                                        <th>Biaya / jam</th>
-                                                        <th>{"  "}</th>
-                                                        <th>Durasi</th>
-                                                        <th>Total Biaya</th>
-
-                                                    </tr>
-                                                </thead>
-                                                {
-                                                    this.renderDetails()
-                                                }
-                                            </Table>
-                                        </div>
-                                    </CardBody>
-                                </Card>
-                                <ButtonUI className="mt-2" onClick={this.checkoutBookingButtonHandler}>Checkout</ButtonUI>
-                                </UncontrolledCollapse>       
-                                </div>
                             </div>
-                        </center>       
+                        
+                        </div>
+                        <div className="col-5">
+                            <div className="header-detail">
+                                <h5>Order Detail</h5>
+                            </div>
+                            <div className="table-user">
+                                <div className="table-wrap">
+                                    <Table borderless small>
+                                        <tr>
+                                            <th>Nama Pemesan</th>
+                                            <td>:</td>
+                                            <td>{this.state.bookingTransaction.fullName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Email</th>
+                                            <td>:</td>
+                                            <td>{this.state.bookingTransaction.email}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>No Tlp</th>
+                                            <td>:</td>
+                                            <td>+{this.state.bookingTransaction.phoneNumber}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Metode Pembayaran</th>
+                                            <td>:</td>
+                                            <td>
+                                                <select 
+                                                    style={{ border: "none", width: "90%"}}   
+                                                    onChange={(e) => this.inputHandler(e, "paymentMethod", "bookingTransaction")}
+                                                >
+                                                    <option value="transfer">Transfer Bank</option>
+                                                    <option value="e-wallet">e-Wallet</option>
+                                                    <option value="merchant">Merchant</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Bayar</th>
+                                            <td>:</td>
+                                            <td>{this.state.bookingTransaction.totalPrice}</td>
+                                        </tr>
+                                    </Table>
+                                    <Button style={{width: "100%"}} onClick={this.checkoutBookingButtonHandler}>checkout</Button>
+                                </div>
+                               
+                                    <div>
+                                        
+                                    </div>
+                            </div>
+                        </div>
                 </div>
+                
             </div>
         )
     }
@@ -296,4 +310,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(BookingDetails) ;
+
 

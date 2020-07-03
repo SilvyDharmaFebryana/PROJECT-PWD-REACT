@@ -9,4 +9,50 @@
 
 th {
     background-color: #f2f2f2;
+    color: #336699;
+}
+
+td {
+    border: none !important;
+}
+
+.td-custom {
+    border-left: solid 2px lightgray !important;
+}
+
+
+.th-tbl {
+    background-color: white !important;
+}
+
+.table-wrap {
+    /* border: solid 2px lightgray; */
+    width: 98%;
+    padding: 24px;
+
+}
+
+
+.table-user {
+    /* margin-left: 50px; */
+    border-top: none !important;
+    border-style: solid;
+    border-width: 2px;
+    border-color: lightgray;
+    /* border-radius: 12px; */
+    height: 365px;
+    width: 95%;
+    color: #336699;
+}
+
+.header-detail {
+    /* margin-left: 50px; */
+    background-color: #336699;
+    color: whitesmoke;
+    height: 70px;
+    padding: 22px;
+    text-align: center;
+    width: 95%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }

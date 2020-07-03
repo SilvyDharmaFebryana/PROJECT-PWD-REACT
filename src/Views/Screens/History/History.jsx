@@ -10,14 +10,14 @@ import { API_URL } from "../../../Constants/API";
 class History extends React.Component {
 
     state = {
-        activePage: "",
+        activePage: "belum",
         pendingList: []
     }
 
     getPendingStatus = () => {
-        Axios.get(`${API_URL}/transaction/pending`, {
+        Axios.get(`${API_URL}/transaction/noPayment`, {
             params: {
-                status: "pending"
+                status: "noPayment"
             }
         })
             .then((res) => {

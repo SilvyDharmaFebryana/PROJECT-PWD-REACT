@@ -76,7 +76,7 @@ class LapanganDetails extends React.Component {
   };
 
   bookingBtnHandler = () => {
- 
+
     Axios.get(`${API_URL}/bField/check/`, {
       params: {
         date: this.state.lapanganDetails.date,
