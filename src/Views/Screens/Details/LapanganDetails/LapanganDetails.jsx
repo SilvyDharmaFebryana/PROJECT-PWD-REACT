@@ -76,44 +76,63 @@ class LapanganDetails extends React.Component {
   };
 
   bookingBtnHandler = () => {
-    // let bookingNumber = Math.floor(Math.random() * 1000000000000000);
-    // bookingNumber.toFixed(16)
-
+ 
     Axios.get(`${API_URL}/bField/check/`, {
       params: {
         date: this.state.lapanganDetails.date,
-        time: this.state.lapanganDetails.time
+        time: this.state.lapanganDetails.time,
+        field_id: this.state.lapanganDetails.id
       },
     })
       .then((res) => {  
-        if (res.data.length > 0) {
+        console.log(res.data);
+        if (res.data.length !== 0) {
           swal(
             "Jadwal tidak tersedia",
             "",
             "error"
           );
-        } else {
-          
-          let fieldId = this.state.lapanganDetails.id
-          let userId =  this.props.user.id
-
-            Axios.post(`${API_URL}/bField/${fieldId}/${userId}`, {
-                duration: 1,
-                date: this.state.lapanganDetails.date,
+        } else  {
+            Axios.get(`${API_URL}/transaction/details/check/`, {
+              params: {
+                booking_date: this.state.lapanganDetails.date,
                 time: this.state.lapanganDetails.time,
+                field_id: this.state.lapanganDetails.id
+              },
             })
             .then((res) => {
-                console.log(res.data);
-                swal("", "Your item has been add to your cart", "success");
-                this.setState({ modalOpen: false });
-                // this.props.onFillCart(this.props.user.id);
+                if (res.data.length > 0) {
+                    swal(
+                      "Jadwal tidak tersedia",
+                      "",
+                      "error"
+                    );
+
+                } else {
+                    let fieldId = this.state.lapanganDetails.id
+                    let userId =  this.props.user.id
+          
+                      Axios.post(`${API_URL}/bField/${fieldId}/${userId}`, {
+                          duration: 1,
+                          date: this.state.lapanganDetails.date,
+                          time: this.state.lapanganDetails.time,
+                      })
+                      .then((res) => {
+                          console.log(res.data);
+                          swal("", "Save on your Booking List", "success");
+                          this.setState({ modalOpen: false });
+                          // this.props.onFillCart(this.props.user.id);
+                      })
+                      .catch((err) => {
+                          console.log(err);
+                      });   
+                }
             })
             .catch((err) => {
-                console.log(err);
-            });   
+              console.log(err);
+            })
         }
       })
-
       .catch((err) => {
         console.log(err);
         

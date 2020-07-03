@@ -3,7 +3,7 @@ import { Route, Switch, withRouter } from 'react-router-dom'
 import Cookie from "universal-cookie";
 import "bootstrap/dist/css/bootstrap.css";
 import './App.css';
-
+import { WaveTopBottomLoading  } from 'react-loadingg';
 import Home from './Views/Screens/Home/Home'
 import Navbar from './Views/Components/Navbar/Navbar'
 import AuthScreen from './Views/Screens/Auth/AuthScreen'
@@ -26,6 +26,8 @@ import AddUser from './Views/Screens/Admin/SuperAdmin/TambahUser/AddUser';
 import AddField from './Views/Screens/Admin/SuperAdmin/TambahField/AddField';
 import LapanganFutsal from './Views/Screens/Lapangan/LapanganFutsal/LapanganFutsal';
 import Checkout from './Views/Screens/Checkout/Checkout';
+import History from './Views/Screens/History/History';
+
 
 
 const cookieObj = new Cookie();
@@ -33,13 +35,17 @@ const cookieObj = new Cookie();
 class App extends React.Component {
 
   componentDidMount() {
+    setTimeout(() => {
       let cookieResult = cookieObj.get("authData");
       if (cookieResult) {
         this.props.keepLogin(cookieResult);
       } else {
         this.props.cookieChecker();
       }
+    }, 1000);
   }
+
+ 
 
   render() {
     if (this.props.user.cookieChecked) {
@@ -76,7 +82,8 @@ class App extends React.Component {
              <Route exact path="/shoes" component={Shoes} />
              <Route exact path="/kolam" component={Kolam} />
              <Route exact path="/test" component={Export} />
-             <Route exact path="/checkout" component={Checkout} />
+             <Route exact path="/checkout/:idTrans" component={Checkout} />
+             <Route exact path="/history" component={History} />
 
              <Route exact path="/login/admin" component={AdminLogin} />
 
@@ -85,7 +92,11 @@ class App extends React.Component {
          </>
         )}
     } else {
-      return <div>Loading ...</div>
+      return (
+          <div>
+            <WaveTopBottomLoading />
+          </div>
+      ) 
     }
   }
 }

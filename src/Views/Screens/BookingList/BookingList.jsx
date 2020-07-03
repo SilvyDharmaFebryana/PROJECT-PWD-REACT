@@ -2,7 +2,7 @@ import React from "react"
 import "./BookingList.css"
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faListAlt, faStop, faCross, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faListAlt, faStop, faCross, faTrashAlt, faProcedures, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { Table, Alert } from 'reactstrap'
 import Axios from "axios";
 import { API_URL } from "../../../Constants/API";
@@ -16,8 +16,23 @@ class BookingList extends React.Component {
     state = {
         bookingTransactions: {},
         bookingListData: [],
+        checkoutItems: [],
         
     }
+
+    checkboxHandler = (e, idx) => {
+        const { checked } = e.target;
+    
+        if (checked) {
+          this.setState({ checkoutItems: [...this.state.checkoutItems, idx] });
+        } else {
+          this.setState({
+            checkoutItems: [
+              ...this.state.checkoutItems.filter((val) => val !== idx),
+            ],
+          });
+        }
+    };
 
     getBookingList = () => {
         Axios.get(`${API_URL}/bField/user/`, {
@@ -36,9 +51,7 @@ class BookingList extends React.Component {
     }
 
     componentDidMount() {
-        this.getBookingList()
-        console.log(this.props.user.id);
-        
+        this.getBookingList()    
     }
 
     deleteDataHandler = (id) => {
@@ -71,6 +84,13 @@ class BookingList extends React.Component {
                             onClick={() => this.deleteDataHandler(val.id)}
                         /> 
                     </td>
+                    <td>
+                        <FontAwesomeIcon
+                            className="mt-1 ml-3 fontawesome-icon"
+                            icon={faCheck}
+                            style={{ fontSize: 18 }}
+                        /> only this item <p></p>
+                    </td>
                 </tr>
             )
         })
@@ -101,7 +121,7 @@ class BookingList extends React.Component {
                         <>
                         <div className="">
                                 <center>
-                                    <Table className="table-striped" style={{ width: "80%" }} >
+                                    <Table style={{ width: "80%" }} >
                                         <thead>
                                             <tr>
                                                 <th>No</th>
@@ -109,7 +129,8 @@ class BookingList extends React.Component {
                                                 <th>Harga</th>
                                                 <th>Tanggal</th>
                                                 <th>Jam</th>
-                                                <th>Action</th>
+                                                <th>Hapus</th>
+                                                <th>Checkout</th>
                                             </tr>
                                         </thead>
                                         <tbody>

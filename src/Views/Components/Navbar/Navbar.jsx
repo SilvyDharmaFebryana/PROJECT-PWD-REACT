@@ -67,7 +67,7 @@ class Navbar extends React.Component {
                           style={{ color: "inherit", textDecoration: "none" }}
                           to="/history"
                         >
-                          Cart
+                          History
                         </Link>
                       </DropdownItem>
                       <DropdownItem>
