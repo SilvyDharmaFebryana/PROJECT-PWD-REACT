@@ -121,9 +121,11 @@ class Home extends React.Component {
                                     />
                                 </div>
                                 <div>
-                                    <button className="mt-4 button">
-                                        Admin Task
+                                    <Link to="/admin/task" style={{ textDecoration: "none", color: "inherit"}}>
+                                    <button className="mt-2 button">
+                                        Task List
                                     </button>
+                                    </Link>
                                 </div>
                                 <div>
                                     <button className="mt-2 button">

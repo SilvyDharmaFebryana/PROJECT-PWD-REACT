@@ -1,0 +1,32 @@
+.rules-in {
+    height: 420px;
+    border: solid 2px #cccccc;
+    border-top: none;
+    /* width: 90%; */
+}
+
+.rules-header {
+    height: 50px; 
+    background-color: #0d1a26; 
+    /* border: solid 2px #cccccc; */
+    color: white; 
+    border-top-left-radius: 12px; 
+    border-top-right-radius: 12px;
+    /* width: 90%; */
+    padding: 10px;
+}
+
+/* .rules {
+   width: 90%;
+} */
+
+/* td {
+    font-size: 12px;
+} */
+
+th {
+    background-color: #0d1a26; 
+    color: white; 
+    font-size: 14px;
+}
+

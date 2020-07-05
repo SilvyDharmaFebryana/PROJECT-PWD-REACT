@@ -16,6 +16,7 @@ const init_state = {
     address: "",
     role: "",
     errMsg: "",
+    errorMsg: "",
     cookieChecked: false,
 };
 
@@ -47,7 +48,7 @@ export default (state = init_state, action) => {
         case "COOKIE_CHECK":
             return { ...state, cookieChecked: true };
         case "ON_PASSWORD_FAIL":
-            return { ...state, errMsg: action.payload, cookieChecked: true };
+            return { ...state, errorMsg: action.payload, cookieChecked: true };
         default:
             return { ...state };
     }

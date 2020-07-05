@@ -81,18 +81,19 @@ export const logoutAdminHandler = () => {
 
 export const registerHandler = (userData) => {
     return (dispatch) => {
-        const { repPassword, password, username, firstname, lastname, role, address, gender, phoneNumber, email, } = userData
+        const { repPassword, password, username, firstname, lastname, role, address, gender, phoneNumber, email } = userData
 
-        Axios.get(`${API_URL}/users/username`, {
+        Axios.get(`${API_URL}/users/username/email/`, {
             params: {
                 username: userData.username,
+                email: userData.email
             },
         })
             .then((res) => {
                 if (res.data.length > 0) {
                     dispatch({
                         type: "ON_REGISTER_FAIL",
-                        payload: "Username sudah digunakan",
+                        payload: "Username atau Email sudah digunakan",
                     });
                 } else {
                     if (password == repPassword) {

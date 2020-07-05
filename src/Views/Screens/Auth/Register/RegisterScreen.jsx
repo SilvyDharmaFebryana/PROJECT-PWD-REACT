@@ -188,6 +188,15 @@ class RegisterScreen extends React.Component {
                       this.inputHandler(e, "email", "registerForm")
                     }
                   />
+                  <p className="small">
+                    {this.props.user.errMsg ? (
+                      <p className="small" style={{ color: "red" }}>
+                        {this.props.user.errMsg}
+                      </p>
+                    ) : (
+                      <p className="small">** must be unique</p>
+                    )}
+                  </p>
                 </div>
                 <div className="col-sm-2">
                   <p className="mt-3">Phone Number</p>
@@ -225,7 +234,7 @@ class RegisterScreen extends React.Component {
                     }
                   />
                   <p className="small">
-                    {this.props.user.errMsg ? (
+                    {this.props.user.errorMsg ? (
                       <p className="small" style={{ color: "red" }}>
                         ** password not match
                       </p>

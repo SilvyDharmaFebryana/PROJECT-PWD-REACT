@@ -1,27 +1,34 @@
 import React from "react"
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory } from "@fortawesome/free-solid-svg-icons";
-import { Table, Alert } from 'reactstrap'; 
+import { faHistory, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { Table, Alert, Button } from 'reactstrap'; 
+import { Link, Redirect } from "react-router-dom";
 import "./History.css"
 import Axios from "axios";
 import { API_URL } from "../../../Constants/API";
+import { priceFormatter } from "../../../Supports/formatter";
 
 class History extends React.Component {
 
     state = {
         activePage: "belum",
-        pendingList: []
+        noPaymentList: [],
+        pendingList: [],
+        suksesList: [],
+        gagalList: [],
+        activeProducts: [],
+        details: []
     }
-
-    getPendingStatus = () => {
-        Axios.get(`${API_URL}/transaction/noPayment`, {
+    //=========================================================== Get Status ====================================================================================
+    getNoPaymentStatus = () => {
+        Axios.get(`${API_URL}/transaction/none`, {
             params: {
                 status: "noPayment"
             }
         })
             .then((res) => {
-                this.setState({ pendingList: res.data})
+                this.setState({ noPaymentList: res.data})
                 console.log(res.data);
                 
             })
@@ -30,30 +37,145 @@ class History extends React.Component {
             })
     }
 
+    getPendingStatus = () => {
+        Axios.get(`${API_URL}/transaction/pending`, {
+            params: {
+                status: "pending"
+            }
+        })
+            .then((res) => {
+                this.setState({ pendingList: res.data })
+                console.log(res.data);
+                
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
+    getSuksesStatus = () => {
+        Axios.get(`${API_URL}/transaction/sukses`, {
+            params: {
+                status: "sukses"
+            }
+        })
+            .then((res) => {
+                this.setState({ suksesList: res.data})
+                console.log(res.data);
+                
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
+    getGagalStatus = () => {
+        Axios.get(`${API_URL}/transaction/gagal`, {
+            params: {
+                status: "gagal"
+            }
+        })
+            .then((res) => {
+                this.setState({ gagalList: res.data})
+                console.log(res.data);
+                
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
+
+    //========================================================================================================================================================
+
+    // getDetails = () => {
+    //     Axios.get(`${API_URL}/transaction/details/trans/`,{
+    //         params: {
+    //             field_transactions_id: this.state.pendingList.id
+    //         }
+    //     })
+    //     .then((res) => {
+    //         this.setState({ details: res.data })
+    //         console.log(res.data)
+    //     })
+    //     .catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
+
     componentDidMount() {
         this.getPendingStatus()
+        // this.getDetails()
+        this.getNoPaymentStatus()
     }
 
 
     renderList = () => {
         const { activePage } = this.state;
         if (activePage === "belum") {
-            return this.state.pendingList.map((val, idx) => {
+            // this.getNoPaymentStatus()
+            return this.state.noPaymentList.map((val, idx) => {
                 return (
                     <tr>    
                         <td>{idx + 1}</td>
-                        <td>{val.kodeBooking}</td>
-                        <td>{}</td>
-                        <td>{val.totalPrice}</td>
+                        <td>{val.checkoutDate}</td>
+                        <td>Order #{val.noPesanan}</td>
+                        <td>{priceFormatter(val.totalPrice)}</td>
                         <td>{val.status}</td>
-                        <td>Lihat Detail</td>
+                        <td><Link to={`/checkout/${val.id}`}><Button>Bayar</Button></Link></td>
                     </tr>
+                )
+            })
+        } else if (activePage === "sudah") {
+            // this.getPendingStatus()
+            return this.state.pendingList.map((val, idx) => {
+                return (
+                   <>
+                    <tr>    
+                        <td>{idx + 1}</td>
+                        <td>{val.checkoutDate}</td>
+                        <td>Order #{val.noPesanan}</td>
+                        <td>{priceFormatter(val.totalPrice)}</td>
+                        <td>{val.status}</td>
+                        <td style={{ width: "25%" }}>
+                            <Alert color="warning">
+                                <p style={{ fontSize: "10px" }}> 
+                                <FontAwesomeIcon
+                                    className="mr-2"
+                                    icon={faExclamationCircle}
+                                    style={{ fontSize: 15 }}
+                                />  
+                                Sedang dilakukan pengecekan oleh admin, Mohon menunggu</p>
+                            </Alert>
+                        </td>
+                    </tr>
+                    <tr>
+                            <td className="" colSpan={8}>
+                                <div className="d-flex flex-row justify-content-center">
+                                    <table className="small justify-content-center">
+                                        <thead>
+                                            <tr>
+                                                <th>Image</th>
+                                                <th>Product Name</th>
+                                                <th>Quantity</th>
+                                                <th>Item Price</th>
+                                                <th>Item Total</th>
+                                                <th></th>
+
+                                            </tr>
+                                        </thead>
+                                       
+
+                                    </table>
+                                </div>
+
+                            </td>
+                    </tr>
+                    </>
                 )
             })
         }
     }
-
-
 
 
     render() {
@@ -72,8 +194,9 @@ class History extends React.Component {
                         </BreadcrumbItem>
                     </Breadcrumb>
                 </div>
+                <div className="wrap">
                 <div>
-                    <Table borderless>
+                    <Table borderless style={{ width: "40%"}}>
                             <thead>
                                 <tr>
                                     <th 
@@ -107,12 +230,14 @@ class History extends React.Component {
                                 </tr>
                             </thead>
                     </Table>
-                    <Table>
+                    </div>
+                    <div className="text-center">
+                    <Table> 
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Kode Booking</th>
-                                <th>Lapangan</th>
+                                <th>Date Issue</th>
+                                <th>No Pesanan</th>
                                 <th>Total Bayar</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -124,6 +249,7 @@ class History extends React.Component {
                             }
                         </tbody>
                     </Table>
+                    </div>
                 </div>
             </div>
         )

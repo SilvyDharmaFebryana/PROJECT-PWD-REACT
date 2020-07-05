@@ -27,6 +27,7 @@ import AddField from './Views/Screens/Admin/SuperAdmin/TambahField/AddField';
 import LapanganFutsal from './Views/Screens/Lapangan/LapanganFutsal/LapanganFutsal';
 import Checkout from './Views/Screens/Checkout/Checkout';
 import History from './Views/Screens/History/History';
+import AdminTask from './Views/Screens/Admin/AdminTask/AdminTask';
 
 
 
@@ -49,7 +50,7 @@ class App extends React.Component {
 
   render() {
     if (this.props.user.cookieChecked) {
-      if (this.props.user.role == "super_admin") {
+      if (this.props.user.role === "super_admin") {
         return (
           <>
             <Navbar />
@@ -65,7 +66,20 @@ class App extends React.Component {
             <div style={{ height: "120px" }} />
           </>
         )
-      } else {
+      } else if (this.props.user.role === "admin") {
+        return (
+           <>
+           <Navbar />
+           <Switch>
+             <Route exact path="/" component={Home} />
+             <Route exact path="/admin/task" component={AdminTask} />
+             <Route exact path="/login/admin" component={AdminLogin} />
+
+           </Switch>
+           <div style={{ height: "120px" }} />
+         </>
+        )}
+      } else if (this.props.user.role === "admin") {
         return (
            <>
            <Navbar />
@@ -84,13 +98,13 @@ class App extends React.Component {
              <Route exact path="/test" component={Export} />
              <Route exact path="/checkout/:idTrans" component={Checkout} />
              <Route exact path="/history" component={History} />
-
+             <Route exact path="/admin/task" component={AdminTask} />
              <Route exact path="/login/admin" component={AdminLogin} />
 
            </Switch>
            <div style={{ height: "120px" }} />
          </>
-        )}
+        )
     } else {
       return (
           <div>

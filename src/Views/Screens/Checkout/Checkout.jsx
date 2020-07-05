@@ -16,13 +16,28 @@ import { UncontrolledCollapse, Button, CardBody, Card, FormGroup, Label, Input, 
 import { priceFormatter } from "../../../Supports/formatter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import swal from "sweetalert";
+import { Link, Redirect } from "react-router-dom";
 
 class Checkout extends React.Component {
 
     state = {
-        transId: [],
+        transId: {
+            id: 0,
+            totalPrice: 0,
+            totalDuration: 0,
+            status: "pending",
+            paymentMethod: "",
+            checkoutDate: "",
+            approveDate: null,
+            buktiTransfer: null,
+            noPesanan: 0,
+            attempt: 1,
+            user: 0
+        },
         noRek: 0,
         bank: "bni",
+        selectedFile: null,
 
     } 
     componentDidMount() {
@@ -40,6 +55,36 @@ class Checkout extends React.Component {
         .catch((err) => {
             console.log(err);
         })
+    }
+
+    imageChangeHandler = (e) => {
+        this.setState({ selectedFile: e.target.files[0] });
+    };
+
+    uploadBuktiHandler = () => {
+        let formData = new FormData();
+
+        formData.append(
+            "file",
+            this.state.selectedFile,
+            this.state.selectedFile.name
+        );
+        formData.append("fieldData", JSON.stringify(this.state.transId))
+
+        Axios.put(`${API_URL}/transaction/checkout/upload_file/${this.state.transId.id}`, formData)
+            .then((res) => {
+                console.log(res.data)
+                // this.setState({ file: res.data })
+                swal("berhasil upload gambar")
+                // return <Redirect to="/history" />
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+            
+        // console.log(this.state.formUser);
+        // console.log(JSON.stringify(this.state.formUser));
     }
 
 
@@ -248,17 +293,20 @@ class Checkout extends React.Component {
                                     <Table bordered>
                                         <tr style={{  color: "#4d4d4d"}}>
                                                 <th style={{ width:"40%", backgroundColor: "white", color: "#4d4d4d" }}>Upload Bukti Transfer</th>
-                                                <td><input type="file" name="" id=""/></td>
+                                                <td><input type="file" onChange={this.imageChangeHandler}/></td>
                                         </tr>
                                     </Table>
-                                    <Button style={{ width: "100%", backgroundColor: "#336699" }}>
-                                            <FontAwesomeIcon
-                                                className="mt-2 mr-2"
-                                                icon={faCamera}
-                                                style={{ fontSize: 18 }}
-                                            />
-                                        Upload
-                                    </Button>
+                                    <Link to="/history">
+                                        <Button style={{ width: "100%", backgroundColor: "#336699" }}  onClick={this.uploadBuktiHandler}>
+                                                <FontAwesomeIcon
+                                                    className="mt-2 mr-2"
+                                                    icon={faCamera}
+                                                    style={{ fontSize: 18 }}
+                                                />
+                                            Upload
+                                        </Button>
+                                    </Link>
+                                   
                                 </div>
                             </div>
                     </div>
@@ -269,93 +317,4 @@ class Checkout extends React.Component {
 }
 
 
-export default Checkout
-
-
-
-{/* <div>
-<Table bordered>
-    <tr>
-        <th className="py-5" style={{ height: "10px", width: "30%" }}>Total Bayar</th>
-        <td className="py-5" style={{ fontSize: "20px", fontWeight: "bold" }}>{this.state.transId.totalPrice}</td>
-    </tr>
-    <tr>
-        <th className="py-4">Pilih Bank</th>
-        <td className="d-flex justify-content-start" style={{ border: "none" }}>
-            <FormGroup check>
-                <Label check>
-                    <Input
-                        className="mt-3 mr-2"
-                        type="radio"
-                        name="bank"
-                        value="bni"
-                        onChange={() => this.setState({
-                            transId: {
-                                ...this.state.transId,
-                                noRek: "0397616123",
-                                bank: "bni"
-                            }
-                        })}
-                    />
-                    <img className="mt-2" src={bni} alt="" style={{ width: "50%" }} />
-                </Label>
-            </FormGroup>
-            <FormGroup check>
-                <Label check>
-                    <Input
-                        className="mt-3 mr-2 ml-1"
-                        type="radio"
-                        name="bank"
-                        value="bca"
-                        onChange={() => this.setState({
-                            transId: {
-                                ...this.state.transId,
-                                noRek: "935123243",
-                                bank: "bca"
-                            }
-                        })}
-                    />
-                    <img className="mt-2 ml-4" src={bca} alt="" style={{ width: "35%" }} />
-                </Label>
-            </FormGroup>
-            <FormGroup check>
-                <Label check>
-                    <Input
-                        className="mt-3 mr-2"
-                        type="radio"
-                        name="bank"
-                        value="cimb"
-                        onChange={() => this.setState({
-                            transId: {
-                                ...this.state.transId,
-                                noRek: "7060453453300",
-                                bank: "cimb"
-                            }
-                        })}
-                    />
-                    <img src={cimb} alt="" style={{ width: "30%" }} />
-                </Label>
-            </FormGroup>
-        </td>
-    </tr>
-    <tr color="primary" id="toggler" style={{ marginBottom: '1rem' }}>
-        <th>No Rekening</th>
-        <td className="d-flex" style={{ border: "none", borderTop: "solid 1px lightgrey", borderBottom: "solid 1px lightgrey" }}><p className="mr-2" style={{ textDecoration: "underline", color: "blue" }}>{this.state.transId.noRek}</p> (A/n Kickoff Sport Center)</td>
-    </tr>
-    <tr colSpan={2}>
-        <UncontrolledCollapse toggler="#toggler">
-            <Card>
-                <CardBody>
-
-                </CardBody>
-            </Card>
-        </UncontrolledCollapse>
-    </tr>
-    <tr>
-        <th>Upload Bukti Transfer</th>
-        <td>
-            <input type="file" />
-        </td>
-    </tr>
-</Table>
-</div> */}
+export default Checkout;
