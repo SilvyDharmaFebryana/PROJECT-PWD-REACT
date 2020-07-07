@@ -14,6 +14,7 @@ import {
   faListAlt,
   faSignInAlt,
   faSign,
+  faBell,
 } from "@fortawesome/free-solid-svg-icons/";
 import { } from "@fortawesome/free-regular-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
@@ -62,14 +63,6 @@ class Navbar extends React.Component {
                   this.props.user.role === "user" ? (
                     <>
                       <DropdownItem>Profile</DropdownItem>
-                      <DropdownItem>
-                        <Link
-                          style={{ color: "inherit", textDecoration: "none" }}
-                          to="/history"
-                        >
-                          History
-                        </Link>
-                      </DropdownItem>
                       <DropdownItem>
                         <Link
                           style={{ color: "inherit", textDecoration: "none" }}
@@ -122,7 +115,7 @@ class Navbar extends React.Component {
             <DropdownToggle tag="nav" className="d-flex">
               <FontAwesomeIcon
                 className="mt-2"
-                icon={faListAlt}
+                icon={faBell}
                 style={{ fontSize: 18, color: "#003cb3" }}
               />
               <h6 className="mt-1 ml-2 text-navbar">0</h6>
