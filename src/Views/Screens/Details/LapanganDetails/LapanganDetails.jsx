@@ -5,6 +5,8 @@ import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import "./LapanganDetails.css";
 // import DatePicker from "react-date-picker";
 import DatePicker from "react-datepicker";
+import { registerLocale, setDefaultLocale } from  "react-datepicker";
+import id from 'date-fns/locale/es';
 import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import { connect } from "react-redux";
@@ -14,7 +16,9 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { faRestroom, faToilet, faChargingStation, faTrashAlt, faMosque, faClock, faVolleyballBall, faBasketballBall, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 // import ButtonUI from "../../../Components/Buttons/Buttons";
 import { faFutbol } from "@fortawesome/free-regular-svg-icons";
+import { Link, Redirect } from "react-router-dom";
 
+registerLocale('id', id)
 
 class LapanganDetails extends React.Component {
   state = {
@@ -27,10 +31,29 @@ class LapanganDetails extends React.Component {
       duration: 0,
       description:"",
       time: "",
-      date: new Date(),
+      date: new Date().toLocaleString(),
     },
     modalOpen: false,
   };
+
+  mustToLogin = () => {
+    swal({
+      title: "Harus Login",
+      text: "Anda harus login untuk meneruskan penyewaan, Login?",
+      icon: "warning",
+    })
+    //   buttons: true,
+    //   onClick: "",
+    //   dangerMode: true,
+    // })
+    // .then((willDelete) => {
+    //   if (willDelete) {
+    //     return onClick=<Link to="/login/" />
+    //   } else {
+    //     swal("Anda Belum Login");
+    //   }
+    // });
+  }
 
   onChangeDate = (date) =>
     this.setState({
@@ -77,66 +100,163 @@ class LapanganDetails extends React.Component {
 
   bookingBtnHandler = () => {
 
-    Axios.get(`${API_URL}/bField/check/`, {
+    Axios.get(`${API_URL}/bField/user/`, {
       params: {
-        date: this.state.lapanganDetails.date,
-        time: this.state.lapanganDetails.time,
-        field_id: this.state.lapanganDetails.id
-      },
+        user_id: this.props.user.id,
+      }
     })
-      .then((res) => {  
-        console.log(res.data);
-        if (res.data.length !== 0) {
-          swal(
-            "Jadwal tidak tersedia",
-            "",
-            "error"
-          );
-        } else  {
-            Axios.get(`${API_URL}/transaction/details/check/`, {
-              params: {
-                booking_date: this.state.lapanganDetails.date,
-                time: this.state.lapanganDetails.time,
-                field_id: this.state.lapanganDetails.id
-              },
-            })
+      .then((res) => {
+        if (res.data.length === 0) {
+          Axios.get(`${API_URL}/bField/check/`, {
+            params: {
+              date: this.state.lapanganDetails.date,
+              time: this.state.lapanganDetails.time,
+              field_id: this.state.lapanganDetails.id
+            },
+          })
             .then((res) => {
-                if (res.data.length > 0) {
-                    swal(
-                      "Jadwal tidak tersedia",
-                      "",
-                      "error"
-                    );
+              console.log(res.data);
 
-                } else {
-                    let fieldId = this.state.lapanganDetails.id
-                    let userId =  this.props.user.id
-          
+              if (res.data.length !== 0) {
+                swal(
+                  "Jadwal tidak tersedia",
+                  "",
+                  "error"
+                );
+              } else {
+                Axios.get(`${API_URL}/transaction/details/check/`, {
+                  params: {
+                    booking_date: this.state.lapanganDetails.date,
+                    time: this.state.lapanganDetails.time,
+                    field_id: this.state.lapanganDetails.id
+                  },
+                })
+                  .then((res) => {
+
+                    if (res.data.length > 0) {
+                      swal(
+                        "Jadwal tidak tersedia",
+                        "",
+                        "error"
+                      );
+
+                    } else {
+                      let fieldId = this.state.lapanganDetails.id
+                      let userId = this.props.user.id
+
                       Axios.post(`${API_URL}/bField/${fieldId}/${userId}`, {
-                          duration: 1,
-                          date: this.state.lapanganDetails.date,
-                          time: this.state.lapanganDetails.time,
+                        duration: 1,
+                        date: this.state.lapanganDetails.date,
+                        time: this.state.lapanganDetails.time,
                       })
-                      .then((res) => {
+                        .then((res) => {
                           console.log(res.data);
                           swal("", "Save on your Booking List", "success");
                           this.setState({ modalOpen: false });
                           // this.props.onFillCart(this.props.user.id);
-                      })
-                      .catch((err) => {
+                        })
+                        .catch((err) => {
                           console.log(err);
-                      });   
-                }
+                        });
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  })
+              }
             })
             .catch((err) => {
               console.log(err);
+
             })
+
+        } else {
+            Axios.get(`${API_URL}/bField/check/onthisdate/`, {
+              params: {
+                date: this.state.lapanganDetails.date,
+                // time: this.state.lapanganDetails.time,
+                field_id: this.state.lapanganDetails.id
+              },
+            })
+              .then((res) => {
+                if (res.data.length == 0) {
+                  swal(
+                    "harus sama lapangan",
+                    "",
+                    "error"
+                  );
+                } else {
+                  Axios.get(`${API_URL}/bField/check/onthistime/`, {
+                    params: {
+                      // date: this.state.lapanganDetails.date,
+                      time: this.state.lapanganDetails.time,
+                      // field_id: this.state.lapanganDetails.id
+                    },
+                  })
+                  .then((res) => {
+                    if (res.data.length > 0) {
+                      swal(
+                        "Jam tidak tersedia",
+                        "",
+                        "error"
+                      )
+                    } else {
+                      Axios.get(`${API_URL}/transaction/details/check/`, {
+                        params: {
+                          booking_date: this.state.lapanganDetails.date,
+                          time: this.state.lapanganDetails.time,
+                          field_id: this.state.lapanganDetails.id
+                        },
+                      })
+                        .then((res) => {
+      
+                          if (res.data.length > 0) {
+                            swal(
+                              "Jadwal tidak tersedia",
+                              "",
+                              "error"
+                            );
+      
+                          } else {
+                            let fieldId = this.state.lapanganDetails.id
+                            let userId = this.props.user.id
+      
+                            Axios.post(`${API_URL}/bField/${fieldId}/${userId}`, {
+                              duration: 1,
+                              date: this.state.lapanganDetails.date,
+                              time: this.state.lapanganDetails.time,
+                            })
+                              .then((res) => {
+                                console.log(res.data);
+                                swal("", "Save on your Booking List", "success");
+                                this.setState({ modalOpen: false });
+                                // this.props.onFillCart(this.props.user.id);
+                              })
+                              .catch((err) => {
+                                console.log(err);
+                              });
+                          }
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                        })
+                    }
+                  })
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+                
+              })
         }
+
       })
       .catch((err) => {
         console.log(err);
-        
+
       })
+
+    
     
   };
 
@@ -244,7 +364,14 @@ class LapanganDetails extends React.Component {
                 </div>
                 <div>
                   <center>
-                  <input className="button-book mt-4" type="button" value="Booking" onClick={this.toggle}/>
+                    {
+                      this.props.user.id > 0 ? (
+                          <input className="button-book mt-4" type="button" value="Booking" onClick={this.toggle}/>
+                      ) : (
+                          <input className="button-book mt-4" type="button" value="Booking" onClick={this.mustToLogin}/>
+                      )
+                    }
+                  
                   </center>
                   <Modal isOpen={this.state.modalOpen} toggle={this.toggle}>
                   <ModalHeader toggle={this.toggle}>
@@ -273,10 +400,14 @@ class LapanganDetails extends React.Component {
                       classNam="ml-5"
                       selected={this.state.lapanganDetails.date}
                       onChange={this.onChangeDate}
-                      value={this.state.lapanganDetails.date}
+                      value={(this.state.lapanganDetails.date)}
                       style={{ color: "#003cb3" }}
-                      dateFormat="dd/MM/yyyy"
+                      // dateFormat="dd/MM/yyyy"
                       minDate={new Date()}
+                      locale="id"
+                      toLocaleString
+                      // registerLocale={('es', es)}
+                    
                       // isClearable={true}
                     />
                     <select

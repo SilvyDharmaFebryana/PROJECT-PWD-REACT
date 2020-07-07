@@ -1,0 +1,17 @@
+.eticket-wrap {
+    border: solid 2px #2d5986;
+    width: 80%;
+    margin: 60px;
+    height: 500px;
+}
+
+.ticket {
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    position: relative !important;
+    background: #8dc63f;
+    float: left;
+    padding: 7px 3px;
+    margin: 0 5px 5px 0;
+}

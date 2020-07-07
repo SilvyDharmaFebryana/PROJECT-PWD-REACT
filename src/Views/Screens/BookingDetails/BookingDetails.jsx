@@ -12,6 +12,7 @@ import { UncontrolledCollapse, Button, CardBody, Card, FormGroup, Label, Input, 
 import { Table, Alert } from 'reactstrap';
 import { Link, Redirect } from "react-router-dom";
 import { WaveTopBottomLoading  } from 'react-loadingg';
+import { priceFormatter } from "../../../Supports/formatter";
 
 
 class BookingDetails extends React.Component {
@@ -183,7 +184,7 @@ class BookingDetails extends React.Component {
             return (
                 <tr style={{ height: "150px", fontSize: "13px", border: "solid 2px lightgray" }}>
                     <th className="th-tbl" style={{ width:"30%" }}>
-                        <img className="mt-1" style={{ width: "100%" }} src={val.field.image} alt="" srcset=""/>
+                        <img className="mt-1" style={{ width: "100%", height: "120px" }} src={val.field.image} alt="" srcset=""/>
                         <h6 className="text-center mt-3" style={{ fontSize: "14px" }}>{val.field.fieldName}</h6>
                     </th>
                     
@@ -206,7 +207,7 @@ class BookingDetails extends React.Component {
                         <tr style={{ height: "5px" }}>
                             <td>Total</td>
                             <td>:</td>
-                            <td>{val.field.price}</td>
+                            <td>{priceFormatter(val.field.price)}</td>
                         </tr>
                     </td>
                 </tr>
@@ -269,6 +270,17 @@ class BookingDetails extends React.Component {
                                             <td>+{this.state.bookingTransaction.phoneNumber}</td>
                                         </tr>
                                         <tr>
+                                            <th>Total Durasi</th>
+                                            <td>:</td>
+                                            <td>{this.state.bookingTransaction.totalDuration} Jam</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Total Bayar</th>
+                                            <td>:</td>
+                                            <td style={{ fontSize: "16px", fontWeight: "bolder"}}>{priceFormatter(this.state.bookingTransaction.totalPrice)}</td>
+                                        </tr>
+                                        <tr>
                                             <th>Metode Pembayaran</th>
                                             <td>:</td>
                                             <td>
@@ -281,11 +293,6 @@ class BookingDetails extends React.Component {
                                                     <option value="merchant">Merchant</option>
                                                 </select>
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Total Bayar</th>
-                                            <td>:</td>
-                                            <td>{this.state.bookingTransaction.totalPrice}</td>
                                         </tr>
                                     </Table>
                                     <Button style={{width: "100%"}} onClick={this.checkoutBookingButtonHandler}>checkout</Button>

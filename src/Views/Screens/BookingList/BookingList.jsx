@@ -9,6 +9,7 @@ import { API_URL } from "../../../Constants/API";
 import { connect } from 'react-redux'
 import ButtonUI from "../../Components/Buttons/Buttons";
 import { Link } from "react-router-dom";
+import { priceFormatter } from "../../../Supports/formatter";
 
 
 class BookingList extends React.Component {
@@ -17,6 +18,7 @@ class BookingList extends React.Component {
         bookingTransactions: {},
         bookingListData: [],
         checkoutItems: [],
+        fieldImages: ""
         
     }
 
@@ -42,7 +44,7 @@ class BookingList extends React.Component {
         })
         .then((res) => {
             this.setState({ bookingListData: res.data})
-            console.log(res.data)
+            console.log(this.state.bookingListData.fieldId)
         })
         .catch((err) => {
             console.log(err);
@@ -68,12 +70,11 @@ class BookingList extends React.Component {
     renderBookingList = () => {
         return this.state.bookingListData.map((val, idx) => {
             let tanggal = val.date.split("T")[0]
-
             return (
                 <tr>
                     <td>{idx + 1}</td>
-                    <td>Lapangan {val.field.category}</td>
-                    <td>{val.field.price}</td>
+                    <td>{val.field.fieldName}</td>
+                    <td>{priceFormatter(val.field.price)}</td>
                     <td>{tanggal}</td>
                     <td>{val.time}</td>
                     <td> 
@@ -84,17 +85,12 @@ class BookingList extends React.Component {
                             onClick={() => this.deleteDataHandler(val.id)}
                         /> 
                     </td>
-                    <td>
-                        <FontAwesomeIcon
-                            className="mt-1 ml-3 fontawesome-icon"
-                            icon={faCheck}
-                            style={{ fontSize: 18 }}
-                        /> only this item <p></p>
-                    </td>
                 </tr>
             )
         })
     }
+
+    
 
 
     render() {
@@ -113,6 +109,12 @@ class BookingList extends React.Component {
                         </BreadcrumbItem>
                     </Breadcrumb>
                 </div>
+
+                <div>
+                    <div className="d-flex">
+                        {/* <img src={this.state.fieldImages} alt=""/> */}
+                    </div>
+                </div>
                 <div>
                     {
                         this.state.bookingListData.length == 0 ? (
@@ -130,7 +132,7 @@ class BookingList extends React.Component {
                                                 <th>Tanggal</th>
                                                 <th>Jam</th>
                                                 <th>Hapus</th>
-                                                <th>Checkout</th>
+                                          
                                             </tr>
                                         </thead>
                                         <tbody>

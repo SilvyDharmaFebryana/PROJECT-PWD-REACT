@@ -5,6 +5,7 @@ import "./LapanganBasket.css"
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from "react-router-dom";
 import { API_URL } from "../../../../Constants/API";
+import CardLapangan from "../../../Components/Card/CardLapangan/CardLapangan";
 
 class LapanganVoli extends React.Component {
 
@@ -35,28 +36,7 @@ class LapanganVoli extends React.Component {
     return this.state.lapanganBasket.map((val) => {
       return (
         <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-          <div className={`kolam-card d-inline-block ml-4 mt-4`}>
-            <img
-              className="image-lap"
-              src={val.image}
-              // style={{ objectFit: "contain" }}
-            />
-            <div>
-              <p className="mt-3">{val.type}</p>
-              <div className="d-flex">
-                <span>
-                  <h5 style={{ fontWeight: "bolder" }}>
-                    {new Intl.NumberFormat("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    }).format(val.price)}
-                    {'      '} / hour
-                  </h5>
-                </span>
-              </div>
-
-            </div>
-          </div>
+          <CardLapangan key={`fields-cart-${val.id}`} className="m-2" data={val} />
         </Link>
       )
     })
