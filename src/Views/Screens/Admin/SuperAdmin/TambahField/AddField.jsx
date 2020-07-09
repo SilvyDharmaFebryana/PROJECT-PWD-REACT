@@ -52,8 +52,6 @@ class AddField extends React.Component {
                 console.log(res.data)
                 this.setState({ file: res.data })
                 alert("tersimpan")
-                // let fileName = this.state.file.split("/")[5]
-                // this.setState({ fileNames: fileName })
             })
             .catch((err) => {
                 console.log("ERROR");
@@ -63,7 +61,6 @@ class AddField extends React.Component {
             
         console.log(this.state.formField);
         console.log(JSON.stringify(this.state.formField));
-  
     };
 
 

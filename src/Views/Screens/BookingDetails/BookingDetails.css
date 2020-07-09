@@ -40,7 +40,7 @@ td {
     border-width: 2px;
     border-color: lightgray;
     /* border-radius: 12px; */
-    height: 365px;
+    height: 490px;
     width: 95%;
     color: #336699;
 }
@@ -49,10 +49,11 @@ td {
     /* margin-left: 50px; */
     background-color: #336699;
     color: whitesmoke;
-    height: 70px;
-    padding: 22px;
+    height: 80px;
+    padding: 24px;
     text-align: center;
     width: 95%;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
+

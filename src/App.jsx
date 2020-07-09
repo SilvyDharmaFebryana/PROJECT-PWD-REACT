@@ -28,6 +28,9 @@ import LapanganFutsal from './Views/Screens/Lapangan/LapanganFutsal/LapanganFuts
 import Checkout from './Views/Screens/Checkout/Checkout';
 import History from './Views/Screens/History/History';
 import AdminTask from './Views/Screens/Admin/AdminTask/AdminTask';
+import ETicket from './Views/Screens/e-Ticket/eticket';
+import UserProfile from './Views/Screens/User/UserProfile';
+
 
 
 
@@ -50,65 +53,85 @@ class App extends React.Component {
 
   render() {
     if (this.props.user.cookieChecked) {
-      if (this.props.user.role === "super_admin") {
-        return (
-          <>
+        if (this.props.user.role === "super_admin") {
+          return (
+            <>
+              <Navbar />
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/login/" component={LoginScreen} />
+                <Route exact path="/login/admin" component={AdminLogin} />
+                <Route exact path="/admin/dashboard" component={AdminDashboard} />
+                <Route exact path="/admin/list_user" component={ListUser} />
+                <Route exact path="/admin/add_user" component={AddUser} />
+                <Route exact path="/admin/add_field" component={AddField} />  
+              </Switch>
+              <div style={{ height: "120px" }} />
+            </>
+          )
+        } else if (this.props.user.role === "admin") {
+          return (
+            <>
+            <Navbar />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/admin/task" component={AdminTask} />
+              <Route exact path="/login/admin" component={AdminLogin} />
+              
+
+            </Switch>
+            <div style={{ height: "120px" }} />
+          </>
+          )
+        } else if (this.props.user.role === "user") {
+          return (
+            <>
             <Navbar />
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/login/" component={LoginScreen} />
-              <Route exact path="/login/admin" component={AdminLogin} />
-              <Route exact path="/admin/dashboard" component={AdminDashboard} />
-              <Route exact path="/admin/list_user" component={ListUser} />
-              <Route exact path="/admin/add_user" component={AddUser} />
-              <Route exact path="/admin/add_field" component={AddField} />  
+              <Route exact path="/register" component={RegisterScreen} />
+              <Route exact path="/voli" component={LapanganVoli} />
+              <Route exact path="/basket" component={LapanganBasket} />
+              <Route exact path="/futsal" component={LapanganFutsal} />
+              <Route exact path="/booking_details" component={BookingDetails} />
+              <Route exact path="/booking_list" component={BookingList} />
+              <Route exact path="/lapangan/:fieldId" component={LapanganDetails} />
+              <Route exact path="/shoes" component={Shoes} />
+              <Route exact path="/kolam" component={Kolam} />
+              <Route exact path="/test" component={Export} />
+              <Route exact path="/checkout/:idTrans" component={Checkout} />
+              <Route exact path="/history" component={History} />
+              <Route exact path="/e-ticket/:idTrans" component={ETicket} />
+              <Route exact path="/profile/:userId" component={UserProfile} />
             </Switch>
             <div style={{ height: "120px" }} />
           </>
-        )
-      } else if (this.props.user.role === "admin") {
-        return (
-           <>
-           <Navbar />
-           <Switch>
-             <Route exact path="/" component={Home} />
-             <Route exact path="/admin/task" component={AdminTask} />
-             <Route exact path="/login/admin" component={AdminLogin} />
-
-           </Switch>
-           <div style={{ height: "120px" }} />
-         </>
-        )}
-      } else if (this.props.user.role === "admin") {
-        return (
-           <>
-           <Navbar />
-           <Switch>
-             <Route exact path="/" component={Home} />
-             <Route exact path="/login/" component={LoginScreen} />
-             <Route exact path="/register" component={RegisterScreen} />
-             <Route exact path="/voli" component={LapanganVoli} />
-             <Route exact path="/basket" component={LapanganBasket} />
-             <Route exact path="/futsal" component={LapanganFutsal} />
-             <Route exact path="/booking_details" component={BookingDetails} />
-             <Route exact path="/booking_list" component={BookingList} />
-             <Route exact path="/lapangan/:fieldId" component={LapanganDetails} />
-             <Route exact path="/shoes" component={Shoes} />
-             <Route exact path="/kolam" component={Kolam} />
-             <Route exact path="/test" component={Export} />
-             <Route exact path="/checkout/:idTrans" component={Checkout} />
-             <Route exact path="/history" component={History} />
-             <Route exact path="/admin/task" component={AdminTask} />
-             <Route exact path="/login/admin" component={AdminLogin} />
-
-           </Switch>
-           <div style={{ height: "120px" }} />
-         </>
-        )
-    } else {
+          )
+        } else {
+          return (
+            <>
+            <Navbar />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/login/" component={LoginScreen} />
+              <Route exact path="/register" component={RegisterScreen} />
+              <Route exact path="/login/admin" component={AdminLogin} />
+              <Route exact path="/test" component={Export} />
+              <Route exact path="/lapangan/:fieldId" component={LapanganDetails} />
+              <Route exact path="/voli" component={LapanganVoli} />
+              <Route exact path="/basket" component={LapanganBasket} />
+              <Route exact path="/futsal" component={LapanganFutsal} />
+            </Switch>
+            <div style={{ height: "120px" }} />
+            </>
+          )
+        }
+   } else {
       return (
           <div>
             <WaveTopBottomLoading />
+            {/* loadingg..... */}
           </div>
       ) 
     }

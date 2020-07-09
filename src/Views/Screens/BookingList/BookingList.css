@@ -1,8 +1,42 @@
 .fontawesome-icon {
-    cursor: pointer;
-    color: black;
+    cursor: pointer !important;
+    color: red !important;
 }
 
 .fontawesome-icon:hover {
-    color: blue;
+    color: black !important;
 }
+
+.tengah-gambar {
+    margin-left: 0px !important;
+    margin-top: 10px !important;
+    height: 200px;
+}
+
+.icon-kosong {
+  margin-top: 150px !important;
+}
+
+.link-home {
+    text-decoration: none  !important;
+    color: #1e4693;
+}
+
+.link-home:hover {
+    text-decoration: none  !important;
+    color: black  !important;
+    font-weight: bold  !important;
+}
+
+
+.button-checkout {
+    margin-left: 1220px  !important;
+    background-color: #1e4693  !important;
+}
+
+.button-checkout:hover {
+    background-color: green  !important;
+    color: white  !important;
+}
+
+

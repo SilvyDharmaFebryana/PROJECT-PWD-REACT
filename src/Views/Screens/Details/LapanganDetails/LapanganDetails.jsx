@@ -5,20 +5,19 @@ import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import "./LapanganDetails.css";
 // import DatePicker from "react-date-picker";
 import DatePicker from "react-datepicker";
-import { registerLocale, setDefaultLocale } from  "react-datepicker";
-import id from 'date-fns/locale/es';
 import "react-datepicker/dist/react-datepicker.css";
 import "react-calendar/dist/Calendar.css";
 import { connect } from "react-redux";
 import swal from "sweetalert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { faRestroom, faToilet, faChargingStation, faTrashAlt, faMosque, faClock, faVolleyballBall, faBasketballBall, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
+import { faRestroom, faToilet, faChargingStation, faTrashAlt, faMosque, faClock, faVolleyballBall, faBasketballBall, faCalendarAlt, faStar } from "@fortawesome/free-solid-svg-icons";
 // import ButtonUI from "../../../Components/Buttons/Buttons";
 import { faFutbol } from "@fortawesome/free-regular-svg-icons";
 import { Link, Redirect } from "react-router-dom";
+import { faStar as star } from "@fortawesome/free-regular-svg-icons";
 
-registerLocale('id', id)
+
 
 class LapanganDetails extends React.Component {
   state = {
@@ -74,7 +73,7 @@ class LapanganDetails extends React.Component {
         .then((res) => {
             // console.log(res.data);
             this.setState({ lapanganDetails: res.data });
-            console.log(this.state.lapanganDetails.id);
+            console.log(this.state.lapanganDetails.rating);
             
         })
         .catch((err) => {
@@ -283,10 +282,10 @@ class LapanganDetails extends React.Component {
             <div className="col-5">
               <div>
                 <div className="d-flex">
-                  <h2 style={{ color: "grey" }}>Lapangan {category}</h2>
+                  <h2 style={{ color: "#737373" }}>Lapangan {category}</h2>
                   <p
                     className="font-weight-bolder ml-2"
-                    style={{ color: "grey" }}
+                    style={{ color: "#737373" }}
                   >
                     {type}
                   </p>
@@ -300,14 +299,61 @@ class LapanganDetails extends React.Component {
                     / <p className="small">{"   "}Jam</p>
                   </h4>
                 </span>
+                <div className="mt-4 d-flex">
+                  {
+                    this.state.lapanganDetails.rating == 1 ? (
+                      <>
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
+                      </>
+                    ) : this.state.lapanganDetails.rating == 2 ? (
+                      <>
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
+                      </>
+                    ) : this.state.lapanganDetails.rating == 3 ? (
+                      <>
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
+                      </>
+                    ) : this.state.lapanganDetails.rating == 4 ? (
+                      <>
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
+                      </>
+                    ) : this.state.lapanganDetails.rating == 5 ? (
+                      <>
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                        <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
+                      </>
+                    ) : <p>Belum ada rating</p>
+                  }
+                  <p className="ml-2" style={{ fontSize: "14px", color: "#ff9900", fontWeight:"bold" }}>{this.state.lapanganDetails.rating} / 5</p>
+                </div>
+                
                 <div className="mt-4">
-                  <p className="font-weight-bolder" style={{ color: "grey" }}>
+                  <p className="font-weight-bolder" style={{ color: "#737373" }}>
                     Deskripsi
                   </p>
                   <p className="mt-2 align-jus">{description}</p>
                 </div>
                 <div className="mt-4">
-                  <p className="font-weight-bolder" style={{ color: "grey" }}>
+                  <p className="font-weight-bolder" style={{ color: "#737373" }}>
                     Fasilitas
                   </p>
                   <div className="d-flex">
@@ -362,17 +408,10 @@ class LapanganDetails extends React.Component {
                     ) : null}
                   </div>
                 </div>
+                
+
                 <div>
-                  <center>
-                    {
-                      this.props.user.id > 0 ? (
-                          <input className="button-book mt-4" type="button" value="Booking" onClick={this.toggle}/>
-                      ) : (
-                          <input className="button-book mt-4" type="button" value="Booking" onClick={this.mustToLogin}/>
-                      )
-                    }
-                  
-                  </center>
+                 
                   <Modal isOpen={this.state.modalOpen} toggle={this.toggle}>
                   <ModalHeader toggle={this.toggle}>
                     <FontAwesomeIcon
@@ -402,12 +441,10 @@ class LapanganDetails extends React.Component {
                       onChange={this.onChangeDate}
                       value={(this.state.lapanganDetails.date)}
                       style={{ color: "#003cb3" }}
-                      // dateFormat="dd/MM/yyyy"
+                      dateFormat="MM/dd/yyyy"
                       minDate={new Date()}
-                      locale="id"
-                      toLocaleString
-                      // registerLocale={('es', es)}
-                    
+                      utcOffset="UTC(+0700)"
+
                       // isClearable={true}
                     />
                     <select
@@ -603,6 +640,17 @@ class LapanganDetails extends React.Component {
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          <center>
+            {
+              this.props.user.id > 0 ? (
+                <input className="button-book mt-4" type="button" value="Booking now !" onClick={this.toggle} />
+              ) : (
+                  <input className="button-book mt-4" type="button" value="Booking now !" onClick={this.mustToLogin} />
+                )
+            }
+          </center>
         </div>
       </div>
     );

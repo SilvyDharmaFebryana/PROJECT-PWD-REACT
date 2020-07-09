@@ -23,6 +23,7 @@
 
 .align-jus {
     text-align: justify;
+    font-size: 14px;
 }
 
 .book-wrap {
@@ -31,11 +32,11 @@
 }
 
 .button-book {
-  width: 200px;
+  width: 20%;
   height: 40px;
   background-color: #336699;
   color: #e6e6e6;
-  border-radius: 20px;
+  border-radius: 4px;
   opacity: 20%;
   border: none;
   transition: all ease-in-out 200ms;

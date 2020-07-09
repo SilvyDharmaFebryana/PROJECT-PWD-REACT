@@ -16,13 +16,18 @@ import { faPlus, faBookOpen, faLandmark, faTasks, faTicketAlt, faSearch, faSearc
 import { Breadcrumb, BreadcrumbItem, FormGroup, Label, Input } from 'reactstrap';
 import { Link } from "react-router-dom"
 import { Carousel, CarouselControl, CarouselItem } from "reactstrap";
+import Axios from "axios";
+import { API_URL } from '../../../Constants/API'
+import CardLapangan from '../../Components/Card/CardLapangan/CardLapangan'
+import { searchInputHandler } from "../../../Redux/Actions";
+ 
 
 
 const dummy = [
     {
         productName: "KICKOFF",
         image: cover,
-        desc: `----- Sweating makes you healty ----- \n
+        desc: `Sweating makes you healty \n
                 Booking lapangan yang kamu inginkan, Kickoff menyediakan tempat berolahraga dengan fasilitas yang sangat nyaman dan bersih serta mematuhi protokol
                 kesehatan yang berlaku, kami menyediakan dua jenis lapangan yaitu indoor dan outdoor sehingga anda bisa memilih yang anda inginkan.`,
         id: 1,
@@ -30,7 +35,7 @@ const dummy = [
     {
         productName: "CARE",
         image: care,
-        desc: `--- Melayani dengan sepenuh hati --- \n
+        desc: ` Melayani dengan sepenuh hati \n
                 Sehubung dengan adanya pandemi COVID-19, kami selalu rutin untuk melakukan penyemprotan disinfektan secara rutin di semua area olahraga, dan kami
                 juga menyediakan handsanitizer di setiap sudut untuk di gunakan oleh pengunjung`,
         id: 2,
@@ -39,7 +44,7 @@ const dummy = [
         productName: "",
         image: baskteOrang,
         desc: ` Dengan berolahraga, tubuh kita akan merasa jauh lebih baik. Selain itu, olahraga merupakan pilihan terbaik untuk mengatasi berbagai hal yang membebani pikiran, mengurangi depresi karena interaksi yang dijalin dengan berolahraga akan membantu untuk mengurangi nya.
-                Olahraga juga mampu meningkatkan perkembangan tubuh bagi anak-anak menjadi lebih tinggi. Kenapa? Olahraga akan membantu perkembangan otot lebih kuat karena hormon perkembangan tubuh bekerja dengan maksimal.`,
+                Olahraga juga mampu meningkatkan perkembangan tubuh bagi anak-anak menjadi lebih tinggi.`,
         id: 3,
     },
     {
@@ -71,8 +76,88 @@ class Home extends React.Component {
     state = {
         activeIndex: 0,
         animating: false,
-        activeCategory: ""
+        activeCategory: "",
+        voli: [],
+        futsal: [],
+        all: [],
+        basket: [],
       };
+
+
+    getLapanganBasket = () => {
+        Axios.get(`${API_URL}/lapangan/basket`, {
+          params: {
+            category: "basket"
+          }
+        })
+          .then((res) => {
+            this.setState({ basket: res.data })
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+
+    getLapanganFutsal = () => {
+        Axios.get(`${API_URL}/lapangan/futsal`, {
+          params: {
+            category: "futsal"
+          }
+        })
+          .then((res) => {
+            this.setState({ futsal: res.data })
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    }
+
+    getLapanganVoli = () => {
+        Axios.get(`${API_URL}/lapangan/voli`, {
+          params: {
+            category: "voli"
+          }
+        })
+          .then((res) => {
+            this.setState({ voli: res.data })
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    }
+
+    getAllLapangan = () => {
+        Axios.get(`${API_URL}/lapangan/`)
+          .then((res) => {
+            this.setState({ all: res.data })
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    }
+    
+    
+    componentDidMount() {
+        this.getLapanganBasket()
+        this.getLapanganFutsal()
+        this.getLapanganVoli()
+        this.getAllLapangan()
+    }
+    
+
+    renderLapangan = () => {
+        return this.state.all.map((val) => {
+            if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+              return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+            }
+        })
+    }
+
+    //==================================== CARROUSSEL =====================================================================================================================
 
     renderCarouselItems = () => {
         return dummy.map(({ image, productName, desc, id }) => {
@@ -88,9 +173,9 @@ class Home extends React.Component {
                   <div className="col-6 d-flex flex-row justify-content-center">
                       <img src={image} alt="" style={{ height: "300px", width: "100%" }} />
                     </div>
-                    <div className="col-6" style={{ width: "50%", color: "#060d13" }}>
+                    <div className="col-6" style={{ width: "50%", color: "#c5d9ec" }}>
                       <h2 style={{ width: "20%" }}>{productName}</h2>
-                      <p className="mt-4" style={{ width: "40%", fontSize: "12px"}} >{desc}</p>
+                      <p className="mt-4" style={{ width: "40%", fontSize: "14px"}} >{desc}</p>
                        
                     </div>
                    
@@ -102,24 +187,28 @@ class Home extends React.Component {
         });
       };
 
-      nextHandler = () => {
+    nextHandler = () => {
         if (this.state.animating) return;
         let nextIndex =
-          this.state.activeIndex === dummy.length - 1
-            ? 0
-            : this.state.activeIndex + 1;
+            this.state.activeIndex === dummy.length - 1
+                ? 0
+                : this.state.activeIndex + 1;
         this.setState({ activeIndex: nextIndex });
-      };
-    
-      prevHandler = () => {
+    };
+
+    prevHandler = () => {
         if (this.state.animating) return;
         let prevIndex =
-          this.state.activeIndex === 0
-            ? dummy.length - 1
-            : this.state.activeIndex - 1;
+            this.state.activeIndex === 0
+                ? dummy.length - 1
+                : this.state.activeIndex - 1;
         this.setState({ activeIndex: prevIndex });
-      };
+    };
 
+
+    //==========================================================================================================================================================================
+    
+    
     showMenu = () => {
         if (this.props.user.role === "super_admin") {
             return (
@@ -272,7 +361,12 @@ class Home extends React.Component {
                                     icon={faSearch}
                                     style={{ fontSize: 23, color: "#003cb3" }}
                                 />
-                               <input className="search-input mr-5" type="text" placeholder="search"/>
+                               <input 
+                                    className="search-input mr-5" 
+                                    type="text" 
+                                    placeholder="search"  
+                                    onChange={(e) => this.props.onSearch(e.target.value)}
+                                />
                            </div>
                            <div>
                                <div className="filter-wrap">
@@ -285,31 +379,29 @@ class Home extends React.Component {
                                         <p className="mt-3" style={{ fontSize: "12px", fontWeight: "bold" }}>Sort By</p>
                                     </div>
                                     <div className="dalam">
-                                        <p className="" style={{ fontSize: "12px", fontWeight: "bold" }}>Cabang Olahraga</p>
-                                        <div className="category">
-                                            <FormGroup check>
-                                                <Label check>
-                                                    <Input type="radio" name="radio1" />{' '}
-                                                    Lapangan Futsal
-                                                </Label>
-                                            </FormGroup>
-                                            <FormGroup check>
-                                                <Label check>
-                                                    <Input type="radio" name="radio1" />{' '}
-                                                   Lapangan Basket
-                                                </Label>
-                                            </FormGroup>
-                                            <FormGroup check disabled>
-                                                <Label check>
-                                                    <Input type="radio" name="radio1" />{' '}
-                                                    Lapangan Voli    
-                                                </Label>
-                                            </FormGroup>
+                                        <p className="ml-3 mt-3" style={{ fontSize: "12px", fontWeight: "bold" }}>Cabang Olahraga</p>
+                                        <div className="category d-flex">
+
+                                        <form className="d-flex">
+                                            <span>
+
+                                                <input className="" style={{ fontSize: "12px"}} type="radio" id="voli" name="lapangan" value="voli" />
+                                                <label className="ml-2" style={{ fontSize: "12px"}} for="voli">Lapangan Voli</label><br/>
+                                                <input className="ml-1 " style={{ fontSize: "12px"}} type="radio" id="futsal" name="lapangan" value="futsal" />
+                                                <label className="ml-2" style={{ fontSize: "12px"}} for="futsal">Lapangan Futsal</label><br/>
+                                                <input className="ml-2" style={{ fontSize: "12px"}} type="radio" id="basket" name="lapangan" value="basket" />
+                                                <label className="ml-2" style={{ fontSize: "12px"}} for="basket">Lapangan Basket</label><br/>
+                                                <input className="ml-2" style={{ fontSize: "12px"}} type="radio" id="basket" name="lapangan" value="badminton" />
+                                                <label className="ml-2" style={{ fontSize: "12px"}} for="badminton">Lapangan Badminton</label><br/>
+                                        
+                                            </span>
+                                        </form>
+                                          
                                         </div>
                                     </div>
                                     <div className="dalam">
-                                        <p className="" style={{ fontSize: "12px", fontWeight: "bold" }}>Type Lapangan</p>
-                                        <div className="category">
+                                        <p className="ml-3 mt-3" style={{ fontSize: "12px", fontWeight: "bold" }}>Type Lapangan</p>
+                                        <div className="type">
                                             
                                         </div>
                                     </div>
@@ -337,6 +429,18 @@ class Home extends React.Component {
                             </Carousel>
                         </div>
                    </div>
+                    <div>
+                        <h3 className="text-center font-weight-bolder mt-5">Lapangan</h3>
+                        <div className="container-lapangan">
+                            {/* BEST SELLER SECTION */}
+                            
+                            <div className="row d-flex flex-wrap justify-content-center">
+                                {
+                                    this.renderLapangan()
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )
         }
@@ -364,8 +468,14 @@ class Home extends React.Component {
 const mapStateToProps = (state) => {
     return {
         user: state.user,
+        search: state.search
     };
 };
 
-export default connect(mapStateToProps)(Home)
+const mapDispatchToProps = {
+    onSearch: searchInputHandler,
+
+  };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
 

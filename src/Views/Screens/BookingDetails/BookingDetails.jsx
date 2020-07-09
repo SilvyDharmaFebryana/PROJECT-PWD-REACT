@@ -29,7 +29,10 @@ class BookingDetails extends React.Component {
             status: "pending",
             totalDuration: 0,
             totalPrice: 0,
+            totalPaket: 0,
+            grandTotal: 0,
             bookingDate: 0,
+            paketId: 9,
             noPesanan: 0,
             paymentMethod: "transfer",
             bank: "",
@@ -81,6 +84,7 @@ class BookingDetails extends React.Component {
                     totalDuration: allTotalJam,
                     totalPrice: subTotal,
                     bookingDate: res.data.date,
+
                 },
                 listBookingItem: res.data
             })
@@ -119,14 +123,17 @@ class BookingDetails extends React.Component {
     checkoutBookingButtonHandler = () => {
        
         let userId =  this.props.user.id
+        let paketId = this.state.bookingTransaction.paketId
 
-        Axios.post(`${API_URL}/transaction/${userId}`, {
+        Axios.post(`${API_URL}/transaction/${userId}/${paketId}`, {
             noPesanan: new Date().getTime(),
             checkoutDate: new Date().toLocaleString(),
             paymentMethod: this.state.bookingTransaction.paymentMethod,
             status: "noPayment",
             totalDuration: this.state.bookingTransaction.totalDuration,
-            totalPrice: this.state.bookingTransaction.totalPrice
+            totalPrice: this.state.bookingTransaction.totalPrice,
+            totalPaket: this.state.bookingTransaction.totalPaket,
+            grandTotal: this.state.bookingTransaction.totalPrice + this.state.bookingTransaction.totalPaket
         })
         .then((res) => {
             this.setState({ idTrans: res.data.id})
@@ -239,6 +246,106 @@ class BookingDetails extends React.Component {
                 <div className="row">
                         <div className="col-7">
                             <div className="ml-3 mt-2">
+                            <div className="mb-4 d-flex">
+                               <p style={{ fontSize: "16px", fontWeight: "bold" }}> Pilih Paket : </p>
+                                    <select
+                                    className="ml-3"
+                                    style={{ width: "85%" }}
+                                    onChange={(e) => this.inputHandler(e, "paymentMethod", "paketId")}
+                                >
+                                    <option 
+                                        value="none"
+                                        onClick={() => this.setState({
+                                            bookingTransaction: {
+                                                ...this.state.bookingTransaction,
+                                                totalPaket: 0,
+                                                paketId: 9
+                                            }
+                                        })} 
+                                    > None </option>
+                                    <option 
+                                        value="aqua1"
+                                        onClick={() => this.setState({
+                                            bookingTransaction: {
+                                                ...this.state.bookingTransaction,
+                                                totalPaket: 20000,
+                                                paketId: 1
+                                            }
+                                        })} 
+                                    >Aqua 1  Dus </option>
+                                    <option 
+                                        value="aqua2"
+                                        onClick={() => this.setState({
+                                            bookingTransaction: {
+                                                ...this.state.bookingTransaction,
+                                                totalPaket: 35000,
+                                                paketId: 2
+                                            }
+                                        })} 
+                                    >Aqua 2 Dus</option>
+                                    <option 
+                                        value="bola1"
+                                        onClick={() => this.setState({
+                                            bookingTransaction: {
+                                                ...this.state.bookingTransaction,
+                                                totalPaket: 5000,
+                                                paketId: 3
+                                            }
+                                        })} 
+                                    >Bola (+1)</option>
+                                    <option 
+                                        value="bolaAqua1"
+                                        onClick={() => this.setState({
+                                            bookingTransaction: {
+                                                ...this.state.bookingTransaction,
+                                                totalPaket: 23000,
+                                                paketId: 4
+                                            }
+                                        })} 
+                                    >Bola (+1) + Aqua 1 Dus</option>
+                                    <option 
+                                        value="bola2"
+                                        onClick={() => this.setState({
+                                            bookingTransaction: {
+                                                ...this.state.bookingTransaction,
+                                                totalPaket: 10000,
+                                                paketId: 5
+                                            }
+                                        })} 
+                                    >Bola (+2)</option>
+                                    <option 
+                                        value="aqua3"
+                                        onClick={() => this.setState({
+                                            bookingTransaction: {
+                                                ...this.state.bookingTransaction,
+                                                totalPaket: 50000,
+                                                paketId: 6
+                                            }
+                                        })} 
+                                    >Aqua 3 Dus</option>
+                                    <option 
+                                        value="aqua5"
+                                        onClick={() => this.setState({
+                                            bookingTransaction: {
+                                                ...this.state.bookingTransaction,
+                                                totalPaket: 90000,
+                                                paketId: 7
+                                            }
+                                        })} 
+                                    >Aqua 5 Dus</option>
+                                    <option 
+                                        value="bola2aqua5"
+                                        onClick={() => this.setState({
+                                            bookingTransaction: {
+                                                ...this.state.bookingTransaction,
+                                                totalPaket: 100000,
+                                                paketId: 8
+                                            }
+                                        })} 
+                                    >Bola (+2) + Aqua 5 Dus</option>
+                                </select>
+
+                            </div>
                                 <Table bordered>
                                         {
                                             this.renderDetails()
@@ -274,12 +381,6 @@ class BookingDetails extends React.Component {
                                             <td>:</td>
                                             <td>{this.state.bookingTransaction.totalDuration} Jam</td>
                                         </tr>
-                                        
-                                        <tr>
-                                            <th>Total Bayar</th>
-                                            <td>:</td>
-                                            <td style={{ fontSize: "16px", fontWeight: "bolder"}}>{priceFormatter(this.state.bookingTransaction.totalPrice)}</td>
-                                        </tr>
                                         <tr>
                                             <th>Metode Pembayaran</th>
                                             <td>:</td>
@@ -293,6 +394,21 @@ class BookingDetails extends React.Component {
                                                     <option value="merchant">Merchant</option>
                                                 </select>
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total</th>
+                                            <td>:</td>
+                                            <td>{priceFormatter(this.state.bookingTransaction.totalPrice)}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Paket</th>
+                                            <td>:</td>
+                                            <td>{priceFormatter(this.state.bookingTransaction.totalPaket)}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total Bayar</th>
+                                            <td>:</td>
+                                            <td style={{ fontSize: "16px", fontWeight: "bolder"}}>{priceFormatter(this.state.bookingTransaction.totalPrice + this.state.bookingTransaction.totalPaket)}</td>
                                         </tr>
                                     </Table>
                                     <Button style={{width: "100%"}} onClick={this.checkoutBookingButtonHandler}>checkout</Button>
