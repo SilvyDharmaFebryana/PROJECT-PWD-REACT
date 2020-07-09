@@ -34,3 +34,80 @@ body {
     background-color: #060d13;
     color: #e6e6e6;
 }
+
+.search {
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 100px;
+    height: 40px;
+    background: lightgray;
+    border-radius: 4px;
+    transition: width 2s;
+}
+
+.search:hover {
+    width: 300px;
+}
+
+.search-input {
+    width: 80px;
+    height: 40px;
+    background: lightgray;
+    border-radius: 4px;
+    border: none;
+    transition: width 2s;
+}
+
+.search-input:hover {
+    width: inherit;
+}
+
+.filter-wrap {
+    /* border: 3px solid #336699; */
+    background-color: lightgray;
+    height: 450px;
+    margin-left: 20px;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+.category {
+    border: none;
+    border-radius: 4px;
+    width: 90%;
+    margin: 14px;
+    height: 100px;
+    background-color: #f2f2f2;
+    justify-items: flex-start !important;
+}
+
+p {
+    text-align: start !important;
+}
+
+
+/* .dalam {
+
+    width: 90%;
+    margin-left: 14px;
+    margin-top: 25px;
+    
+} */
+
+.carousel-item-home-bg {
+    background: rgb(7, 15, 32);
+    /* background: linear-gradient(
+      90deg,
+      rgba(7, 15, 32, 1) 6%,
+      rgba(60, 100, 177, 1) 69%,
+      rgba(90, 130, 207, 1) 100%
+    ); */
+    background-color: #9fbedf;
+    opacity: inherit;
+  }
+  
+  .carousel-item-home {
+    width: 100vw;
+    height: 520px;
+  }
+  
