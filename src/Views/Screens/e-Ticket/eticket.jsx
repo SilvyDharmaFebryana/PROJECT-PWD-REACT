@@ -21,6 +21,7 @@ class ETicket extends React.Component {
     state = {
         detailTicket : [],
         transId : [],
+        paket: [],
 
     }
 
@@ -55,10 +56,24 @@ class ETicket extends React.Component {
         })
     }
 
+    getPaket = () => {
+        Axios.get(`${API_URL}/paket/details/${this.state.transId.paketId}`)
+        .then((res) => {
+            console.log(res.data);
+            this.setState({ paket : res.data })
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
 
     componentDidMount() {
         this.getDetailsTicket()
-        // this.getIdTrans()
+        this.getIdTrans()
+        console.log(this.state.transId.id);
+        
+        this.getPaket()
         
     }
 
@@ -98,19 +113,6 @@ class ETicket extends React.Component {
                 <Alert color="success" className="mt-4">
                    e-Ticket anda telah terbit !
                 </Alert> 
-            {/* <div className="mb5">
-            <button onClick={this.printDocument}>Print</button>
-            </div>
-            <div id="divToPrint" className="mt4" style={{ backgroundColor: 'white',
-            width: '210mm',
-            minHeight: '297mm',
-            marginLeft: 'auto',
-            marginRight: 'auto' }} 
-            >
-            <div>Note: Here the dimensions of div are same as A4</div> 
-            <div>You Can add any component here</div>
-            <h1>INI PDF NYA</h1>
-            </div> */}
                 <div className="d-flex justify-content-end mr-4">
                     <Button color="success" onClick={this.printDocument}>
                         <FontAwesomeIcon
@@ -165,6 +167,12 @@ class ETicket extends React.Component {
                                     this.renderList()
                                 }
                             </Table>
+                            {/* <br/>
+                            <br/>
+                            <div>
+                                Paket Tambahan :
+                                Nama Paket : {this.state.paket.namaPaket}
+                            </div> */}
                         </div>
                         <br/>
                         <br/>
@@ -172,12 +180,15 @@ class ETicket extends React.Component {
                         <br/>
                         <br/>
                         <div>
-                            <p className="ml-2 " style={{ color: "red"}}>Terms & Condition</p>
-                            <ul style={{ color: "red"}}>
-                                <li>Bawa bukti ini untuk di tunjukkan ke admin saat ingin check-in</li>
-                                <li>Jangan sampai hilang</li>
-                                <li>Catat kode booking yang tertera</li>
-                            </ul>
+                            <Alert color="secondary" style={{ fontSize: "10px" }}>
+                                <p className="ml-2 " style={{ color: "grey"}}>Terms & Condition</p>
+                                <ul style={{ color: "grey"}}>
+                                    <li>Bawa bukti ini untuk di tunjukkan ke admin saat ingin check-in</li>
+                                    <li>Jangan sampai hilang</li>
+                                    <li>Catat kode booking yang tertera</li>
+                                </ul>
+                            </Alert>
+                            
                         </div>
                     </div>
                 </div>

@@ -48,6 +48,11 @@
     margin-top: 0px;
 }
 
+.browse{
+    margin-left: 570px;
+    margin-top: 0px;
+}
+
 .icon-edit:hover {
     color: #2d5986;
     cursor: pointer;
@@ -60,5 +65,17 @@
     background-color: #2d5986;
 
 }
+
+
+.circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: #f4f5f4;
+    text-align: center;
+    /* margin: 3px; */
+    margin-top: 20px;
+    margin-left: 600px;
+  }
 
 

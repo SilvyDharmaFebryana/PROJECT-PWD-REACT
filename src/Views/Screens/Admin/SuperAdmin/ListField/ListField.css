@@ -1,0 +1,42 @@
+.gambar {
+    width: 70%;
+    height: 180px;
+    margin-left: 30px;
+}
+
+.wrap-table {
+    width: 90%;
+    margin-left: 70px;
+}
+
+.icon-edit-lap {
+    color: #2d5986;
+    /* border: 5px; */
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.icon-edit-lap:hover {
+    color: navy;
+    cursor: pointer;
+}
+
+.icon-hapus-lap {
+    color: red;
+    /* border: 5px; */
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.icon-hapus-lap:hover {
+    color: maroon;
+    cursor: pointer;
+}
+
+.img-edit {
+    margin-left: 17px;
+    margin-top: 20px;
+    width: 93%;
+    height: 150px;
+}
+

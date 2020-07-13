@@ -12,11 +12,12 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^4.5.0",
     "html2canvas": "^1.0.0-rc.5",
     "jsonwebtoken": "^8.5.1",
     "jspdf": "^1.5.3",
     "react": "^16.13.1",
+    "react-bootstrap": "^1.2.2",
     "react-calendar": "^3.1.0",
     "react-date-picker": "^8.0.1",
     "react-datepicker": "^2.16.0",
@@ -58,5 +59,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^5.1.5",
+    "@types/reactstrap": "^8.5.0"
   }
 }

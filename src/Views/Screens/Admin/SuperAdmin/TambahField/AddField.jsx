@@ -1,9 +1,10 @@
 import React from "react"
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import "./AddField.css"
-import { Table } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
 import Axios from "axios"
 import { API_URL } from "../../../../../Constants/API";
+import swal from "sweetalert";
 
 
 class AddField extends React.Component {
@@ -33,6 +34,7 @@ class AddField extends React.Component {
         })
     }
 
+   
     fileChangeHandler = (e) => {
         this.setState({ selectedFile: e.target.files[0] });
     };
@@ -51,11 +53,31 @@ class AddField extends React.Component {
             .then((res) => {
                 console.log(res.data)
                 this.setState({ file: res.data })
-                alert("tersimpan")
+                swal(
+                    "Success!",
+                    "Berhasil menyimpan lapangan baru",
+                    "success"
+                )
+                this.setState ({
+                    formField: {
+                        fieldName: "",
+                        type: "",
+                        category: "",
+                        price: "",
+                        description: "",
+                       
+                    },
+                    selectedFile: false
+                })
             })
             .catch((err) => {
                 console.log("ERROR");
                 console.log(err);
+                swal(
+                    "Gagal!",
+                    "Gagal menyimpan lapangan baru",
+                    "error"
+                )
             });
 
             
@@ -82,7 +104,7 @@ class AddField extends React.Component {
                                 <td>
                                     <input 
                                         className="input-text"  
-                                        // value={this.state.formField.username}
+                                        value={this.state.formField.fieldName}
                                         placeholder="field Name"
                                         onChange={(e) => this.inputHandler(e, "fieldName", "formField")}
                                     />
@@ -96,7 +118,7 @@ class AddField extends React.Component {
                                         className="input-text" 
                                         name="category" 
                                         id=""
-                                        // value={this.state.formField.gender}
+                                        value={this.state.formField.category}
                                         onChange={(e) => this.inputHandler(e, "category", "formField")}
                                         placeholder="Field Type"
                                     >
@@ -142,7 +164,7 @@ class AddField extends React.Component {
                                         className="input-text" 
                                         name="type" 
                                         id=""
-                                        // value={this.state.formField.gender}
+                                        value={this.state.formField.type}
                                         onChange={(e) => this.inputHandler(e, "type", "formField")}
                                         placeholder="Field Category"
                                     >
@@ -168,7 +190,7 @@ class AddField extends React.Component {
                                 <td>
                                     <input 
                                         className="input-text" 
-                                        // value={this.state.formField.email}
+                                        value={this.state.formField.price}
                                         placeholder="price"
                                         onChange={(e) => this.inputHandler(e, "price", "formField")}
                                     />
@@ -191,7 +213,7 @@ class AddField extends React.Component {
                                         id="" 
                                         cols="30" 
                                         rows="2"
-                                        // value={this.state.formField.address}
+                                        value={this.state.formField.description}
                                         placeholder="description"
                                         onChange={(e) => this.inputHandler(e, "description", "formField")}
                                     >
@@ -199,12 +221,11 @@ class AddField extends React.Component {
                                 </td>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td><button onClick={this.fieldUploadDataHandler}>Create Field</button></td>
-                            </tr>
-                        </tbody>
+
                 </Table>
+                <div>
+                    <Button className="button-create" color="info" onClick={this.fieldUploadDataHandler}>Create Field</Button>
+                </div>
             </div>
         </div>
         )

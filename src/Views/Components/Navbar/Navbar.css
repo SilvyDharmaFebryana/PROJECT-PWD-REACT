@@ -11,6 +11,8 @@
   border-radius: 50%;
   background-color: #f4f5f4;
   text-align: center;
+  margin: 3px;
+  margin-right: 9px;
 }
 
 .navbar-container {

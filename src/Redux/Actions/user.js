@@ -19,18 +19,18 @@ export const loginHandler = (userData) => {
             }  
         })
             .then((res) => {
-                console.log(res.data);       
+                console.log(res.data);
                 dispatch({
                     type: ON_LOGIN_SUCCESS,
                     payload: res.data,
-                });
+                });  
             })
             .catch((err) => {
                 console.log(err);
                 dispatch({
                     type: ON_LOGIN_FAIL,
                     payload: "Username atau password salah",
-                })
+                });
             })
         }
 };
@@ -43,17 +43,10 @@ export const userKeepLogin = (userData) => {
             },
         })
             .then((res) => {
-                // if (res.data.length > 0) {
                     dispatch({
                         type: ON_LOGIN_SUCCESS,
                         payload: res.data,
                     });
-                // } else {
-                    // dispatch({
-                    //     type: ON_LOGIN_FAIL,
-                    //     payload: "Username atau password salah",
-                    // });
-                // }
             })
             .catch((err) => {
                 console.log(err);
@@ -107,6 +100,7 @@ export const registerHandler = (userData) => {
                             address: address,
                             gender: gender,
                             phoneNumber: phoneNumber,
+                            profileImage: null,
                             email: email,
                             role: role,
                         })

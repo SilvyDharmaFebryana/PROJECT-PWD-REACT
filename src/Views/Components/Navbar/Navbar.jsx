@@ -29,6 +29,11 @@ import {
   UncontrolledDropdown,
 } from "reactstrap";
 import logo from "../../../Assets/Images/Untitled.png";
+import noImage from "../../../Assets/Images/user/user.png"
+
+const CircleBg = ({ children }) => {
+  return <div className="circle-bg">{children}</div>;
+};
 
 class Navbar extends React.Component {
   state = {
@@ -106,11 +111,30 @@ class Navbar extends React.Component {
                 </DropdownItem>
               </DropdownMenu>
               <DropdownToggle tag="nav" className="d-flex">
-                <FontAwesomeIcon
+                {/* <FontAwesomeIcon
                   className="m-2"
                   icon={faUserAlt}
                   style={{ fontSize: 17, color: "#003cb3" }}
-                />
+                /> */}
+                <CircleBg>
+                  <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
+                    {
+                      this.props.user.profileImage == null ? (
+                        <img
+                          className="circle-bg"
+                          src={noImage}
+                          />
+                      ) : (
+                          <img
+                            className="circle-bg"
+                            src={this.props.user.profileImage}
+                          />
+                        )
+                    }
+                     
+                  </small>
+                </CircleBg>
+                
                 <h6 className="mt-1 ml-2 text-navbar">
                   {this.props.user.username}
                 </h6>

@@ -75,10 +75,10 @@ body {
     border: none;
     border-radius: 4px;
     width: 90%;
-    margin: 14px;
+    /* margin: 14px; */
     height: 200px;
     background-color: #f2f2f2;
-    justify-items: flex-start !important;
+    /* justify-items: flex-start !important; */
 }
 
 .type {
@@ -117,5 +117,12 @@ p {
   .carousel-item-home {
     width: 100vw;
     height: 520px;
+  }
+
+
+  .select-wrap {
+      width: 80%;
+      height: 40px;
+      background-color: #f2f2f2;
   }
   

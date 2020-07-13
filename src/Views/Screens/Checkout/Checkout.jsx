@@ -25,6 +25,7 @@ class Checkout extends React.Component {
         transId: {
             id: 0,
             totalPrice: 0,
+            grandTotal: 0,
             totalDuration: 0,
             status: "pending",
             paymentMethod: "",
@@ -95,9 +96,9 @@ class Checkout extends React.Component {
                 <Alert color="success" className="mt-4">
                         1 Step lagi untuk menyelesaikan pesanan Anda, mohon ikuti langkah-langkah di bawah ini untuk melakukan proses payment !
                 </Alert> 
-                <div className="wrap" style={{ border: "solid 3px lightGray" }}>
+                <div className="wrap-checkout" style={{ border: "solid 3px lightGray" }}>
                     {/* <div style={{ border: "solid 1px black" }}> */}
-                            <div className="p-3" style={{ border: "solid 1px #e6e6e6", width: "100%", backgroundColor: "#e6e6e6", color: "#4d4d4d"}}>
+                            <div className="p-3" style={{ border: "solid 1px #e6e6e6", backgroundColor: "#e6e6e6", color: "#4d4d4d"}}>
                                 <h4>Order #{this.state.transId.noPesanan}</h4>
                                 <p className="small">Issue Date : {this.state.transId.checkoutDate}</p>
                             </div>
@@ -105,7 +106,7 @@ class Checkout extends React.Component {
                             <div className="d-flex">
                                 <div className="col-6 mt-5">
                                     <h6 style={{ color: "#4d4d4d"}}>Total yang harus di bayar :</h6>
-                                    <h2 style={{ color: "#336699"}}>{ priceFormatter(this.state.transId.totalPrice) }</h2>
+                                    <h2 style={{ color: "#336699"}}>{ priceFormatter(this.state.transId.grandTotal) }</h2>
                                     <Alert color="warning">
                                         <p style={{ fontSize: "12px"}}>Bayar Pesanan sesuai dengan jumlah di atas</p>
                                     </Alert> 

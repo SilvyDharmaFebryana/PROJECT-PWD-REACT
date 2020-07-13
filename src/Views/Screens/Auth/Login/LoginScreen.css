@@ -46,6 +46,30 @@ body {
   font-family: Muli;
 }
 
+.text-input-password {
+  width: 65%;
+  height: 35px;
+  /* background-color: var(--gray-lightest); */
+  padding: 20px;
+  border: 1px solid #336699;
+  border-right: none;
+  border-radius: 20px 0px 0px 20px;
+  font-size: 16px;
+  outline: none;
+  border-bottom: 1px solid none;
+  transition: all ease 150ms;
+  font-family: Muli;
+}
+
+.icon-password {
+  width: 13%;
+  height: 42px;
+  border: 1px solid #336699;
+  border-radius: 0px 20px 20px 0px;
+  border-left: none;
+  background-color: white;
+}
+
 .shadow {
   -webkit-box-shadow: 0px 4px 19px -9px rgba(0, 0, 0, 1);
   -moz-box-shadow: 0px 4px 19px -9px rgba(0, 0, 0, 1);

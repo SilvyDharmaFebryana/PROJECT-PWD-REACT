@@ -11,7 +11,7 @@ import cover1 from "../../../Assets/Images/Showcase/cover1.png"
 import { connect } from "react-redux";
 import "./Home.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { faUser, faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
 import { faPlus, faBookOpen, faLandmark, faTasks, faTicketAlt, faSearch, faSearchMinus, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { Breadcrumb, BreadcrumbItem, FormGroup, Label, Input } from 'reactstrap';
 import { Link } from "react-router-dom"
@@ -290,9 +290,11 @@ class Home extends React.Component {
                                     </Link>
                                 </div>
                                 <div>
+                                    <Link to="/admin/list_field" style={{ textDecoration: "none", color: "inherit"}}>
                                     <button className="mt-2 button">
                                         List Field
                                     </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -325,10 +327,13 @@ class Home extends React.Component {
                                     </Link>
                                 </div>
                                 <div>
+                                    <Link to="/admin/task/list" style={{ textDecoration: "none", color: "inherit"}}>
                                     <button className="mt-2 button">
                                         Task Done
                                     </button>
+                                    </Link>
                                 </div>
+                               
                             </div>
                         </div>
                         <div className="col-6">
@@ -336,14 +341,16 @@ class Home extends React.Component {
                                 <div>
                                     <FontAwesomeIcon
                                         className="mt-5 ml-2"
-                                        icon={faTicketAlt}
+                                        icon={faCalendarAlt}
                                         style={{ fontSize: 100, color: "#336699" }}
                                     />
                                 </div>
                                 <div>
+                                    <Link to="/admin/report" style={{ textDecoration: "none", color: "inherit"}}>
                                     <button className="mt-4 button">
-                                        e-Ticket
+                                        Report Day
                                     </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -379,30 +386,84 @@ class Home extends React.Component {
                                         <p className="mt-3" style={{ fontSize: "12px", fontWeight: "bold" }}>Sort By</p>
                                     </div>
                                     <div className="dalam">
-                                        <p className="ml-3 mt-3" style={{ fontSize: "12px", fontWeight: "bold" }}>Cabang Olahraga</p>
-                                        <div className="category d-flex">
+                                        <p className="ml-3 mt-5" style={{ fontSize: "12px", fontWeight: "bold" }}>Cabang Olahraga</p>
+                                        <div className="">
 
-                                        <form className="d-flex">
-                                            <span>
+                                            <select
+                                                // value={this.state.report.fieldId}
+                                                className="mt-1 select-wrap"
+                                                onChange={(e) =>
+                                                    this.inputHandler(e, "fieldId", "report")
+                                                }
+                                            >
+                                                <option
+                                                    onClick={() =>
+                                                        this.setState({
+                                                            report: {
+                                                                ...this.state.report,
+                                                                fieldId: 0,
+                                                            },
+                                                        })
+                                                    }
+                                                    value="All Booking List"
+                                                >
+                                                    Semua Lapangan
+                                                </option>
+                                                <option
+                                                    onClick={() =>
+                                                        this.setState({
+                                                            report: {
+                                                                ...this.state.report,
+                                                                fieldId: 1,
+                                                            },
+                                                        })
+                                                    }
+                                                    value="Lapangan Voli (Indoor)"
+                                                >
+                                                    Lapangan Voli
+                                                </option>
 
-                                                <input className="" style={{ fontSize: "12px"}} type="radio" id="voli" name="lapangan" value="voli" />
-                                                <label className="ml-2" style={{ fontSize: "12px"}} for="voli">Lapangan Voli</label><br/>
-                                                <input className="ml-1 " style={{ fontSize: "12px"}} type="radio" id="futsal" name="lapangan" value="futsal" />
-                                                <label className="ml-2" style={{ fontSize: "12px"}} for="futsal">Lapangan Futsal</label><br/>
-                                                <input className="ml-2" style={{ fontSize: "12px"}} type="radio" id="basket" name="lapangan" value="basket" />
-                                                <label className="ml-2" style={{ fontSize: "12px"}} for="basket">Lapangan Basket</label><br/>
-                                                <input className="ml-2" style={{ fontSize: "12px"}} type="radio" id="basket" name="lapangan" value="badminton" />
-                                                <label className="ml-2" style={{ fontSize: "12px"}} for="badminton">Lapangan Badminton</label><br/>
-                                        
-                                            </span>
-                                        </form>
-                                          
+                                            </select>
                                         </div>
                                     </div>
                                     <div className="dalam">
-                                        <p className="ml-3 mt-3" style={{ fontSize: "12px", fontWeight: "bold" }}>Type Lapangan</p>
-                                        <div className="type">
-                                            
+                                        <p className="ml-3 mt-4" style={{ fontSize: "12px", fontWeight: "bold" }}>Type Lapangan</p>
+                                        <div className="">
+                                            <select
+                                                // value={this.state.report.fieldId}
+                                                className="mt-1 select-wrap"
+                                                onChange={(e) =>
+                                                    this.inputHandler(e, "fieldId", "report")
+                                                }
+                                            >
+                                                <option
+                                                    onClick={() =>
+                                                        this.setState({
+                                                            report: {
+                                                                ...this.state.report,
+                                                                fieldId: 0,
+                                                            },
+                                                        })
+                                                    }
+                                                    value="All Booking List"
+                                                >
+                                                   Indoor
+                                                </option>
+                                                <option
+                                                    onClick={() =>
+                                                        this.setState({
+                                                            report: {
+                                                                ...this.state.report,
+                                                                fieldId: 1,
+                                                            },
+                                                        })
+                                                    }
+                                                    value="Lapangan Voli (Indoor)"
+                                                >
+                                                    Outdoor
+                                                </option>
+
+                                            </select>
                                         </div>
                                     </div>
                                </div>

@@ -30,6 +30,11 @@ import History from './Views/Screens/History/History';
 import AdminTask from './Views/Screens/Admin/AdminTask/AdminTask';
 import ETicket from './Views/Screens/e-Ticket/eticket';
 import UserProfile from './Views/Screens/User/UserProfile';
+import ListField from './Views/Screens/Admin/SuperAdmin/ListField/ListField';
+import AdminReportDay from './Views/Screens/Admin/AdminReport/AdminReportDay';
+import PaketReport from './Views/Screens/Admin/SuperAdmin/Report/PaketReport/PaketReport';
+import TaskList from './Views/Screens/Admin/AdminTask/TaskList/TaskList';
+import ForgotPassword from './Views/Screens/User/ForgotPassword/ForgotPassword';
 
 
 
@@ -63,8 +68,10 @@ class App extends React.Component {
                 <Route exact path="/login/admin" component={AdminLogin} />
                 <Route exact path="/admin/dashboard" component={AdminDashboard} />
                 <Route exact path="/admin/list_user" component={ListUser} />
+                <Route exact path="/admin/list_field" component={ListField} />
                 <Route exact path="/admin/add_user" component={AddUser} />
-                <Route exact path="/admin/add_field" component={AddField} />  
+                <Route exact path="/admin/add_field" component={AddField} />
+                <Route exact path="/admin/report/paket" component={PaketReport} />
               </Switch>
               <div style={{ height: "120px" }} />
             </>
@@ -76,6 +83,8 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/admin/task" component={AdminTask} />
+              <Route exact path="/admin/task/list" component={TaskList} />
+              <Route exact path="/admin/report" component={AdminReportDay} />
               <Route exact path="/login/admin" component={AdminLogin} />
               
 
@@ -104,6 +113,7 @@ class App extends React.Component {
               <Route exact path="/history" component={History} />
               <Route exact path="/e-ticket/:idTrans" component={ETicket} />
               <Route exact path="/profile/:userId" component={UserProfile} />
+              <Route exact path="/users/:username" component={Home} />
             </Switch>
             <div style={{ height: "120px" }} />
           </>
@@ -122,6 +132,7 @@ class App extends React.Component {
               <Route exact path="/voli" component={LapanganVoli} />
               <Route exact path="/basket" component={LapanganBasket} />
               <Route exact path="/futsal" component={LapanganFutsal} />
+              <Route exact path="/forgot/password" component={ForgotPassword} />
             </Switch>
             <div style={{ height: "120px" }} />
             </>

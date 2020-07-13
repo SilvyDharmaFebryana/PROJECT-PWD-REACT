@@ -7,6 +7,7 @@ import swal from "sweetalert";
 import { registerHandler, loginHandler } from "../../../../Redux/Actions";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { WaveTopBottomLoading  } from 'react-loadingg';
 
 class RegisterScreen extends React.Component {
   state = {
@@ -80,6 +81,14 @@ class RegisterScreen extends React.Component {
 
     this.props.onRegister(userData);
   };
+
+
+  // tunggu = () => {
+  //   setTimeout(() => {
+  //     this.registerBtnHandler()
+  //   }, 1000)
+   
+  // }
 
   render() {
     if (this.props.user.id > 0) {
@@ -270,15 +279,15 @@ class RegisterScreen extends React.Component {
               </div>
             </div>
             <div className="bg-grey" style={{ height: "100px" }}>
-              <div className="mt-3 mr-1 d-flex flex-row-reverse">
-                <input
-                  onClick={this.registerBtnHandler}
-                  className="button-register mt-4"
-                  type="button"
-                  value="Register"
-                />
-              </div>
-            </div>
+                  <div className="mt-3 mr-1 d-flex flex-row-reverse">
+                    <input
+                      onClick={this.registerBtnHandler}
+                      className="button-register mt-4"
+                      type="button"
+                      value="Register"
+                    />
+                  </div>
+            </div> 
           </div>
           <div className="col-sm-1"></div>
         </div>

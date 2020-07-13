@@ -70,7 +70,7 @@ class History extends React.Component {
             .then((res) => {
                 this.setState({ pendingList: res.data })
                 console.log(res.data);
-                // this.getPendingStatus()
+                this.getPendingStatus()
                 
             })
             .catch((err) => {
@@ -87,7 +87,7 @@ class History extends React.Component {
             .then((res) => {
                 this.setState({ suksesList: res.data})
                 console.log(res.data);
-                // this.getSuksesStatus()
+                this.getSuksesStatus()
                 
             })
             .catch((err) => {
@@ -104,7 +104,7 @@ class History extends React.Component {
             .then((res) => {
                 this.setState({ declineList: res.data})
                 console.log(res.data);
-                // this.getUploadUlang()
+                this.getUploadUlang()
             })
             .catch((err) => {
                 console.log(err);
@@ -120,7 +120,7 @@ class History extends React.Component {
             .then((res) => {
                 this.setState({ gagalList: res.data })
                 console.log(res.data);
-                // this.getGagalStatus()
+                this.getGagalStatus()
                 
             })
             .catch((err) => {
@@ -346,7 +346,7 @@ class History extends React.Component {
                         </BreadcrumbItem>
                     </Breadcrumb>
                 </div>
-                <div className="wrap">
+                <div className="wrap-history">
                 <div>
                     <Table borderless style={{ width: "40%"}}>
                             <thead>

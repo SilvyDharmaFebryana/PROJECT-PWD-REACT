@@ -10,6 +10,7 @@ const init_state = {
     lastname: "",
     email: "",
     gender: "",
+    profileImage: "",
     phoneNumber: "",
     password: "",
     repPassword: "",
@@ -23,7 +24,7 @@ const init_state = {
 export default (state = init_state, action) => {
     switch (action.type) {
         case ON_LOGIN_SUCCESS:
-            const { username, fullname, role, id, password, cookieChecked, firstname, lastname, phoneNumber, address, repPassword, gender, email } = action.payload;
+            const { username, fullname, role, id, password, cookieChecked, firstname, lastname, phoneNumber, address, repPassword, gender, email, profileImage } = action.payload;
             return {
                 ...state,
                 username,
@@ -31,6 +32,7 @@ export default (state = init_state, action) => {
                 firstname,
                 lastname,
                 phoneNumber,
+                profileImage,
                 address,
                 gender,
                 email,
@@ -40,6 +42,10 @@ export default (state = init_state, action) => {
                 cookieChecked: true,
             };
         case ON_LOGIN_FAIL:
+            return { ...state, errMsg: action.payload, cookieChecked: true };
+        case "ON_LOGIN_FAIL_USERNAME":
+            return { ...state, errMsg: action.payload, cookieChecked: true };
+        case" ON_LOGIN_FAIL_PASSWORD":
             return { ...state, errMsg: action.payload, cookieChecked: true };
         case "ON_REGISTER_FAIL":
             return { ...state, errMsg: action.payload, cookieChecked: true };

@@ -16,3 +16,10 @@
     transition: all ease 150ms;
 
 }
+
+.button-create {
+    margin-left: 650px;
+    margin-top: 20px;
+    background-color: #2d5986;
+    border: none;
+}

@@ -6,7 +6,7 @@ import "./LapanganDetails.css";
 // import DatePicker from "react-date-picker";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "react-calendar/dist/Calendar.css";
+// import "react-calendar/dist/Calendar.css";
 import { connect } from "react-redux";
 import swal from "sweetalert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -41,26 +41,18 @@ class LapanganDetails extends React.Component {
       text: "Anda harus login untuk meneruskan penyewaan, Login?",
       icon: "warning",
     })
-    //   buttons: true,
-    //   onClick: "",
-    //   dangerMode: true,
-    // })
-    // .then((willDelete) => {
-    //   if (willDelete) {
-    //     return onClick=<Link to="/login/" />
-    //   } else {
-    //     swal("Anda Belum Login");
-    //   }
-    // });
   }
 
-  onChangeDate = (date) =>
+  onChangeDate = (date) => {
     this.setState({
       lapanganDetails: {
         ...this.state.lapanganDetails,
         date: date,
       },
-    });
+    })
+    console.log(date.getTime())
+    console.log(new Date())
+  }
 
   toggle = () => this.setState({ modalOpen: !this.state.modalOpen });
 
@@ -118,11 +110,12 @@ class LapanganDetails extends React.Component {
 
               if (res.data.length !== 0) {
                 swal(
-                  "Jadwal tidak tersedia",
-                  "",
+                  "Tidak tersedia!",
+                  "Jadwal yang anda pilih tidak tersedia",
                   "error"
                 );
               } else {
+                //cek lagi di transaksi
                 Axios.get(`${API_URL}/transaction/details/check/`, {
                   params: {
                     booking_date: this.state.lapanganDetails.date,
@@ -134,8 +127,8 @@ class LapanganDetails extends React.Component {
 
                     if (res.data.length > 0) {
                       swal(
-                        "Jadwal tidak tersedia",
-                        "",
+                        "Tidak tersedia!",
+                        "Jadwal yang anda pilih tidak tersedia",
                         "error"
                       );
 
@@ -150,7 +143,7 @@ class LapanganDetails extends React.Component {
                       })
                         .then((res) => {
                           console.log(res.data);
-                          swal("", "Save on your Booking List", "success");
+                          swal("Berhasil !", "Disimpan di booking list", "success");
                           this.setState({ modalOpen: false });
                           // this.props.onFillCart(this.props.user.id);
                         })
@@ -170,6 +163,7 @@ class LapanganDetails extends React.Component {
             })
 
         } else {
+          //ini kalo cart udh ada isi
             Axios.get(`${API_URL}/bField/check/onthisdate/`, {
               params: {
                 date: this.state.lapanganDetails.date,
@@ -180,8 +174,8 @@ class LapanganDetails extends React.Component {
               .then((res) => {
                 if (res.data.length == 0) {
                   swal(
-                    "harus sama lapangan",
-                    "",
+                    "Tidak bisa pesan!",
+                    "Harus dengan lapangan yang sama atau tanggal yang sama ",
                     "error"
                   );
                 } else {
@@ -195,11 +189,12 @@ class LapanganDetails extends React.Component {
                   .then((res) => {
                     if (res.data.length > 0) {
                       swal(
-                        "Jam tidak tersedia",
-                        "",
+                        "Tidak tersedia!",
+                        "Jam yang anda pilih telah terbooking",
                         "error"
                       )
                     } else {
+                      //cek lagi dari transaksi, udh ada yang pesan atau belum 
                       Axios.get(`${API_URL}/transaction/details/check/`, {
                         params: {
                           booking_date: this.state.lapanganDetails.date,

@@ -8,13 +8,13 @@
 }
 
 .tengah-gambar {
-    margin-left: 0px !important;
+    margin-left: 125px !important;
     margin-top: 10px !important;
-    height: 200px;
+    height: 100px;
 }
 
 .icon-kosong {
-  margin-top: 150px !important;
+    margin-top: 150px !important;
 }
 
 .link-home {
@@ -30,13 +30,19 @@
 
 
 .button-checkout {
-    margin-left: 1220px  !important;
+    margin-left: 1160px  !important;
     background-color: #1e4693  !important;
+    border: none;
+    width: 10%;
 }
 
 .button-checkout:hover {
     background-color: green  !important;
     color: white  !important;
+}
+
+.wrap-tabel {
+    width: 80%;
 }
 
 

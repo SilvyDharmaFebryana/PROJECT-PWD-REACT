@@ -73,8 +73,8 @@ class BookingList extends React.Component {
             let tanggal = val.date.split("T")[0]
             return (
                 <tr style={{ height: "100px", fontSize: "13px", border: "solid 2px lightgray" }}>
-                    <th className="th-tbl" style={{ width:"100%" }}>
-                        <img className="tengah-gambar" style={{ width: "100%" }} src={val.field.image} alt="" srcset=""/>
+                    <th className="th-tbl" style={{ width:"50%" }}>
+                        <img className="tengah-gambar" style={{ width: "50%" }} src={val.field.image} alt="" srcset=""/>
                         <h6 className="text-center mt-3" style={{ fontSize: "14px" }}>{val.field.fieldName}</h6>
                     </th>
                     
@@ -131,7 +131,7 @@ class BookingList extends React.Component {
                         <BreadcrumbItem active>
                             <h5 className="font-weight-bolder m-1">
                                 <FontAwesomeIcon
-                                    className="mt-2 mr-2"
+                                    className="mt-1 mr-2"
                                     icon={faListAlt}
                                     style={{ fontSize: 18 }}
                                 />  Your Booking List
@@ -157,7 +157,7 @@ class BookingList extends React.Component {
                                 </Link>
                                 
                             </div>
-                            <div className="wrap ml-4" >
+                            <div className="wrap-tabel ml-4" >
                                 <Table bordered>
                                     {
                                         this.renderBookingList()
