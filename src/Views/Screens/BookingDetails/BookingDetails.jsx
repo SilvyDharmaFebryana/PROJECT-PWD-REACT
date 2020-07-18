@@ -140,12 +140,13 @@ class BookingDetails extends React.Component {
             console.log(res.data.id);
             
             this.state.listBookingItem.forEach((val) => {
+                // let userId =  this.props.user.id
                 let fieldId = val.field.id
                 let fieldTransactionId = res.data.id
                 let bookingNumber = Math.floor(Math.random() * 1000000000000000);
                 bookingNumber.toFixed(16)        
 
-                Axios.post(`${API_URL}/transaction/details/${fieldId}/${fieldTransactionId}`, {
+                Axios.post(`${API_URL}/transaction/details/${fieldId}/${fieldTransactionId}/${this.props.user.id}`, {
                     kodeBooking: bookingNumber,
                     bookingDate: val.date,
                     duration: val.duration,
