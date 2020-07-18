@@ -96,26 +96,10 @@ class Navbar extends React.Component {
 
                 <DropdownItem divider />
                 <DropdownItem>
-                  <Link
-                    to="/"
-                    style={{ textDecoration: "none", color: "inherit" }}
-                    onClick={this.onLogout}
-                  >
-                    <FontAwesomeIcon
-                      className="mt-2 mr-2"
-                      icon={faSignOutAlt}
-                      style={{ fontSize: 18 }}
-                    />
-                    Logout
-                  </Link>
+                 
                 </DropdownItem>
               </DropdownMenu>
               <DropdownToggle tag="nav" className="d-flex">
-                {/* <FontAwesomeIcon
-                  className="m-2"
-                  icon={faUserAlt}
-                  style={{ fontSize: 17, color: "#003cb3" }}
-                /> */}
                 <CircleBg>
                   <small style={{ color: "#3C64B1", fontWeight: "bold" }}>
                     {
@@ -147,8 +131,27 @@ class Navbar extends React.Component {
                 className="mt-2"
                 icon={faBell}
                 style={{ fontSize: 18, color: "#003cb3" }}
-              />
-              <h6 className="mt-1 ml-2 text-navbar">0</h6>
+              />  <p style={{ fontSize: "13px", fontWeight: "bold" }}>{this.props.user.jumlahNotif}</p>
+            </DropdownToggle>
+          </div>
+          <div className="d-flex mt-2 ml-4">
+            <DropdownToggle tag="nav" className="d-flex">
+              <h6 className="mt-1">|</h6>
+            </DropdownToggle>
+          </div>
+          <div className="d-flex mt-2 ml-4">
+            <DropdownToggle tag="nav" className="d-flex">
+              <Link
+                to="/"
+                style={{ textDecoration: "none", color: "inherit" }}
+                onClick={this.onLogout}
+              >
+                <FontAwesomeIcon
+                  className="mt-2"
+                  icon={faSignOutAlt}
+                  style={{ fontSize: 20 , color: "#003cb3" }}
+                />
+              </Link>
             </DropdownToggle>
           </div>
         </div>
@@ -201,7 +204,7 @@ class Navbar extends React.Component {
         </div>
         <div className="col-sm-7 d-flex d-flex justify-content-center align-items-center">
           {
-            this.props.user.role === "admin" ? (
+            this.props.user.role === "admin" || this.props.user.role == "super_admin" ? (
               null
             ) : (
               <>
