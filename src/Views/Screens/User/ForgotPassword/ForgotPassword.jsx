@@ -15,14 +15,20 @@ class ForgotPassword extends React.Component {
     }
 
     sendEmailHandler = () => {
-        Axios.post(`${API_URL}/users/forgot/password`, this.state.sendEmail.email)
+        Axios.put(`${API_URL}/users/forgot/password`, this.state.sendEmail)
         .then((res) => {
             console.log(res.data)
             swal(
                 "Sukses", 
-                "Silahkan Cek Email Anda Untuk Memulihkan Password Akun Anda", 
+                "Cek Email Anda Untuk Memulihkan Akun Anda", 
                 "success"
             )
+            this.setState({
+                sendEmail: {
+                    ...this.state.sendEmail,
+                    email: ""
+                }
+            })
         })
         .catch((err) => {
             console.log(err)
@@ -67,6 +73,7 @@ class ForgotPassword extends React.Component {
                             type="button" 
                             value="Reset Password"
                             onClick={this.sendEmailHandler}
+                           
                         />
                     </div>
                 </div>
