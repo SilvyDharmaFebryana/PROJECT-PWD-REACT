@@ -236,7 +236,7 @@ class UserProfile extends React.Component {
                     </div>
 
                     <div className="d-flex edit-wrap">
-                        <h6 onClick={() => this.setState({ activeEdit: true })}>{this.state.editUserData.fullname}</h6>
+                        <h6 onClick={() => this.setState({ activeEdit: true })}>{this.state.editUserData.firstname + " " + this.state.editUserData.lastname}</h6>
                         <FontAwesomeIcon
                             className="ml-2 icon-edit"
                             icon={faEdit}
@@ -292,7 +292,7 @@ class UserProfile extends React.Component {
                                             <input
                                                 className="input-edit"
                                                 type="text"
-                                                style={{ width: "100%" }}
+                                                style={{ width: "100%", backgroundColor: "whitesmoke" }}
                                                 value={this.state.editUserData.username}
                                                 onChange={(e) => this.inputHandler(e, "username", "editUserData")}
                                                 disabled
@@ -316,13 +316,40 @@ class UserProfile extends React.Component {
                                         <th>Gender</th>
                                         <td>:</td>
                                         <td className="d-flex">
-                                            <input
-                                                className="input-edit"
-                                                type="text"
-                                                style={{ width: "100%" }}
-                                                value={this.state.editUserData.gender}
-                                                onChange={(e) => this.inputHandler(e, "gender", "editUserData")}
-                                            />
+                                        <select
+                                            value={this.state.editUserData.gender}
+                                            className="input-edit h-100 pl-3"
+                                            onChange={(e) =>
+                                                this.inputHandler(e, "gender", "editUserData")
+                                            }
+                                            >
+                                            <option
+                                                onClick={() =>
+                                                this.setState({
+                                                    registerForm: {
+                                                    ...this.state.editUserData,
+                                                    gender: "female",
+                                                    },
+                                                })
+                                                }
+                                                value="female"
+                                            >
+                                                Female
+                                            </option>       
+                                            <option
+                                                onClick={() =>
+                                                this.setState({
+                                                    registerForm: {
+                                                    ...this.state.editUserData,
+                                                    gender: "male",
+                                                    },
+                                                })
+                                                }
+                                                value="male"
+                                            >
+                                                Male
+                                            </option>
+                                        </select>
                                         </td>
                                     </tr>
                                     <tr style={{ color: "#2d5986" }}>
@@ -332,7 +359,7 @@ class UserProfile extends React.Component {
                                             <input
                                                 className="input-edit"
                                                 type="text"
-                                                style={{ width: "100%" }}
+                                                style={{ width: "100%", backgroundColor: "whitesmoke" }}
                                                 value={this.state.editUserData.email}
                                                 onChange={(e) => this.inputHandler(e, "email", "editUserData")}
                                                 disabled
@@ -554,6 +581,11 @@ class UserProfile extends React.Component {
                                         onChange={(e) => this.editInputHandler(e, "confirmPassword", "editPasswordUser")}
 
                                     />
+                                </div>
+                                <div>
+                                    <Link to="/forgot/password" style={{ textDecoration: "none", color: "inherit"}}>
+                                        <p className="mt-3" style={{ fontSize: "14px" }}>Lupa Password ?</p>
+                                    </Link>
                                 </div>
                                 
                             </ModalBody>
