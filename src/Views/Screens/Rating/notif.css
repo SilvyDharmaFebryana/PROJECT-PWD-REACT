@@ -1,0 +1,31 @@
+.notif-wrap {
+    width: 60%;
+    height: 180px;
+    border: 2px solid lightgray;
+    margin-left: 270px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.icon-rate {
+    font-size: 25px;
+    color: lightgray
+}
+
+.icon-rate:hover {
+    font-size: 25px;
+    color: #ff9900
+}
+
+.div-star {
+    border: 1px solid lightgray;
+}
+
+.pick.active {
+    border-style: dotted !important;
+    border: 2px solid lightgray;
+}
+
+.notif-kosong {
+    margin-left: 550px !important;
+}
