@@ -79,7 +79,12 @@ class RegisterScreen extends React.Component {
       role: "user"
     };
 
+
     this.props.onRegister(userData);
+
+      // setTimeout(() => {
+      //   <WaveTopBottomLoading />
+      // }, 5000)
   };
 
 
