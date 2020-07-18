@@ -9,11 +9,7 @@ import logo from "../../../Assets/Images/Untitled.png"
 import { priceFormatter } from '../../../Supports/formatter';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
-
-
-// download html2canvas and jsPDF and save the files in app/ext, or somewhere else
-// the built versions are directly consumable
-// import {html2canvas, jsPDF} from 'app/ext';
+import { connect } from "react-redux";
 
 
 class ETicket extends React.Component {
@@ -30,8 +26,9 @@ class ETicket extends React.Component {
 
         Axios.get(`${API_URL}/transaction/checkout/${idTrans}`)
         .then((res) => {
-            console.log(res.data);
-            this.setState({ transId: res.data})
+            console.log(res.data.paket);
+            this.setState({ transId: res.data })
+            this.setState({ paket: res.data.paket })
         })
         .catch((err) => {
             console.log(err);
@@ -45,37 +42,19 @@ class ETicket extends React.Component {
         Axios.get(`${API_URL}/transaction/details/trans/${idTrans}`)
         .then((res) => {
             this.setState({ detailTicket: res.data,
-                            // noPesanan: res.data.fieldTransactions.noPesanan
             })
-            this.getIdTrans()
-            // this.setState({ noPesanan: this.state.detailTicket.fieldTransactions.noPesanan })
-            // console.log(res.data.fieldTransactions.noPesanan)
         })
         .catch((err) => {
             console.log(err)
         })
     }
 
-    getPaket = () => {
-        Axios.get(`${API_URL}/paket/details/${this.state.transId.paketId}`)
-        .then((res) => {
-            console.log(res.data);
-            this.setState({ paket : res.data })
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-    }
-
-
     componentDidMount() {
         this.getDetailsTicket()
         this.getIdTrans()
-        console.log(this.state.transId.id);
-        
-        this.getPaket()
-        
+
     }
+
 
     renderList = () => {
         return this.state.detailTicket.map((val, idx) => {
@@ -95,10 +74,23 @@ class ETicket extends React.Component {
     }
 
 
+    // renderTambahPaket = () => {
+    //     return this.state.transId.map((val, idx) => {
+    //         return (
+    //             <tbody>
+    //                 <tr>
+    //                     <td>{val.paket.namaPaket}</td>
+    //                     <td>{val.totalPaket}</td>
+    //                 </tr>
+    //             </tbody>
+    //         )
+    //     })
+    // }
+
     printDocument() {
         const input = document.getElementById('divToPrint');
         html2canvas(input)
-        .then((canvas) => {
+        .then((canvas) => { 
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF();
             pdf.addImage(imgData, 'JPEG', 0, 0);
@@ -108,6 +100,8 @@ class ETicket extends React.Component {
     }
 
     render() {
+
+
         return (
         <div>
                 <Alert color="success" className="mt-4">
@@ -116,7 +110,7 @@ class ETicket extends React.Component {
                 <div className="d-flex justify-content-end mr-4">
                     <Button color="success" onClick={this.printDocument}>
                         <FontAwesomeIcon
-                            className="mt-2 mr-2"
+                            className="mt-1 mr-2"
                             icon={faDownload}
                             style={{ fontSize: 18 }}
                         /> Print e-Ticket
@@ -143,8 +137,11 @@ class ETicket extends React.Component {
                                     <br/>
                                     <br/>
                                     <div> 
+                                        <h5 className="ml-2">Dear, {this.props.user.username}</h5>
+                                    </div>
+                                    <div> 
                                         {/* <h6 className="ml-2" style={{ fontSize: "15px" }}>{this.state.transId.user.username}</h6> */}
-                                        <h6 className="ml-2" style={{ fontSize: "12px" }}>Date Issue : {this.state.transId.approveDate}</h6>
+                                        <h6 className="ml-2 mb-5" style={{ fontSize: "12px" }}>Date Issue : {this.state.transId.approveDate}</h6>
                                     </div>
                                 </div>
                             {/* )
@@ -167,20 +164,47 @@ class ETicket extends React.Component {
                                     this.renderList()
                                 }
                             </Table>
-                            {/* <br/>
                             <br/>
-                            <div>
-                                Paket Tambahan :
-                                Nama Paket : {this.state.paket.namaPaket}
-                            </div> */}
+                            <br/>
+                        </div>
+                        <div>
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th className="text-center" >Nama Paket Tambahan</th>
+                                        <th style={{ width: "13%" }}>Total Paket</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td className="text-center" >{this.state.paket.namaPaket}</td>
+                                        <td>{priceFormatter(this.state.transId.totalPaket)}</td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </div>
+                        <br/>
+                        <div >
+                            <Table bordered>
+                                <tr style={{ border: "1px solid smokewhite", width: "100%" }}>
+                                    <th>Total Harga Lapangan</th>
+                                    <td className="td-custom">{priceFormatter(this.state.transId.totalPrice)}</td>
+                                </tr>
+                                <tr style={{ border: "1px solid smokewhite", width: "100%" }}>
+                                    <th>Total Harga Paket</th>
+                                    <td className="td-custom">{priceFormatter(this.state.transId.totalPaket)}</td>
+                                </tr>
+                                <tr style={{ border: "1px solid smokewhite", width: "100%" }}>
+                                    <th>Total Harga </th>
+                                    <td className="td-custom" style={{fontSize: "20px"} }>{priceFormatter(this.state.transId.grandTotal)}</td>
+                                </tr>
+                            </Table>
+                          
                         </div>
                         <br/>
                         <br/>
-                        <br/>
-                        <br/>
-                        <br/>
                         <div>
-                            <Alert color="secondary" style={{ fontSize: "10px" }}>
+                            <Alert color="secondary" style={{ fontSize: "12px" }}>
                                 <p className="ml-2 " style={{ color: "grey"}}>Terms & Condition</p>
                                 <ul style={{ color: "grey"}}>
                                     <li>Bawa bukti ini untuk di tunjukkan ke admin saat ingin check-in</li>
@@ -198,4 +222,11 @@ class ETicket extends React.Component {
     }
 }
 
-export default ETicket;
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+    };
+};
+
+export default connect(mapStateToProps)(ETicket);

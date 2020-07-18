@@ -12,6 +12,10 @@
     position: relative !important;
     background: #8dc63f;
     float: left;
-    padding: 7px 3px;
-    margin: 0 5px 5px 0;
+    padding: 7px 7px;
+    margin: 5px;
+}
+
+.td-custom {
+    border: 1px solid lightgray !important;
 }
