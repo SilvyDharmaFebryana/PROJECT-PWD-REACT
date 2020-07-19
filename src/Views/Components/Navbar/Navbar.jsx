@@ -30,6 +30,7 @@ import {
 } from "reactstrap";
 import logo from "../../../Assets/Images/Untitled.png";
 import noImage from "../../../Assets/Images/user/user.png"
+import ig from "../../../Assets/Images/instagram.jpeg"
 
 const CircleBg = ({ children }) => {
   return <div className="circle-bg">{children}</div>;
@@ -38,6 +39,7 @@ const CircleBg = ({ children }) => {
 class Navbar extends React.Component {
   state = {
     modalOpen: false,
+    modalOpenFind: false,
     dropdownOpen: false,
     date: new Date().getDate(),
     month: new Date().getMonth() + 1,
@@ -45,6 +47,8 @@ class Navbar extends React.Component {
   };
 
   toggle = () => this.setState({ modalOpen: !this.state.modalOpen });
+
+  toggleFind = () => this.setState({ modalOpenFind: !this.state.modalOpenFind });
 
   toggleDropdown = () =>
     this.setState({ dropdownOpen: !this.state.dropdownOpen });
@@ -220,11 +224,27 @@ class Navbar extends React.Component {
                 <Link
                   className="mr-3 text-navbar"
                   color="danger"
-                  // onClick={this.toggle}
+                  onClick={this.toggleFind}
                   style={{ textDecoration: "none" }}
                 >
                   Find Us
                 </Link>
+                <Modal isOpen={this.state.modalOpenFind} toggle={this.toggleFind}>
+                  <ModalHeader toggle={this.toggleFind}>Find Us</ModalHeader>
+                  <ModalBody>
+                    <img src={ig} alt="" style={{ width: "30px", height: "30px"}}/> @Kickoff_sportcenter
+                    <div className="mt-5">
+                      <h6>Alamat</h6>
+                      GOR GEMILANG, Jl. Perumahan Papan Mas, Mangunjaya, Kec. Tambun Sel., Bekasi, Jawa Barat 17510
+
+                    </div>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="secondary" onClick={this.toggleFind}>
+                      Close
+                </Button>
+                  </ModalFooter>
+                </Modal>
               </h6>
               <h6>|</h6>
               <h6>
@@ -313,6 +333,10 @@ class Navbar extends React.Component {
             {this.sigInLogIn()}
           </div>
         </div>
+        <>
+
+        </>
+
       </div>
     );
   }

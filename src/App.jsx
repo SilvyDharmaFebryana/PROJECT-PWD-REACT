@@ -41,6 +41,7 @@ import FieldReport from './Views/Screens/Admin/SuperAdmin/Report/FieldReport/Fie
 import Notif from './Views/Screens/Rating/notif';
 import Validasi from './Views/Screens/Admin/AdminValidasi/AdminValidasi';
 import LapanganTennis from './Views/Screens/Lapangan/LapanganTennis/LapanganTennis';
+import PageNotFound from './Views/Screens/PageNotFound';
 
 
 
@@ -79,6 +80,27 @@ class App extends React.Component {
                 <Route exact path="/admin/add_field" component={AddField} />
                 <Route exact path="/admin/report/paket" component={PaketReport} />
                 <Route exact path="/admin/report/field" component={FieldReport} />
+
+                <Route exact path="/register" component={PageNotFound} />
+                <Route exact path="/voli" component={PageNotFound} />
+                <Route exact path="/basket" component={PageNotFound} />
+                <Route exact path="/futsal" component={PageNotFound} />
+                <Route exact path="/badminton" component={PageNotFound} />
+                <Route exact path="/tennis" component={PageNotFound} />
+                <Route exact path="/booking_details" component={PageNotFound} />
+                <Route exact path="/booking_list" component={PageNotFound} />
+                <Route exact path="/lapangan/:fieldId" component={PageNotFound} />
+                <Route exact path="/shoes" component={PageNotFound} />
+                <Route exact path="/kolam" component={PageNotFound} />
+                <Route exact path="/test" component={PageNotFound} />
+                <Route exact path="/checkout/:idTrans" component={PageNotFound} />
+                <Route exact path="/history" component={PageNotFound} />
+                <Route exact path="/e-ticket/:idTrans" component={PageNotFound} />
+                <Route exact path="/profile/:userId" component={PageNotFound} />
+                <Route exact path="/users/:username" component={PageNotFound} />
+                <Route exact path="/notif" component={PageNotFound} />
+                <Route exact path="/forgot/password" component={PageNotFound} />
+                <Route exact path="/users/forgot/password/:username" component={PageNotFound} />
               </Switch>
               <div style={{ height: "120px" }} />
             </>
@@ -88,13 +110,34 @@ class App extends React.Component {
             <>
             <Navbar />
             <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/admin/task" component={AdminTask} />
-              <Route exact path="/admin/task/list" component={TaskList} />
-              <Route exact path="/admin/report" component={AdminReportDay} />
-              <Route exact path="/admin/validasi" component={Validasi} />
-              <Route exact path="/login/" component={LoginScreen} />
-              
+                <Route exact path="/" component={Home} />
+                <Route exact path="/admin/task" component={AdminTask} />
+                <Route exact path="/admin/task/list" component={TaskList} />
+                <Route exact path="/admin/report" component={AdminReportDay} />
+                <Route exact path="/admin/validasi" component={Validasi} />
+                <Route exact path="/login/" component={LoginScreen} />
+
+                <Route exact path="/register" component={PageNotFound} />
+                <Route exact path="/voli" component={PageNotFound} />
+                <Route exact path="/basket" component={PageNotFound} />
+                <Route exact path="/futsal" component={PageNotFound} />
+                <Route exact path="/badminton" component={PageNotFound} />
+                <Route exact path="/tennis" component={PageNotFound} />
+                <Route exact path="/booking_details" component={PageNotFound} />
+                <Route exact path="/booking_list" component={PageNotFound} />
+                <Route exact path="/lapangan/:fieldId" component={PageNotFound} />
+                <Route exact path="/shoes" component={PageNotFound} />
+                <Route exact path="/kolam" component={PageNotFound} />
+                <Route exact path="/test" component={PageNotFound} />
+                <Route exact path="/checkout/:idTrans" component={PageNotFound} />
+                <Route exact path="/history" component={PageNotFound} />
+                <Route exact path="/e-ticket/:idTrans" component={PageNotFound} />
+                <Route exact path="/profile/:userId" component={PageNotFound} />
+                <Route exact path="/users/:username" component={PageNotFound} />
+                <Route exact path="/notif" component={PageNotFound} />
+                <Route exact path="/forgot/password" component={PageNotFound} />
+                <Route exact path="/users/forgot/password/:username" component={PageNotFound} />
+
 
             </Switch>
             <div style={{ height: "120px" }} />
@@ -127,6 +170,20 @@ class App extends React.Component {
               <Route exact path="/notif" component={Notif} />
               <Route exact path="/forgot/password" component={ForgotPassword} />
               <Route exact path="/users/forgot/password/:username" component={ResetPassword} />
+
+
+              <Route exact path="/admin/task" component={PageNotFound} />
+              <Route exact path="/admin/task/list" component={PageNotFound} />
+              <Route exact path="/admin/report" component={PageNotFound} />
+              <Route exact path="/admin/validasi" component={PageNotFound} />
+
+              <Route exact path="/admin/dashboard" component={PageNotFound} />
+              <Route exact path="/admin/list_user" component={PageNotFound} />
+              <Route exact path="/admin/list_field" component={PageNotFound} />
+              <Route exact path="/admin/add_user" component={PageNotFound} />
+              <Route exact path="/admin/add_field" component={PageNotFound} />
+              <Route exact path="/admin/report/paket" component={PageNotFound} />
+              <Route exact path="/admin/report/field" component={PageNotFound} />
          
             </Switch>
             <div style={{ height: "120px" }} />
@@ -150,6 +207,20 @@ class App extends React.Component {
               <Route exact path="/tennis" component={LapanganTennis} />
               <Route exact path="/forgot/password" component={ForgotPassword} />
               <Route exact path="/users/forgot/password/:username" component={ResetPassword} />
+              <Route exact path="/pagenotfound" component={PageNotFound} />
+
+              <Route exact path="/admin/task" component={PageNotFound} />
+              <Route exact path="/admin/task/list" component={PageNotFound} />
+              <Route exact path="/admin/report" component={PageNotFound} />
+              <Route exact path="/admin/validasi" component={PageNotFound} />
+
+              <Route exact path="/admin/dashboard" component={PageNotFound} />
+              <Route exact path="/admin/list_user" component={PageNotFound} />
+              <Route exact path="/admin/list_field" component={PageNotFound} />
+              <Route exact path="/admin/add_user" component={PageNotFound} />
+              <Route exact path="/admin/add_field" component={PageNotFound} />
+              <Route exact path="/admin/report/paket" component={PageNotFound} />
+              <Route exact path="/admin/report/field" component={PageNotFound} />
             </Switch>
             <div style={{ height: "120px" }} />
             </>

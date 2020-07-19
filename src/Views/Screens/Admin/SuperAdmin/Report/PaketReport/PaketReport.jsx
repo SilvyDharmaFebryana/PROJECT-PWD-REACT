@@ -13,35 +13,6 @@ class PaketReport extends React.Component {
     }
 
     getPaket = () => {
-        // Axios.get(`${API_URL}/paket`)
-        //     .then((res) => {
-        //         this.setState({ paket: res.data })
-        //         console.log(res.data);
-
-        //         res.data.forEach((val) => {
-        //             Axios.get(`${API_URL}/paket/report/`, {
-        //                 params: {
-        //                     id: val.id,
-        //                     status: "approve"
-        //                 }
-        //             })
-        //                 .then((res) => {
-        //                     console.log(res.data, "ID:", val.id);
-        //                     this.setState({ jumlah: [...this.state.jumlah, res.data] })
-
-        //                 })
-        //                 .catch((err) => {
-        //                     console.log(err);
-
-        //                 })
-        //         })
-
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-
-        //     })
-
         Axios.get(`${API_URL}/paket/report/`, {
             params: {
                 status: "approve"

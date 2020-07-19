@@ -1,4 +1,5 @@
 import React from "react"
+import notFound from "../../Assets/Images/404.png"
 
 
 class PageNotFound extends React.Component {
@@ -6,7 +7,10 @@ class PageNotFound extends React.Component {
     render() {
         return (
             <div>
-                PAGE NOT FOUND 
+                <center>
+                    <img className="mt-5" src={notFound} alt=""/>
+                </center>
+                
             </div>
         )
     }
