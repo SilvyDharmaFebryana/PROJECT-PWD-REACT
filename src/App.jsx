@@ -16,6 +16,7 @@ import RegisterScreen from './Views/Screens/Auth/Register/RegisterScreen';
 import LapanganVoli from './Views/Screens/Lapangan/LapanganVoli/LapanganVoli';
 import LapanganDetails from './Views/Screens/Details/LapanganDetails/LapanganDetails';
 import LapanganBasket from './Views/Screens/Lapangan/LapanganBasket/LapanganBasket';
+import LapanganBadminton from "./Views/Screens/Lapangan/LapanganBadminton/LapanganBadminton";
 import BookingDetails from './Views/Screens/BookingDetails/BookingDetails';
 import BookingList from './Views/Screens/BookingList/BookingList';
 import Export from './test';
@@ -35,6 +36,11 @@ import AdminReportDay from './Views/Screens/Admin/AdminReport/AdminReportDay';
 import PaketReport from './Views/Screens/Admin/SuperAdmin/Report/PaketReport/PaketReport';
 import TaskList from './Views/Screens/Admin/AdminTask/TaskList/TaskList';
 import ForgotPassword from './Views/Screens/User/ForgotPassword/ForgotPassword';
+import ResetPassword from './Views/Screens/User/ResetPassword/ResetPassword';
+import FieldReport from './Views/Screens/Admin/SuperAdmin/Report/FieldReport/FieldReport';
+import Notif from './Views/Screens/Rating/notif';
+import Validasi from './Views/Screens/Admin/AdminValidasi/AdminValidasi';
+import LapanganTennis from './Views/Screens/Lapangan/LapanganTennis/LapanganTennis';
 
 
 
@@ -72,6 +78,7 @@ class App extends React.Component {
                 <Route exact path="/admin/add_user" component={AddUser} />
                 <Route exact path="/admin/add_field" component={AddField} />
                 <Route exact path="/admin/report/paket" component={PaketReport} />
+                <Route exact path="/admin/report/field" component={FieldReport} />
               </Switch>
               <div style={{ height: "120px" }} />
             </>
@@ -85,7 +92,8 @@ class App extends React.Component {
               <Route exact path="/admin/task" component={AdminTask} />
               <Route exact path="/admin/task/list" component={TaskList} />
               <Route exact path="/admin/report" component={AdminReportDay} />
-              <Route exact path="/login/admin" component={AdminLogin} />
+              <Route exact path="/admin/validasi" component={Validasi} />
+              <Route exact path="/login/" component={LoginScreen} />
               
 
             </Switch>
@@ -103,6 +111,8 @@ class App extends React.Component {
               <Route exact path="/voli" component={LapanganVoli} />
               <Route exact path="/basket" component={LapanganBasket} />
               <Route exact path="/futsal" component={LapanganFutsal} />
+              <Route exact path="/badminton" component={LapanganBadminton} />
+              <Route exact path="/tennis" component={LapanganTennis} />
               <Route exact path="/booking_details" component={BookingDetails} />
               <Route exact path="/booking_list" component={BookingList} />
               <Route exact path="/lapangan/:fieldId" component={LapanganDetails} />
@@ -114,6 +124,10 @@ class App extends React.Component {
               <Route exact path="/e-ticket/:idTrans" component={ETicket} />
               <Route exact path="/profile/:userId" component={UserProfile} />
               <Route exact path="/users/:username" component={Home} />
+              <Route exact path="/notif" component={Notif} />
+              <Route exact path="/forgot/password" component={ForgotPassword} />
+              <Route exact path="/users/forgot/password/:username" component={ResetPassword} />
+         
             </Switch>
             <div style={{ height: "120px" }} />
           </>
@@ -132,7 +146,10 @@ class App extends React.Component {
               <Route exact path="/voli" component={LapanganVoli} />
               <Route exact path="/basket" component={LapanganBasket} />
               <Route exact path="/futsal" component={LapanganFutsal} />
+              <Route exact path="/badminton" component={LapanganBadminton} />
+              <Route exact path="/tennis" component={LapanganTennis} />
               <Route exact path="/forgot/password" component={ForgotPassword} />
+              <Route exact path="/users/forgot/password/:username" component={ResetPassword} />
             </Switch>
             <div style={{ height: "120px" }} />
             </>

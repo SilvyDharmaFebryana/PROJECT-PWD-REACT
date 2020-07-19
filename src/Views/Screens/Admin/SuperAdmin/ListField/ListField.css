@@ -1,7 +1,7 @@
 .gambar {
-    width: 70%;
-    height: 180px;
-    margin-left: 30px;
+    width: 50%;
+    height: 100px;
+    margin-left: 0px;
 }
 
 .wrap-table {
@@ -22,14 +22,14 @@
 }
 
 .icon-hapus-lap {
-    color: red;
+    color: #2d5986;
     /* border: 5px; */
     font-size: 22px;
     font-weight: bold;
 }
 
 .icon-hapus-lap:hover {
-    color: maroon;
+    color: navy;
     cursor: pointer;
 }
 

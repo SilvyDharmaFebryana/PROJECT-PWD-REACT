@@ -50,7 +50,6 @@ class AddUser extends React.Component {
             } else {
                 if ( this.state.createUserForm.password === this.state.createUserForm.repPassword) {
                     Axios.post(`${API_URL}/users`, {
-                        
                             username : this.state.createUserForm.username,
                             email: this.state.createUserForm.email,
                             address: this.state.createUserForm.address,

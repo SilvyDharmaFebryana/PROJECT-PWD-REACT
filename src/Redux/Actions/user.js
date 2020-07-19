@@ -23,7 +23,21 @@ export const loginHandler = (userData) => {
                 dispatch({
                     type: ON_LOGIN_SUCCESS,
                     payload: res.data,
-                });  
+                }); 
+                Axios.get(`${API_URL}/notif/`, {
+                    params: {
+                        userId: res.data.id,
+                    },
+                })
+                    .then((res) => {
+                        dispatch({
+                            type: "NOTIF_DATA",
+                            payload: res.data.length,
+                        });
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    }); 
             })
             .catch((err) => {
                 console.log(err);
@@ -47,6 +61,20 @@ export const userKeepLogin = (userData) => {
                         type: ON_LOGIN_SUCCESS,
                         payload: res.data,
                     });
+                    Axios.get(`${API_URL}/notif/`, {
+                        params: {
+                            userId: res.data.id,
+                        },
+                    })
+                        .then((res) => {
+                            dispatch({
+                                type: "NOTIF_DATA",
+                                payload: res.data.length,
+                            });
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        }); 
             })
             .catch((err) => {
                 console.log(err);
@@ -134,5 +162,25 @@ export const registerHandler = (userData) => {
 export const cookieChecker = () => {
     return {
         type: "COOKIE_CHECK",
+    };
+};
+
+
+export const notifData = (userId) => {
+    return (dispatch) => {
+        Axios.get(`${API_URL}/notif/`, {
+            params: {
+                userId,
+            }
+        })
+            .then((res) => {
+                dispatch({
+                    type: "NOTIF_DATA",
+                    payload: res.data.length,
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 };

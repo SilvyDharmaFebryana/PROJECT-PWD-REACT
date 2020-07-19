@@ -19,6 +19,7 @@ const init_state = {
     errMsg: "",
     errorMsg: "",
     cookieChecked: false,
+    jumlahNotif: 0
 };
 
 export default (state = init_state, action) => {
@@ -55,6 +56,8 @@ export default (state = init_state, action) => {
             return { ...state, cookieChecked: true };
         case "ON_PASSWORD_FAIL":
             return { ...state, errorMsg: action.payload, cookieChecked: true };
+            case "NOTIF_DATA":
+      return { ...state, jumlahNotif: action.payload };
         default:
             return { ...state };
     }

@@ -1,26 +1,26 @@
 import React from "react"
 import Axios from "axios";
 // import { API_URL } from "../../../../Constants/API";
-import "./LapanganBasket.css"
+import "./LapanganTennis.css"
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from "react-router-dom";
 import { API_URL } from "../../../../Constants/API";
 import CardLapangan from "../../../Components/Card/CardLapangan/CardLapangan";
 
-class LapanganBasket extends React.Component {
+class LapanganTennis extends React.Component {
 
   state = {
-    lapanganBasket: [],
+    lapanganTennis: [],
   }
 
-  getLapanganBasket = () => {
-    Axios.get(`${API_URL}/lapangan/basket`, {
+  getlapanganTennis = () => {
+    Axios.get(`${API_URL}/lapangan/tennis`, {
       params: {
-        category: "basket"
+        category: "tennis"
       }
     })
       .then((res) => {
-        this.setState({ lapanganBasket: res.data })
+        this.setState({ lapanganTennis: res.data })
         console.log(res.data);
       })
       .catch((err) => {
@@ -29,11 +29,11 @@ class LapanganBasket extends React.Component {
   }
 
   componentDidMount() {
-    this.getLapanganBasket()
+    this.getlapanganTennis()
   }
 
   renderLapangan = () => {
-    return this.state.lapanganBasket.map((val) => {
+    return this.state.lapanganTennis.map((val) => {
       return (
         <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}>
           <CardLapangan key={`fields-cart-${val.id}`} className="m-2" data={val} />
@@ -47,7 +47,7 @@ class LapanganBasket extends React.Component {
       <div>
         <div className="mt-1">
           <Breadcrumb>
-            <BreadcrumbItem active>  <h5 className="font-weight-bolder m-1" > LAPANGAN BASKET </h5></BreadcrumbItem>
+            <BreadcrumbItem active>  <h5 className="font-weight-bolder m-1" > LAPANGAN TENNIS </h5></BreadcrumbItem>
           </Breadcrumb>
         </div>
         <div className="container" >
@@ -63,4 +63,4 @@ class LapanganBasket extends React.Component {
   }
 }
 
-export default LapanganBasket;
+export default LapanganTennis;

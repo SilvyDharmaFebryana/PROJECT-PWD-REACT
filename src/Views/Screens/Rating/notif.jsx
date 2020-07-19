@@ -74,7 +74,7 @@ class Notif extends React.Component{
             }
         })
         .then((res)=> {
-            let ratingCalculate = (this.state.editRating.field.rating + this.state.jumlahRating) / res.data.length
+            let ratingCalculate = (this.state.editRating.field.rating + this.state.jumlahRating) / 2
 
             Axios.put(`${API_URL}/lapangan/rating/edit/${this.state.editRating.field.id}`, this.state.editRating.field, {
                 params: {

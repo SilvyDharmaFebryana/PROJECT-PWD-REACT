@@ -16,7 +16,7 @@ interface CardLapanganData {
   type?: string;
   image?: string;
   category?: string;
-  rating?: number;
+  rating: number | string;
 }
 
 type CardLapanganProps = {
@@ -56,7 +56,7 @@ class CardLapangan extends React.Component<CardLapanganProps> {
              <div className="d-flex flex-row align-items-center justify-content-between">
                {/* Render stars dynamically */}
                {
-                 rating == 1 ? (
+                 rating <= 1 ? (
                    <>
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={faStar} aria-hidden="true" />
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={star} />
@@ -64,7 +64,7 @@ class CardLapangan extends React.Component<CardLapanganProps> {
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={star} />
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={star} />
                    </>
-                 ) : rating == 2 ? (
+                 ) : rating <= 2 ? (
                    <>
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={faStar} />
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={faStar} />
@@ -72,7 +72,7 @@ class CardLapangan extends React.Component<CardLapanganProps> {
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={star} />
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={star} />
                    </>
-                 ) : rating == 3 ? (
+                 ) : rating <= 3 ? (
                    <>
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={faStar} />
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={faStar} />
@@ -80,7 +80,7 @@ class CardLapangan extends React.Component<CardLapanganProps> {
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={star} />
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={star} />
                    </>
-                 ) : rating == 4 ? (
+                 ) : rating <= 4 ? (
                    <>
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={faStar} />
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={faStar} />
@@ -88,7 +88,7 @@ class CardLapangan extends React.Component<CardLapanganProps> {
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={faStar} />
                     <FontAwesomeIcon style={{ fontSize: "15px" }} icon={star} />
                    </>
-                 ) : rating == 5 ? (
+                 ) : rating <= 5 ? (
                     <>
                       <FontAwesomeIcon style={{ fontSize: "15px" }} icon={faStar} />
                       <FontAwesomeIcon style={{ fontSize: "15px" }} icon={faStar} />

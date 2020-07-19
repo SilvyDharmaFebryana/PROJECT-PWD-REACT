@@ -20,7 +20,7 @@ import Axios from "axios";
 import { API_URL } from '../../../Constants/API'
 import CardLapangan from '../../Components/Card/CardLapangan/CardLapangan'
 import { searchInputHandler } from "../../../Redux/Actions";
- 
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 
 const dummy = [
@@ -76,11 +76,25 @@ class Home extends React.Component {
     state = {
         activeIndex: 0,
         animating: false,
-        activeCategory: "",
+        activeCategory: "all",
+        activeType: "all",
+        activeRate: "all",
         voli: [],
         futsal: [],
         all: [],
         basket: [],
+        tennis: [],
+        badminton: [],
+        indoor: [],
+        outdoor: [],
+        sangatBaik: [],
+        baik: [],
+        cukup: [],
+        kurang: [],
+        buruk: [],
+        category: {
+
+        }
       };
 
 
@@ -129,6 +143,36 @@ class Home extends React.Component {
           })
     }
 
+    getLapanganTennis = () => {
+        Axios.get(`${API_URL}/lapangan/tennis`, {
+          params: {
+            category: "tennis"
+          }
+        })
+          .then((res) => {
+            this.setState({ tennis: res.data })
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    }
+
+    getLapanganBadminton = () => {
+        Axios.get(`${API_URL}/lapangan/badminton`, {
+          params: {
+            category: "badminton"
+          }
+        })
+          .then((res) => {
+            this.setState({ badminton: res.data })
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    }
+
     getAllLapangan = () => {
         Axios.get(`${API_URL}/lapangan/`)
           .then((res) => {
@@ -139,22 +183,228 @@ class Home extends React.Component {
             console.log(err)
           })
     }
-    
+
+    getTypeIndoor = () => {
+        Axios.get(`${API_URL}/lapangan/type`, {
+            params: {
+              type: "indoor"
+            }
+          })
+            .then((res) => {
+              this.setState({ indoor: res.data })
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+    }
+
+    getTypeOutdoor = () => {
+        Axios.get(`${API_URL}/lapangan/type`, {
+            params: {
+              type: "outdoor"
+            }
+          })
+            .then((res) => {
+              this.setState({ outdoor: res.data })
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+    }
+
+    getRateSangatBaik = () => {
+        Axios.get(`${API_URL}/lapangan/rate`, {
+            params: {
+              satu: 5,
+              dua: 4
+            }
+          })
+            .then((res) => {
+              this.setState({ sangatBaik: res.data })
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+    }
+
+    getRateBaik = () => {
+        Axios.get(`${API_URL}/lapangan/rate`, {
+            params: {
+              satu: 4,
+              dua: 3
+            }
+          })
+            .then((res) => {
+              this.setState({ baik: res.data })
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+    }
+
+    getRateCukup = () => {
+        Axios.get(`${API_URL}/lapangan/rate`, {
+            params: {
+              satu: 3,
+              dua: 2
+            }
+          })
+            .then((res) => {
+              this.setState({ cukup: res.data })
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+    }
+
+    getRateKurang = () => {
+        Axios.get(`${API_URL}/lapangan/rate`, {
+            params: {
+              satu: 2,
+              dua: 1
+            }
+          })
+            .then((res) => {
+              this.setState({ kurang: res.data })
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+    }
+
+    getRateBuruk = () => {
+        Axios.get(`${API_URL}/lapangan/rate`, {
+            params: {
+              satu: 1,
+              dua: 0
+            }
+          })
+            .then((res) => {
+              this.setState({ buruk: res.data })
+              console.log(res.data);
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+    }
+
     
     componentDidMount() {
         this.getLapanganBasket()
         this.getLapanganFutsal()
         this.getLapanganVoli()
         this.getAllLapangan()
+        this.getLapanganBadminton()
+        this.getLapanganTennis()
+        this.getTypeIndoor()
+        this.getTypeOutdoor()
+        this.getRateSangatBaik()
+        this.getRateBaik()
+        this.getRateCukup()
+        this.getRateKurang()
+        this.getRateBuruk()
     }
     
 
     renderLapangan = () => {
-        return this.state.all.map((val) => {
-            if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
-              return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+        if ( this.state.activeCategory === "all") {
+            if (this.state.activeType === "indoor") {
+                return this.state.indoor.map((val) => {
+                    if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                      return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                    }
+                })
+            } else if ( this.state.activeType === "outdoor") {
+                return this.state.outdoor.map((val) => {
+                    if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                      return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                    }
+                })
+            } else if ( this.state.activeType === "all") {
+                if (this.state.activeRate === "sangatbaik") {
+                    return this.state.sangatBaik.map((val) => {
+                        if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                          return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                        }
+                    })
+                } else if (this.state.activeRate === "baik") {
+                    return this.state.baik.map((val) => {
+                        if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                          return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                        }
+                    })
+                } else if (this.state.activeRate === "cukup") {
+                    return this.state.cukup.map((val) => {
+                        if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                          return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                        }
+                    })
+                } else if (this.state.activeRate === "kurang") {
+                    return this.state.kurang.map((val) => {
+                        if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                          return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                        }
+                    })
+                } else if (this.state.activeRate === "buruk") {
+                    return this.state.buruk.map((val) => {
+                        if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                          return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                        }
+                    })
+                }  else if (this.state.activeRate === "all") {
+                    return this.state.all.map((val) => {
+                        if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                          return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                        }
+                    })
+                } 
+            } else {
+                return this.state.all.map((val) => {
+                    if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                      return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                        }
+                })
             }
-        })
+                
+           
+        } else if ( this.state.activeCategory === "basket" ) {
+            return this.state.basket.map((val) => {
+                if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                  return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                }
+            })
+        } else if ( this.state.activeCategory === "tennis" ) {
+            return this.state.tennis.map((val) => {
+                if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                  return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                }
+            })
+        } else if ( this.state.activeCategory === "badminton" ) {
+            return this.state.badminton.map((val) => {
+                if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                  return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                }
+            })
+        } else if ( this.state.activeCategory === "futsal" ) {
+            return this.state.futsal.map((val) => {
+                if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                  return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                }
+            })
+        } else if ( this.state.activeCategory === "voli" ) {
+            return this.state.voli.map((val) => {
+                if (val.fieldName.toLowerCase().includes(this.props.search.searchInput.toLowerCase())) {
+                  return <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}><CardLapangan key={`bestseller-${val.id}`} className="m-2" data={val} /></Link>
+                }
+            })
+        }
+        
     }
 
     //==================================== CARROUSSEL =====================================================================================================================
@@ -229,19 +479,8 @@ class Home extends React.Component {
                                     />
                                 </div>
                                 <div>
-                                    <Link to="/admin/add_user" style={{ textDecoration: "none", color: "inherit"}}>
-                                        <button className="mt-4 button">
-                                            <FontAwesomeIcon
-                                                className="mt-1 mr-2"
-                                                icon={faPlus}
-                                                style={{ fontSize: 16, color: "white" }}
-                                            /> Add User
-                                        </button>
-                                    </Link>
-                                </div>
-                                <div>
                                     <Link to="/admin/list_user" style={{ textDecoration: "none", color: "inherit"}}>
-                                    <button className="mt-2 button">
+                                    <button className="mt-4 button">
                                         List User
                                     </button>
                                     </Link>
@@ -258,14 +497,18 @@ class Home extends React.Component {
                                     />
                                 </div>
                                 <div>
+                                    <Link to="/admin/report/paket" style={{ textDecoration: "none", color: "inherit"}}>
                                     <button className="mt-4 button">
-                                        Report User
+                                        Report Paket
                                     </button>
+                                    </Link>
                                 </div>
                                 <div>
+                                    <Link to="/admin/report/field" style={{ textDecoration: "none", color: "inherit"}}>
                                     <button className="mt-2 button">
                                         Report Field
                                     </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -314,14 +557,14 @@ class Home extends React.Component {
                             <div className="container-admin">
                                 <div>
                                     <FontAwesomeIcon
-                                        className="mt-5 ml-2"
+                                        className="mt-4 ml-2"
                                         icon={faTasks}
                                         style={{ fontSize: 100, color: "#336699" }}
                                     />
                                 </div>
                                 <div>
                                     <Link to="/admin/task" style={{ textDecoration: "none", color: "inherit"}}>
-                                    <button className="mt-2 button">
+                                    <button className="mt-4 button">
                                         Task List
                                     </button>
                                     </Link>
@@ -340,7 +583,7 @@ class Home extends React.Component {
                             <div className="container-admin">
                                 <div>
                                     <FontAwesomeIcon
-                                        className="mt-5 ml-2"
+                                        className="mt-4 ml-2"
                                         icon={faCalendarAlt}
                                         style={{ fontSize: 100, color: "#336699" }}
                                     />
@@ -349,6 +592,13 @@ class Home extends React.Component {
                                     <Link to="/admin/report" style={{ textDecoration: "none", color: "inherit"}}>
                                     <button className="mt-4 button">
                                         Report Day
+                                    </button>
+                                    </Link>
+                                </div>
+                                <div>
+                                    <Link to="/admin/validasi" style={{ textDecoration: "none", color: "inherit"}}>
+                                    <button className="mt-2 button">
+                                        Validasi
                                     </button>
                                     </Link>
                                 </div>
@@ -389,38 +639,54 @@ class Home extends React.Component {
                                         <p className="ml-3 mt-5" style={{ fontSize: "12px", fontWeight: "bold" }}>Cabang Olahraga</p>
                                         <div className="">
 
-                                            <select
-                                                // value={this.state.report.fieldId}
-                                                className="mt-1 select-wrap"
-                                                onChange={(e) =>
-                                                    this.inputHandler(e, "fieldId", "report")
-                                                }
-                                            >
-                                                <option
-                                                    onClick={() =>
-                                                        this.setState({
-                                                            report: {
-                                                                ...this.state.report,
-                                                                fieldId: 0,
-                                                            },
-                                                        })
-                                                    }
-                                                    value="All Booking List"
+                                            <select className="mt-1 select-wrap">
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeCategory: "all"
+                                                    })} 
                                                 >
-                                                    Semua Lapangan
+                                                    All
                                                 </option>
-                                                <option
-                                                    onClick={() =>
-                                                        this.setState({
-                                                            report: {
-                                                                ...this.state.report,
-                                                                fieldId: 1,
-                                                            },
-                                                        })
-                                                    }
-                                                    value="Lapangan Voli (Indoor)"
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeCategory: "voli"
+                                                    })} 
                                                 >
-                                                    Lapangan Voli
+                                                    voli
+                                                </option>
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeCategory: "basket"
+                                                    })} 
+                                                >
+                                                    basket
+                                                </option>
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeCategory: "tennis"
+                                                    })} 
+                                                >
+                                                    tennis
+                                                </option>
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeCategory: "badminton"
+                                                    })} 
+                                                >
+                                                    badminton
+                                                </option>
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeCategory: "futsal"
+                                                    })} 
+                                                >
+                                                    futsal
                                                 </option>
 
                                             </select>
@@ -429,42 +695,86 @@ class Home extends React.Component {
                                     <div className="dalam">
                                         <p className="ml-3 mt-4" style={{ fontSize: "12px", fontWeight: "bold" }}>Type Lapangan</p>
                                         <div className="">
-                                            <select
-                                                // value={this.state.report.fieldId}
-                                                className="mt-1 select-wrap"
-                                                onChange={(e) =>
-                                                    this.inputHandler(e, "fieldId", "report")
-                                                }
-                                            >
-                                                <option
-                                                    onClick={() =>
-                                                        this.setState({
-                                                            report: {
-                                                                ...this.state.report,
-                                                                fieldId: 0,
-                                                            },
-                                                        })
-                                                    }
-                                                    value="All Booking List"
+                                            <select  className="mt-1 select-wrap">
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeType: "indoor"
+                                                    })} 
                                                 >
-                                                   Indoor
+                                                    indoor
                                                 </option>
-                                                <option
-                                                    onClick={() =>
-                                                        this.setState({
-                                                            report: {
-                                                                ...this.state.report,
-                                                                fieldId: 1,
-                                                            },
-                                                        })
-                                                    }
-                                                    value="Lapangan Voli (Indoor)"
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeType: "outdoor"
+                                                    })} 
                                                 >
-                                                    Outdoor
+                                                    outdoor
                                                 </option>
-
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeType: "all"
+                                                    })} 
+                                                >
+                                                    Show All
+                                                </option>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div className="dalam">
+                                        <p className="ml-3 mt-4" style={{ fontSize: "12px", fontWeight: "bold" }}>Rating</p>
+                                        <select className="mt-1 select-wrap" >
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeRate: "sangatbaik"
+                                                    })} 
+                                                >
+                                                    Sangat Baik
+                                                </option>
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeRate: "baik"
+                                                    })} 
+                                                >
+                                                    Baik
+                                                </option>
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeRate: "cukup"
+                                                    })} 
+                                                >
+                                                    Cukup
+                                                </option>
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeRate: "Kurang"
+                                                    })} 
+                                                >
+                                                    Kurang
+                                                </option>
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeRate: "buruk"
+                                                    })} 
+                                                >
+                                                    Buruk
+                                                </option>
+                                                <option 
+                                                    value="" 
+                                                    onClick={() => this.setState({
+                                                        activeRate: "all"
+                                                    })} 
+                                                >
+                                                    Show All
+                                                </option>
+                                            </select>
                                     </div>
                                </div>
                            </div>
@@ -493,8 +803,6 @@ class Home extends React.Component {
                     <div>
                         <h3 className="text-center font-weight-bolder mt-5">Lapangan</h3>
                         <div className="container-lapangan">
-                            {/* BEST SELLER SECTION */}
-                            
                             <div className="row d-flex flex-wrap justify-content-center">
                                 {
                                     this.renderLapangan()

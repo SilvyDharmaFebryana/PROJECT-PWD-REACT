@@ -1,26 +1,25 @@
 import React from "react"
 import Axios from "axios";
-// import { API_URL } from "../../../../Constants/API";
-import "./LapanganBasket.css"
+import "./LapanganBadminton.css"
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from "react-router-dom";
 import { API_URL } from "../../../../Constants/API";
 import CardLapangan from "../../../Components/Card/CardLapangan/CardLapangan";
 
-class LapanganBasket extends React.Component {
+class LapanganBadminton extends React.Component {
 
   state = {
-    lapanganBasket: [],
+    lapanganBadminton: [],
   }
 
-  getLapanganBasket = () => {
-    Axios.get(`${API_URL}/lapangan/basket`, {
+  getLapanganBadminton = () => {
+    Axios.get(`${API_URL}/lapangan/badminton`, {
       params: {
-        category: "basket"
+        category: "badminton"
       }
     })
       .then((res) => {
-        this.setState({ lapanganBasket: res.data })
+        this.setState({ lapanganBadminton: res.data })
         console.log(res.data);
       })
       .catch((err) => {
@@ -29,11 +28,11 @@ class LapanganBasket extends React.Component {
   }
 
   componentDidMount() {
-    this.getLapanganBasket()
+    this.getLapanganBadminton()
   }
 
   renderLapangan = () => {
-    return this.state.lapanganBasket.map((val) => {
+    return this.state.lapanganBadminton.map((val) => {
       return (
         <Link to={`/lapangan/${val.id}`} style={{ textDecoration: "none", color: "inherit" }}>
           <CardLapangan key={`fields-cart-${val.id}`} className="m-2" data={val} />
@@ -47,7 +46,7 @@ class LapanganBasket extends React.Component {
       <div>
         <div className="mt-1">
           <Breadcrumb>
-            <BreadcrumbItem active>  <h5 className="font-weight-bolder m-1" > LAPANGAN BASKET </h5></BreadcrumbItem>
+            <BreadcrumbItem active>  <h5 className="font-weight-bolder m-1" > LAPANGAN BADMINTON </h5></BreadcrumbItem>
           </Breadcrumb>
         </div>
         <div className="container" >
@@ -63,4 +62,4 @@ class LapanganBasket extends React.Component {
   }
 }
 
-export default LapanganBasket;
+export default LapanganBadminton;

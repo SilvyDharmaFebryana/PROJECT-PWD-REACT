@@ -1,7 +1,9 @@
 import React from "react"
 import Axios from "axios"
 import { API_URL } from "../../../../../../Constants/API"
-
+import { Breadcrumb, BreadcrumbItem, Table } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./PaketReport.css"
 
 class PaketReport extends React.Component {
 
@@ -11,35 +13,44 @@ class PaketReport extends React.Component {
     }
 
     getPaket = () => {
-        Axios.get(`${API_URL}/paket`)
+        // Axios.get(`${API_URL}/paket`)
+        //     .then((res) => {
+        //         this.setState({ paket: res.data })
+        //         console.log(res.data);
+
+        //         res.data.forEach((val) => {
+        //             Axios.get(`${API_URL}/paket/report/`, {
+        //                 params: {
+        //                     id: val.id,
+        //                     status: "approve"
+        //                 }
+        //             })
+        //                 .then((res) => {
+        //                     console.log(res.data, "ID:", val.id);
+        //                     this.setState({ jumlah: [...this.state.jumlah, res.data] })
+
+        //                 })
+        //                 .catch((err) => {
+        //                     console.log(err);
+
+        //                 })
+        //         })
+
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+
+        //     })
+
+        Axios.get(`${API_URL}/paket/report/`, {
+            params: {
+                status: "approve"
+            }
+        })
         .then((res) => {
-            this.setState({ paket: res.data })
             console.log(res.data);
-
-            return res.data.map((val) => {
-                return (
-                    // this.getJumlah(val)
-
-                    Axios.get(`${API_URL}/paket/report/`, {
-                        params: {
-                            id : val.id,
-                            status : "approve"
-                        }
-                    })
-                    .then((res) => {
-                        console.log(res.data);
-                        // this.setState({ paket: res.data })
-                        this.setState({ jumlah : res.data })
-                        
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        
-                    })
-                )
-                
-            })    
-           
+            this.setState({ paket: res.data })
+            
         })
         .catch((err) => {
             console.log(err);
@@ -53,53 +64,63 @@ class PaketReport extends React.Component {
     }
 
 
-    getJumlah = (val) => {
-        // return this.state.paket.map((val) => {
-        //     return (
-                Axios.get(`${API_URL}/paket/report/`, {
-                    params: {
-                        id: this.state.paket.id,
-                        status: "approve"
-                    }
-                })
-                    .then((res) => {
-                        console.log(res.data);
-    
-                    })
-                    .catch((err) => {
-                        console.log(err);
-    
-                    })
-    
-        //     )
-        // })
-    }
-
-
     renderPaket = () => {
-        return this.state.paket.map((val) => {
+        return this.state.paket.map((val, idx) => {
             return(
                 <tbody>
                     <tr>
-                        <td>{val.id}</td>
-                        <td>{val.namaPaket}</td>
-                        <td>{val.jenisPaket}</td>
-                        <td>{this.state.total}</td>
-                        {/* <td>{this.getJumlah()}</td> */}
+                        <td>
+                            {
+                                val.jenisPaket === "none" ? (
+                                   <p>Tanpa Paket</p>
+                                ) : val.jenisPaket
+                            }
+                        </td>
+                        <td>
+                            {
+                                val.namaPaket === "none" ? (
+                                   <p>Tanpa Paket</p>
+                                ) : val.namaPaket
+                            }
+                        </td>
+                        <td className="text-center">{val.jumlah}</td>
                     </tr>
                 </tbody>
             )
         })
     }
 
+    
 
     render() {
+        let palingLaku = Math.max.apply(null, this.state.jumlah)
+
         return (
             <div>
-                <h1>REPORT PAKET </h1>
-                {
-                    this.renderPaket()
-                }
+                <div className="mt-1">
+                    <Breadcrumb>
+                        <BreadcrumbItem active>
+                            <h5 className="font-weight-bolder m-1"> REPORT PAKET</h5>
+                        </BreadcrumbItem>
+                    </Breadcrumb>
+                </div>
+                {/* <div>
+                    <h6>Total paket yang terbanyak terjual adalah : {palingLaku} </h6>
+                </div> */}
+                <div>
+                    <Table className="tabel-paket" style={{ width: "80%"}}>
+                        <thead>
+                            <tr>
+                                <th>Jenis Paket</th>
+                                <th>Nama Paket</th>
+                                <th className="text-center">Terjual / paket </th>
+                            </tr>
+                        </thead>
+                        {
+                            this.renderPaket()
+                        }
+                    </Table>
+                </div>
             </div>
         )
     }

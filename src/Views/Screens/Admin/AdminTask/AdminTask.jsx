@@ -17,7 +17,7 @@ class AdminTask extends React.Component{
         approveForm: {
             status: "",
             approveDate: "",
-            notif: ""
+            message: ""
         },
         // declineStatus: {
         //     status: "",
@@ -39,7 +39,7 @@ class AdminTask extends React.Component{
     toggleModal = () => this.setState({ modalOpen: !this.state.modalOpen });
 
     getAdminPendingList = () => {
-        Axios.get(`${API_URL}/transaction/pending`, {
+        Axios.get(`${API_URL}/transaction/pending/admin`, {
             params: {
                 status: "pending"
             }
@@ -80,52 +80,13 @@ class AdminTask extends React.Component{
         })
     }
 
-    // declineHandler = () => {
-    //     Axios.get(`${API_URL}/attempt`, {
-    //         params: {
-    //             attempt: 2
-    //         }
-    //     })
-    //     .then((res) => {
-    //         if (res.data.length == 0) {
-    //             Axios.put(`${API_URL}/transaction/admin/decline/${this.state.approveForm.id}`, {
-    //                 status: this.state.approveForm.status,
-    //                 approveDate : "belom approve"
-    //             })
-    //             .then((res) => {
-    //                 swal("Failed!", "Transaksi Gagal", "error");
-    //                 this.setState({ modalOpen: false });
-    //                 this.getAdminPendingList()
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-                    
-    //             })
-    //         } else {
-    //             Axios.put(`${API_URL}/transaction/admin/failed/${this.state.approveForm.id}`, {
-    //                 status: this.state.approveForm.status,
-    //                 approveDate: "none"
-    //             })
-    //             .then((res) => {
-    //                 swal("DITOLAK!", "Transaksi Ditolak", "error");
-    //                 this.setState({ modalOpen: false });
-    //                 this.getAdminPendingList()
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-                    
-    //             })
-    //         }
-           
-    //     })
-    // }
 
 
     declineHandler = () => {
         Axios.put(`${API_URL}/transaction/admin/decline/${this.state.approveForm.id}`, {
             status: this.state.approveForm.status,
             approveDate: "belom approve",
-            notif: this.state.approveForm.notif
+            // message: this.state.approveForm.message
         })
             .then((res) => {
                 swal("Failed!", "Transaksi Gagal", "error");
@@ -268,35 +229,16 @@ class AdminTask extends React.Component{
                                                 <h6>
                                                     Payment Method : {this.state.approveForm.paymentMethod}
                                                 </h6>
-                                                <h6 className="d-flex" >
-                                                    status : 
-                                                    <select
-                                                    className="ml-2" 
-                                                    style={{ width: "50%"}}   
-                                                    onChange={(e) => this.inputHandler(e, "approveForm", "notif")}
-                                                    >
-                                                        <option value="sukses">Sukses</option>
-                                                        <option value="palsu">Indikasi palsu</option>
-                                                        <option value="kurang">Nominal Kurang</option>
-                                                        <option value="tidakjelas">Bukti Tidak Jelas</option>
-                                                        <option value="attemptmax">Attempt lebih dari 3x</option>
-                                                    </select>
-                                                </h6>
                                                 <h6>Attempt : {this.state.approveForm.attempt}</h6>
                                             </div>
                                         </ModalBody>
                                         <ModalFooter>
                                             <div className="d-flex mr-2">
-                                                <Button color="success" className="button-edit mr-1" onClick={this.approveHandler}>Approve</Button>{' '}
+                                                <Button color="success" className="button-edit mr-1" onClick={this.approveHandler}>Approve</Button>
                                                 <Button color="secondary" style={{ borderRadius: "2px", height: "40px" }} onClick={this.declineHandler}>Decline</Button>
                                             </div>
                                         </ModalFooter>
                                     </Modal>
-
-                                {/* )
-                            })
-                        } */}
-                   
                 </div>
             </div>
         )

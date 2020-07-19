@@ -3,7 +3,6 @@ import { Breadcrumb, BreadcrumbItem, Table, Button, InputGroup, FormControl } fr
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./AdminReportDay.css"
-import DatePicker from "react-datepicker";
 import { API_URL } from "../../../../Constants/API";
 import Axios from "axios"
 import swal from "sweetalert";
@@ -11,17 +10,17 @@ import { faSearch, faStepBackward, faFastBackward, faStepForward, faFastForward 
 import { searchInputHandler } from "../../../../Redux/Actions";
 import { connect } from "react-redux";
 import { priceFormatter } from "../../../../Supports/formatter";
+import DatePicker from "react-date-picker";
 
 
 class AdminReportDay extends React.Component{
 
     state = {
         report : {
-            endDate : new Date(),
-            date: new Date(),
             fieldId : 0,
             status: "approve"
         },
+        date: new Date(),
         hasilSeacrh: [],
         all: [],
         currentPage : 0,
@@ -32,37 +31,20 @@ class AdminReportDay extends React.Component{
 
 
     onChangeDate = (tanggal) => {
-        const ISODate = tanggal.toISOString()
         this.setState({
-            report: {
-              ...this.state.report,
-              date: tanggal,
-            },
+                date: tanggal
           });
         console.log(tanggal)
     }
 
-    
-    onChangeENDDate = (tanggal) => {
-        const ISODate = tanggal.toISOString()
-        this.setState({
-            report: {
-              ...this.state.report,
-              endDate: tanggal,
-            },
-          });
-        console.log(tanggal)
-    }
-   
+
 
     getJadwal = () => {
-        
         Axios.get(`${API_URL}/transaction/details/admin/report/day/date` , {
             params: {
-                booking_date : this.state.report.date,
+                booking_date : this.state.date.toLocaleDateString(),
                 status : "approve",
-                field_id : this.state.report.fieldId,
-                end_date : this.state.report.endDate
+                field_id : this.state.report.fieldId
             }
         })
         .then((res) => {
@@ -83,7 +65,6 @@ class AdminReportDay extends React.Component{
     }
 
     getAllReport = (currentPage) => {
-
         currentPage -= 1;
 
         Axios.get(`${API_URL}/transaction/details/admin/?page=${currentPage}&size=${this.state.listPerPage}`)
@@ -260,28 +241,11 @@ class AdminReportDay extends React.Component{
                                 <h6>Pilih Tanggal :</h6>
                                 <DatePicker
                                     classNam="ml-5"
-                                    selected={this.state.report.date}
+                                    selected={this.state.date}
                                     onChange={this.onChangeDate}
-                                    value={(this.state.report.date)}
+                                    value={this.state.date}
                                     style={{ color: "#003cb3" }}
-                                    // dateFormat="MM/dd/yyyy"
                                     minDate={new Date()}
-                                    // isClearable={true}
-                                    
-                                    
-                                /> 
-                                <p>-</p>
-                                 <DatePicker
-                                    classNam="ml-5 ml-2"
-                                    selected={this.state.report.endDate}
-                                    onChange={this.onChangeENDDate}
-                                    value={(this.state.report.endDate)}
-                                    style={{ color: "#003cb3" }}
-                                    // dateFormat="MM/dd/yyyy"
-                                    minDate={new Date()}
-                                    // isClearable={true}
-                                    
-                                    
                                 />
                                 {console.log(this.state.report.date)}
                             </div>

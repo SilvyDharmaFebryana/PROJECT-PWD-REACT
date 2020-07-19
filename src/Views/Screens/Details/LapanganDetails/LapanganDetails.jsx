@@ -3,19 +3,16 @@ import Axios from "axios";
 import { API_URL } from "../../../../Constants/API";
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import "./LapanganDetails.css";
-// import DatePicker from "react-date-picker";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-// import "react-calendar/dist/Calendar.css";
+import DatePicker from "react-date-picker";
 import { connect } from "react-redux";
 import swal from "sweetalert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { faRestroom, faToilet, faChargingStation, faTrashAlt, faMosque, faClock, faVolleyballBall, faBasketballBall, faCalendarAlt, faStar } from "@fortawesome/free-solid-svg-icons";
-// import ButtonUI from "../../../Components/Buttons/Buttons";
 import { faFutbol } from "@fortawesome/free-regular-svg-icons";
 import { Link, Redirect } from "react-router-dom";
 import { faStar as star } from "@fortawesome/free-regular-svg-icons";
+import { mockComponent } from "react-dom/test-utils";
 
 
 
@@ -30,9 +27,9 @@ class LapanganDetails extends React.Component {
       duration: 0,
       description:"",
       time: "",
-      date: new Date().toLocaleString(),
     },
     modalOpen: false,
+    tanggal: new Date(),
   };
 
   mustToLogin = () => {
@@ -43,13 +40,12 @@ class LapanganDetails extends React.Component {
     })
   }
 
-  onChangeDate = (date) => {
-    this.setState({
-      lapanganDetails: {
-        ...this.state.lapanganDetails,
-        date: date,
-      },
-    })
+
+  onChangeDate = this.onChangeDate.bind(this)
+  onChangeDate(date) {
+    this.setState({ 
+      tanggal: date 
+  })
     console.log(date.getTime())
     console.log(new Date())
   }
@@ -75,7 +71,8 @@ class LapanganDetails extends React.Component {
 
   componentDidMount() {
     this.getLapanganDetails();  
-    // console.log(this.props.user.id);
+    // console.log(moment().utcOffset("+08:00", true).toISOString());
+    
       
   }
 
@@ -100,7 +97,7 @@ class LapanganDetails extends React.Component {
         if (res.data.length === 0) {
           Axios.get(`${API_URL}/bField/check/`, {
             params: {
-              date: this.state.lapanganDetails.date,
+              date: this.state.tanggal.toLocaleDateString(),
               time: this.state.lapanganDetails.time,
               field_id: this.state.lapanganDetails.id
             },
@@ -118,7 +115,7 @@ class LapanganDetails extends React.Component {
                 //cek lagi di transaksi
                 Axios.get(`${API_URL}/transaction/details/check/`, {
                   params: {
-                    booking_date: this.state.lapanganDetails.date,
+                    booking_date: this.state.tanggal.toLocaleDateString(),
                     time: this.state.lapanganDetails.time,
                     field_id: this.state.lapanganDetails.id
                   },
@@ -138,7 +135,7 @@ class LapanganDetails extends React.Component {
 
                       Axios.post(`${API_URL}/bField/${fieldId}/${userId}`, {
                         duration: 1,
-                        date: this.state.lapanganDetails.date,
+                        date: this.state.tanggal.toLocaleDateString(),
                         time: this.state.lapanganDetails.time,
                       })
                         .then((res) => {
@@ -166,7 +163,7 @@ class LapanganDetails extends React.Component {
           //ini kalo cart udh ada isi
             Axios.get(`${API_URL}/bField/check/onthisdate/`, {
               params: {
-                date: this.state.lapanganDetails.date,
+                date: this.state.tanggal.toLocaleDateString(),
                 // time: this.state.lapanganDetails.time,
                 field_id: this.state.lapanganDetails.id
               },
@@ -181,9 +178,7 @@ class LapanganDetails extends React.Component {
                 } else {
                   Axios.get(`${API_URL}/bField/check/onthistime/`, {
                     params: {
-                      // date: this.state.lapanganDetails.date,
                       time: this.state.lapanganDetails.time,
-                      // field_id: this.state.lapanganDetails.id
                     },
                   })
                   .then((res) => {
@@ -197,7 +192,7 @@ class LapanganDetails extends React.Component {
                       //cek lagi dari transaksi, udh ada yang pesan atau belum 
                       Axios.get(`${API_URL}/transaction/details/check/`, {
                         params: {
-                          booking_date: this.state.lapanganDetails.date,
+                          booking_date: this.state.tanggal.toLocaleDateString(),
                           time: this.state.lapanganDetails.time,
                           field_id: this.state.lapanganDetails.id
                         },
@@ -217,7 +212,7 @@ class LapanganDetails extends React.Component {
       
                             Axios.post(`${API_URL}/bField/${fieldId}/${userId}`, {
                               duration: 1,
-                              date: this.state.lapanganDetails.date,
+                              date: this.state.tanggal.toLocaleDateString(),
                               time: this.state.lapanganDetails.time,
                             })
                               .then((res) => {
@@ -255,7 +250,8 @@ class LapanganDetails extends React.Component {
   };
 
   render() {
-    const { image, price, type, category, description } = this.state.lapanganDetails;
+
+    const { image, price, type, category, description, rating } = this.state.lapanganDetails;
 
     return (
       <div className="color-text">
@@ -296,7 +292,7 @@ class LapanganDetails extends React.Component {
                 </span>
                 <div className="mt-4 d-flex">
                   {
-                    this.state.lapanganDetails.rating == 1 ? (
+                    rating <= 1 ? (
                       <>
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
@@ -304,7 +300,7 @@ class LapanganDetails extends React.Component {
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
                       </>
-                    ) : this.state.lapanganDetails.rating == 2 ? (
+                    ) : rating <= 2 ? (
                       <>
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
@@ -312,7 +308,7 @@ class LapanganDetails extends React.Component {
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
                       </>
-                    ) : this.state.lapanganDetails.rating == 3 ? (
+                    ) : rating <= 3 ? (
                       <>
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
@@ -320,7 +316,7 @@ class LapanganDetails extends React.Component {
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
                       </>
-                    ) : this.state.lapanganDetails.rating == 4 ? (
+                    ) : rating <= 4 ? (
                       <>
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
@@ -328,7 +324,7 @@ class LapanganDetails extends React.Component {
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={star} />
                       </>
-                    ) : this.state.lapanganDetails.rating == 5 ? (
+                    ) : rating <= 5 ? (
                       <>
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
                         <FontAwesomeIcon style={{ fontSize: "18px", color: "#ff9900" }} icon={faStar} />
@@ -432,15 +428,11 @@ class LapanganDetails extends React.Component {
                   <div className="col-6 mt-3">
                     <DatePicker
                       classNam="ml-5"
-                      selected={this.state.lapanganDetails.date}
+                      selected={this.state.tanggal}
                       onChange={this.onChangeDate}
-                      value={(this.state.lapanganDetails.date)}
+                      value={this.state.tanggal}
                       style={{ color: "#003cb3" }}
-                      dateFormat="MM/dd/yyyy"
                       minDate={new Date()}
-                      utcOffset="UTC(+0700)"
-
-                      // isClearable={true}
                     />
                     <select
                       value={this.state.lapanganDetails.time}

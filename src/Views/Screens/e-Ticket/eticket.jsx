@@ -41,8 +41,7 @@ class ETicket extends React.Component {
 
         Axios.get(`${API_URL}/transaction/details/trans/${idTrans}`)
         .then((res) => {
-            this.setState({ detailTicket: res.data,
-            })
+            this.setState({ detailTicket: res.data })
         })
         .catch((err) => {
             console.log(err)
@@ -73,19 +72,6 @@ class ETicket extends React.Component {
         })
     }
 
-
-    // renderTambahPaket = () => {
-    //     return this.state.transId.map((val, idx) => {
-    //         return (
-    //             <tbody>
-    //                 <tr>
-    //                     <td>{val.paket.namaPaket}</td>
-    //                     <td>{val.totalPaket}</td>
-    //                 </tr>
-    //             </tbody>
-    //         )
-    //     })
-    // }
 
     printDocument() {
         const input = document.getElementById('divToPrint');
@@ -126,9 +112,7 @@ class ETicket extends React.Component {
                 }}
                 >
                     <div>
-                    {/* {
-                        this.state.detailTicket.map((val) => {
-                            return ( */}
+
                                 <div>
                                     <div class="d-flex justify-content-between">
                                         <img className="ml-2 mt-2" src={logo} style={{ width: "200px" }} />
@@ -144,9 +128,6 @@ class ETicket extends React.Component {
                                         <h6 className="ml-2 mb-5" style={{ fontSize: "12px" }}>Date Issue : {this.state.transId.approveDate}</h6>
                                     </div>
                                 </div>
-                            {/* )
-                        })
-                    } */}
 
                         <div>
                             <Table>
@@ -196,7 +177,7 @@ class ETicket extends React.Component {
                                 </tr>
                                 <tr style={{ border: "1px solid smokewhite", width: "100%" }}>
                                     <th>Total Harga </th>
-                                    <td className="td-custom" style={{fontSize: "20px"} }>{priceFormatter(this.state.transId.grandTotal)}</td>
+                                    <td className="td-custom" style={{fontSize: "20px", fontWeight: "bolder" }}>{priceFormatter(this.state.transId.grandTotal)}</td>
                                 </tr>
                             </Table>
                           

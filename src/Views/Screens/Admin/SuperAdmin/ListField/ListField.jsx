@@ -170,7 +170,7 @@ class ListField extends React.Component {
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th className="text-center">Image</th>
+                                <th>Image</th>
                                 <th>Nama</th>
                                 <th>Harga</th>
                                 <th>Type</th>

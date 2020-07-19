@@ -96,7 +96,6 @@ class Navbar extends React.Component {
 
                 <DropdownItem divider />
                 <DropdownItem>
-                 
                 </DropdownItem>
               </DropdownMenu>
               <DropdownToggle tag="nav" className="d-flex">
@@ -115,7 +114,6 @@ class Navbar extends React.Component {
                           />
                         )
                     }
-                     
                   </small>
                 </CircleBg>
                 
@@ -124,16 +122,26 @@ class Navbar extends React.Component {
                 </h6>
               </DropdownToggle>
             </Dropdown>
-          </div>
-          <div className="d-flex mt-2 ml-4">
-            <DropdownToggle tag="nav" className="d-flex">
-              <FontAwesomeIcon
-                className="mt-2"
-                icon={faBell}
-                style={{ fontSize: 18, color: "#003cb3" }}
-              />  <p style={{ fontSize: "13px", fontWeight: "bold" }}>{this.props.user.jumlahNotif}</p>
-            </DropdownToggle>
-          </div>
+          </div> 
+          {
+            this.props.user.role === "user" ? (
+              <div className="d-flex mt-2 ml-4">
+                <DropdownToggle tag="nav" className="d-flex">
+                  <Link
+                    className="d-flex"
+                    style={{ color: "inherit", textDecoration: "none" }}
+                    to="/notif"
+                  >
+                  <FontAwesomeIcon
+                    className="mt-2"
+                    icon={faBell}
+                    style={{ fontSize: 18, color: "#003cb3" }}
+                  />  <p style={{ fontSize: "13px", fontWeight: "bold" }}>{this.props.user.jumlahNotif}</p>
+                  </Link>
+                </DropdownToggle>
+              </div>
+            ) : null
+          }
           <div className="d-flex mt-2 ml-4">
             <DropdownToggle tag="nav" className="d-flex">
               <h6 className="mt-1">|</h6>
@@ -249,18 +257,22 @@ class Navbar extends React.Component {
                         Lapangan Futsal
                       </Link>
                     </DropdownItem>
-                    <DropdownItem>Lapangan Tennis</DropdownItem>
-                    <DropdownItem>Lapangan Badminton</DropdownItem>
-                    <DropdownItem>Tennis Meja</DropdownItem>
-                    <DropdownItem divider />
                     <DropdownItem>
                       <Link
-                        to="/kolam"
+                        to="/tennis"
                         style={{ textDecoration: "none", color: "inherit" }}
                       >
-                        Beli tiket Kolam Renang{" "}
+                        Lapangan Tennis
                       </Link>
                     </DropdownItem>
+                    <DropdownItem>
+                      <Link
+                        to="/badminton"
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        Lapangan Badminton
+                      </Link>
+                      </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </h6>
@@ -286,7 +298,6 @@ class Navbar extends React.Component {
                     sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </ModalBody>
                   <ModalFooter>
-                    {/* <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '} */}
                     <Button color="secondary" onClick={this.toggle}>
                       Close
                 </Button>

@@ -9,15 +9,20 @@ import Axios from "axios";
 import { API_URL } from "../../../Constants/API";
 import { priceFormatter } from "../../../Supports/formatter";
 import swal from "sweetalert";
+import { connect } from "react-redux";
 
 class History extends React.Component {
 
     state = {
         activePage: "sudah",
         noPaymentList: [],
+        noPaymentJlm : 0,
         pendingList: [],
+        pendingJlm: 0,
         suksesList: [],
+        suksesJlm: 0,
         declineList: [],
+        declineJlm: 0,
         gagalList: [],
         activeProducts: [],
         editForm: {
@@ -32,26 +37,31 @@ class History extends React.Component {
             noPesanan: "",
             attempt: 2,
             notif: null,
+            user_id: 0
         },
         selectedFile: null,
         modalEditOpen: false,
-
-
-        // idPending: 0,
-
-        // detailsPending: []
-
+        taskList: [],
+        currentPage : 0,
+        listPerPage : 4,
+        // targetPage: 0,
+        totalPages: 0,
+        totalElements: 0
 
     }
     //=========================================================== Get Status ====================================================================================
     getNoPaymentStatus = () => {
-        Axios.get(`${API_URL}/transaction/none`, {
+        Axios.get(`${API_URL}/transaction/none/`, {
             params: {
-                status: "noPayment"
+                status: "noPayment",
+                user_id: this.props.user.id
             }
         })
             .then((res) => {
-                this.setState({ noPaymentList: res.data })
+                this.setState({ 
+                    noPaymentList: res.data,
+                    noPaymentJlm: res.data.length
+            })
                 console.log(res.data);
                 this.renderList()
                 
@@ -62,13 +72,17 @@ class History extends React.Component {
     }
 
     getPendingStatus = () => {
-        Axios.get(`${API_URL}/transaction/pending`, {
+        Axios.get(`${API_URL}/transaction/pending/`, {
             params: {
-                status: "pending"
+                status: "pending",
+                user_id: this.props.user.id
             }
         })
             .then((res) => {
-                this.setState({ pendingList: res.data })
+                this.setState({ 
+                    pendingList: res.data,
+                    pendingJlm: res.data.length
+                })
                 console.log(res.data);
                 this.getPendingStatus()
                 
@@ -79,13 +93,17 @@ class History extends React.Component {
     }
 
     getSuksesStatus = () => {
-        Axios.get(`${API_URL}/transaction/sukses`, {
+        Axios.get(`${API_URL}/transaction/sukses/`, {
             params: {
-                status: "approve"
+                status: "approve",
+                user_id: this.props.user.id
             }
         })
             .then((res) => {
-                this.setState({ suksesList: res.data})
+                this.setState({ 
+                    suksesList: res.data,
+                    suksesJlm: res.data.length
+                })
                 console.log(res.data);
                 this.getSuksesStatus()
                 
@@ -96,13 +114,17 @@ class History extends React.Component {
     }
 
     getUploadUlang = () => {
-        Axios.get(`${API_URL}/transaction/decline`, {
+        Axios.get(`${API_URL}/transaction/decline/`, {
             params: {
-                status: "decline"
+                status: "decline",
+                user_id: this.props.user.id
             }
         })
             .then((res) => {
-                this.setState({ declineList: res.data})
+                this.setState({ 
+                    declineList: res.data,
+                    declineJlm: res.data.length
+                })
                 console.log(res.data);
                 this.getUploadUlang()
             })
@@ -112,9 +134,10 @@ class History extends React.Component {
     }
 
     getGagalStatus = () => {
-        Axios.get(`${API_URL}/transaction/gagal`, {
+        Axios.get(`${API_URL}/transaction/gagal/`, {
             params: {
-                status: "failed"
+                status: "failed",
+                user_id: this.props.user.id
             }
         })
             .then((res) => {
@@ -206,16 +229,8 @@ class History extends React.Component {
         this.getNoPaymentStatus()
         this.getSuksesStatus()
         this.getUploadUlang()
+        console.log(this.props.user.id)
     }
-
-    // componentDidUpdate() {
-    //     this.getPendingStatus()
-    //     // this.getDetailsPending()
-    //     this.getNoPaymentStatus()
-    //     this.getSuksesStatus()
-    //     this.getUploadUlang()
-    // }
-
 
     renderList = () => {
         const { activePage } = this.state;
@@ -231,15 +246,6 @@ class History extends React.Component {
                         <td>{priceFormatter(val.totalPrice)}</td>
                         <td>{val.status}</td>
                         <td><Link to={`/checkout/${val.id}`}><Button>Bayar</Button></Link></td>
-                    </tr>
-                    <tr>
-                        {/* {
-                            this.state.detailsPending.map((val) => {
-                                return (
-                                     <td>{val.bookingDate}</td>
-                                )
-                            })
-                        } */}
                     </tr>
                     </>
                 )
@@ -286,7 +292,7 @@ class History extends React.Component {
                                 <p style={{ fontSize: "12px" }}>Transaksi sukses</p>
                             </Alert>
                         </td>
-                        <td className="text-center">    
+                        <td className="text-center"> 
                             <Link to={`/e-ticket/${val.id}`} className="d-flex ngelink">
                                 <FontAwesomeIcon
                                     className="mr-2 mt-1 ml-5"
@@ -311,7 +317,7 @@ class History extends React.Component {
                         <td>{priceFormatter(val.totalPrice)}</td>
                         <td style={{ width: "15%" }}>
                             <Alert color="danger">
-                                <p style={{ fontSize: "12px" }}>Transaksi anda di tolak, karena gambar atau bukti transfer  / nominal / </p>
+                                <p style={{ fontSize: "12px" }}>Transaksi anda di tolak, karena gambar atau bukti transfer rusak / nominal tidak sesuai </p>
                             </Alert>
                         </td>
                         <td>
@@ -356,13 +362,16 @@ class History extends React.Component {
                                         style={{ width: "25%" }}
                                         onClick={() => this.setState({ activePage: "belum" })}
                                     > 
+                                        <p>{this.state.noPaymentJlm}</p>
                                         Belum Bayar
+                                        
                                     </th>
                                     <th 
                                         className={`filter ${this.state.activePage == "sudah" ? "active" : null}`}
                                         style={{ width: "25%" }}
                                         onClick={() => this.setState({ activePage: "sudah" })}
                                     > 
+                                        <p>{this.state.pendingJlm}</p>
                                         Sudah Bayar
                                     </th>
                                     <th 
@@ -370,21 +379,16 @@ class History extends React.Component {
                                         style={{ width: "25%" }}
                                         onClick={() => this.setState({ activePage: "sukses" })}
                                     > 
+                                        <p>{this.state.suksesJlm}</p>
                                         Sukses
                                     </th>
                                     <th 
                                         className={`filter ${this.state.activePage == "ditolak" ? "active" : null}`}
                                         style={{ width: "25%" }}
                                         onClick={() => this.setState({ activePage: "ditolak" })}
-                                    > 
+                                    >   
+                                        <p style={{ color: "red", fontWeight: "bold" }}>{this.state.declineJlm}</p>
                                         Ditolak
-                                    </th>
-                                    <th 
-                                        className={`filter ${this.state.activePage == "gagal" ? "active" : null}`}
-                                        style={{ width: "25%" }}
-                                        onClick={() => this.setState({ activePage: "gagal" })}
-                                    > 
-                                        Gagal
                                     </th>
                                 </tr>
                             </thead>
@@ -546,5 +550,12 @@ class History extends React.Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+      user: state.user,
+    };
+  };
 
-export default History;
+
+
+  export default connect(mapStateToProps)(History);

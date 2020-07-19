@@ -28,7 +28,7 @@ class ListUser extends React.Component {
             lastName: "",
             email: "",
             address: "",
-            fullName: "",
+            fullname: "",
             password: "",
             role: "admin",
             gender: "",
@@ -88,7 +88,7 @@ class ListUser extends React.Component {
     toggleEdit = () => this.setState({ modalEditOpen: !this.state.modalEditOpen });
 
     getAllUserList = () => {
-        Axios.get(`${API_URL}/users`)
+        Axios.get(`${API_URL}/users/all`)
         .then((res) => {
             this.setState({ allUserList: res.data })
             console.log(res.data)   
@@ -105,7 +105,7 @@ class ListUser extends React.Component {
     }
 
     getUserList = () => {
-        Axios.get(`${API_URL}/users`, {
+        Axios.get(`${API_URL}/users/user`, {
             params: {
                 role: "user"
             }
@@ -119,7 +119,7 @@ class ListUser extends React.Component {
     }
 
     getAdminList = () => {
-        Axios.get(`${API_URL}/users`, {
+        Axios.get(`${API_URL}/users/admin`, {
             params: {
                 role: "admin",
             }
@@ -132,37 +132,11 @@ class ListUser extends React.Component {
         })
     }
 
-    editUserBtnHandler = (idx) => {
-        this.setState({
-            editUserForm: {
-                ...this.state.allUserList[idx],
-            },
-            modalEditOpen: true,
-        });
-    };
-
-    editAdminBtnHandler = (idx) => {
-        this.setState({
-            editUserForm: {
-                ...this.state.adminList[idx],
-            },
-            modalEditOpen: true,
-        });
-    };
-
-    editAllUserBtnHandler = (idx) => {
-        this.setState({
-            editUserForm: {
-                ...this.state.allUserList[idx],
-            },
-            modalEditOpen: true,
-        });
-    };
 
     seeUserBtnHandler = (idx) => {
         this.setState({
             editUserForm: {
-                ...this.state.allUserList[idx],
+                ...this.state.userList[idx],
             },
             modalSeeOpen: true,
         });
@@ -187,24 +161,6 @@ class ListUser extends React.Component {
     };
 
 
-    editUserHandler = () => {
-        Axios.put(
-            `${API_URL}/users/${this.state.editUserForm.id}`,
-            this.state.editUserForm
-        )
-            .then((res) => {
-                swal("Success!", "User has been edited", "success");
-                this.setState({ modalEditOpen: false });
-                this.getUserList()
-                this.getAllUserList()
-                this.getAdminList()
-            })
-            .catch((err) => {
-                swal("Error!", "User could not be edited", "error");
-                console.log(err);
-            });
-    };
-
     renderUserList = () => {
         const { activePage } = this.state;
         if (activePage === "user") {
@@ -227,32 +183,14 @@ class ListUser extends React.Component {
                     >
                         <td>{val.id}</td>
                         <td>{val.username}</td>
-                        <td>{val.fullName}</td>
+                        <td>{val.fullname}</td>
                         <td>{val.role}</td>
-                        <td>
-                            <FontAwesomeIcon
-                                className="icon"
-                                icon={faUserEdit}
-                                style={{ fontSize: 18}}
-                                onClick={(_) => this.editUserBtnHandler(idx)}
-                            />
-                        </td>
-                        <td>|</td>
                         <td>
                             <FontAwesomeIcon
                                 className="icon"
                                 icon={faEye}
                                 style={{ fontSize: 18}}
                                 onClick={(_) => this.seeUserBtnHandler(idx)}
-                            />
-                        </td>
-                        <td>|</td>
-                        <td>
-                            <FontAwesomeIcon
-                                className="icon"
-                                icon={faMinusCircle}
-                                style={{ fontSize: 18}}
-                                onClick={() => this.deleteDataHandler(val.id)}
                             />
                         </td>
                     </tr>
@@ -278,17 +216,8 @@ class ListUser extends React.Component {
                     >
                         <td>{val.id}</td>
                         <td>{val.username}</td>
-                        <td>{val.fullName}</td>
+                        <td>{val.fullname}</td>
                         <td>{val.role}</td>
-                        <td>
-                            <FontAwesomeIcon
-                                className="icon"
-                                icon={faUserEdit}
-                                style={{ fontSize: 18}}
-                                onClick={(_) => this.editAdminBtnHandler(idx)}
-                            />
-                        </td>
-                        <td>|</td>
                         <td>
                             <FontAwesomeIcon
                                 className="icon"
@@ -296,15 +225,6 @@ class ListUser extends React.Component {
                                 style={{ fontSize: 18}}
                                 onClick={this.toggleSee}
                                 onClick={(_) => this.seeAdminBtnHandler(idx)}
-                            />
-                        </td>
-                        <td>|</td>
-                        <td>
-                            <FontAwesomeIcon
-                                className="icon"
-                                icon={faMinusCircle}
-                                style={{ fontSize: 18}}
-                                onClick={() => this.deleteDataHandler(val.id)}
                             />
                         </td>
                     </tr>
@@ -330,17 +250,8 @@ class ListUser extends React.Component {
                     >
                         <td>{val.id}</td>
                         <td>{val.username}</td>
-                        <td>{val.fullName}</td>
+                        <td>{val.fullname}</td>
                         <td>{val.role}</td>
-                        <td>
-                            <FontAwesomeIcon
-                                className="icon"
-                                icon={faUserEdit}
-                                style={{ fontSize: 18}}
-                                onClick={(_) => this.editAllUserBtnHandler(idx)}
-                            />
-                        </td>
-                        <td>|</td>
                         <td>
                             <FontAwesomeIcon
                                 className="icon"
@@ -348,15 +259,6 @@ class ListUser extends React.Component {
                                 style={{ fontSize: 18}}
                                 onClick={this.toggleSee}
                                 onClick={(_) => this.seeAllUserBtnHandler(idx)}
-                            />
-                        </td>
-                        <td>|</td>
-                        <td>
-                            <FontAwesomeIcon
-                                className="icon"
-                                icon={faMinusCircle}
-                                style={{ fontSize: 18}}
-                                onClick={() => this.deleteDataHandler(val.id)}
                             />
                         </td>
                     </tr>
@@ -382,7 +284,7 @@ class ListUser extends React.Component {
                     >
                         <td>{val.id}</td>
                         <td>{val.username}</td>
-                        <td>{val.fullName}</td>
+                        <td>{val.fullname}</td>
                         <td>{val.role}</td>
                         <td>
                             <FontAwesomeIcon
@@ -400,15 +302,6 @@ class ListUser extends React.Component {
                                 style={{ fontSize: 18}}
                                 onClick={this.toggleSee}
                                 onClick={(_) => this.seeAllUserBtnHandler(idx)}
-                            />
-                        </td>
-                        <td>|</td>
-                        <td>
-                            <FontAwesomeIcon
-                                className="icon"
-                                icon={faMinusCircle}
-                                style={{ fontSize: 18}}
-                                onClick={() => this.deleteDataHandler(val.id)}
                             />
                         </td>
                     </tr>
@@ -458,26 +351,15 @@ class ListUser extends React.Component {
                                         
                                     </div>
                                 </div>
-                                <div className="col-3">
-                                    <Link to="/admin/add_user" style={{ textDecoration: "none", color: "inherit"}}>
-                                        <button className="add-user">
-                                            <FontAwesomeIcon
-                                                className="mr-2"
-                                                icon={faPlus}
-                                                style={{ fontSize: 15}}
-                                            /> Add User
-                                        </button>
-                                    </Link>       
-                                </div>
                             </div>
                     <Table className="text-center">
                         <thead style={{ backgroundColor: "#2d5986", color:"white"}}>
                             <tr>
                                 <th style={{ width: "10%" }}>ID</th>
                                 <th style={{ width: "20%" }}>Username</th>
-                                <th style={{ width: "20%" }}>FullName</th>
+                                <th style={{ width: "20%" }}>fullname</th>
                                 <th style={{ width: "20%" }}>Role</th>
-                                <th colSpan={5} style={{ width: "25%" }}>Action</th>
+                                <th colSpan={2} style={{ width: "25%" }}>Action</th>
                             </tr>
                         </thead>
                         <tbody style={{ color: "#336699"}}>
@@ -505,7 +387,7 @@ class ListUser extends React.Component {
                                 <input
                                     className="text-input-toggle"   
                                     type="text"
-                                    value={this.state.editUserForm.firstName}
+                                    value={this.state.editUserForm.firstname}
                                     placeholder="Full Name"
                                     onChange={(e) =>
                                         this.inputHandler(e, "firstName", "editUserForm")
@@ -516,7 +398,7 @@ class ListUser extends React.Component {
                                 <input
                                     className="text-input-toggle"   
                                     type="text"
-                                    value={this.state.editUserForm.lastName}
+                                    value={this.state.editUserForm.lastname}
                                     placeholder="Full Name"
                                     onChange={(e) =>
                                         this.inputHandler(e, "lastName", "editUserForm")
@@ -594,7 +476,7 @@ class ListUser extends React.Component {
                                 <tr>
                                     <th style={{ width: "40%" }}>Full Name</th>
                                     <td style={{ width: "5%" }}>:</td>
-                                    <td>{this.state.editUserForm.fullName}</td>
+                                    <td>{this.state.editUserForm.fullname}</td>
                                 </tr>
                                 <tr>
                                     <th style={{ width: "40%" }}>Gender</th>
@@ -614,7 +496,7 @@ class ListUser extends React.Component {
                                 <tr>
                                     <th style={{ width: "40%" }}>Phone Number</th>
                                     <td style={{ width: "5%" }}>:</td>
-                                    <td>+{" "}{this.state.editUserForm.phone}</td>
+                                    <td>+{" "}{this.state.editUserForm.phoneNumber}</td>
                                 </tr>
                                 <tr>
                                     <th style={{ width: "40%" }}>Address</th>
