@@ -15,7 +15,7 @@
     "bootstrap": "^4.5.0",
     "chart.js": "^2.9.3",
     "html2canvas": "^1.0.0-rc.5",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "jspdf": "^1.5.3",
     "react": "^16.13.1",
     "react-bootstrap": "^1.2.2",
